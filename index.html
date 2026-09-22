@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cửa Hàng Giày Thể Thao</title>
+    <meta name="description" content="Website bán giày thể thao với giao diện mua sắm trực quan, hỗ trợ đăng nhập tài khoản (user: 123, admin: 333) khi đặt hàng và giữ nguyên trang sau khi hoàn tất." />
+    <meta property="og:title" content="Cửa Hàng Giày Thể Thao" />
+    <meta property="og:description" content="Website bán giày thể thao với giao diện mua sắm trực quan, hỗ trợ đăng nhập tài khoản (user: 123, admin: 333) khi đặt hàng và giữ nguyên trang sau khi hoàn tất." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN (Chạy trực tiếp trên Live Server không cần cài đặt Node.js) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 9999px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased selection:bg-rose-500 selection:text-white min-h-screen flex flex-col">
+
+    <!-- 1. TOP ANNOUNCEMENT BAR -->
+    <div class="bg-slate-950 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+        <div class="flex items-center gap-4 text-[11px] font-semibold">
+          <span class="flex items-center gap-1.5 text-rose-400">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Giảm thêm 10% với mã: <strong class="text-white">GIAM10</strong>
+          </span>
+          <span class="hidden md:inline text-slate-600">|</span>
+          <span class="hidden md:inline">Giao hàng hỏa tốc toàn quốc 24-48h</span>
+        </div>
+        <div class="flex items-center gap-4 text-[11px] font-semibold text-slate-400">
+          <span>Hotline: <strong class="text-white">1900 6868</strong> (8:00 - 22:00)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. MAIN HEADER -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-4">
+        
+        <!-- Logo -->
+        <a href="#" onclick="renderApp(); return false;" class="flex items-center gap-2.5 shrink-0 group">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-600 to-rose-500 flex items-center justify-center text-white shadow-lg shadow-rose-500/25 group-hover:scale-105 transition-transform">
+            <i data-lucide="flame" class="w-5 h-5 fill-white"></i>
+          </div>
+          <div>
+            <div class="text-lg font-black tracking-tight text-slate-900 flex items-center gap-1">
+              SNEAKER<span class="text-rose-600">ZONE</span>
+            </div>
+            <div class="text-[9px] font-extrabold uppercase tracking-widest text-slate-400 -mt-1">Chính Hãng 100%</div>
+          </div>
+        </a>
+
+        <!-- Search Bar Container -->
+        <div id="header-search-container" class="flex-1 max-w-md hidden sm:block relative">
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Tìm kiếm theo tên giày, thương hiệu (Nike, Jordan, Samba...)..."
+            class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-100/80 border border-slate-200 text-xs font-semibold placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
+          />
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+        </div>
+
+        <!-- Right Action Controls -->
+        <div class="flex items-center gap-2 sm:gap-2.5">
+          
+          <!-- Nút Đăng Nhập ở Header (Hiện khi chưa đăng nhập) -->
+          <button
+            id="btn-header-login"
+            onclick="openLoginModal('header')"
+            class="flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-black shadow-md shadow-rose-600/20 transition-all cursor-pointer"
+            title="Đăng nhập tài khoản user hoặc admin"
+          >
+            <i data-lucide="log-in" class="w-4 h-4"></i>
+            <span>Đăng Nhập</span>
+          </button>
+
+          <!-- Active Account Indicator -->
+          <div id="header-account-chip" class="hidden items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700">
+            <span id="header-account-dot" class="w-2 h-2 rounded-full bg-slate-400"></span>
+            <span id="header-account-text">Chưa đăng nhập</span>
+          </div>
+
+          <!-- Nút Vào Trang Quản Trị (Chỉ hiện khi Admin đang đăng nhập) -->
+          <button
+            id="btn-header-admin-nav"
+            onclick="toggleAdminPage()"
+            class="hidden items-center gap-1.5 px-3 py-2 rounded-2xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-extrabold shadow-sm transition-all cursor-pointer"
+            title="Chuyển đổi giữa trang Quản trị và Cửa hàng"
+          >
+            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+            <span id="admin-nav-text">Quản Trị</span>
+          </button>
+
+          <!-- Cart Button (Xem giỏ hàng trên trang web giày) -->
+          <button
+            id="btn-open-cart"
+            onclick="openCartDrawer()"
+            class="relative p-2.5 rounded-2xl bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-700 transition-all cursor-pointer"
+            title="Xem giỏ hàng"
+          >
+            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+            <span
+              id="header-cart-badge"
+              class="hidden absolute -top-1 -right-1 w-5 h-5 bg-rose-600 text-white text-[11px] font-black rounded-full flex items-center justify-center ring-2 ring-white shadow-sm"
+            >0</span>
+          </button>
+
+          <!-- Logout Button (Hiện khi đã đăng nhập User hoặc Admin) -->
+          <button
+            id="btn-header-logout"
+            onclick="handleLogout()"
+            class="hidden items-center gap-1.5 px-3 py-2 rounded-2xl bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-700 text-xs font-bold transition-all cursor-pointer"
+            title="Đăng xuất tài khoản"
+          >
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">Đăng xuất</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- POP-UP / MODAL ĐĂNG NHẬP (BẬT LÊN KHI ẤN ĐĂNG NHẬP HOẶC KHI ẤN ĐẶT HÀNG MÀ CHƯA ĐĂNG NHẬP) -->
+    <div id="login-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/65 backdrop-blur-sm flex items-center justify-center p-4">
+      <div class="relative max-w-md w-full bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100 animate-in fade-in zoom-in-95 duration-200">
+        
+        <!-- Close button -->
+        <button onclick="closeLoginModal()" class="absolute top-5 right-5 p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-700 cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+
+        <!-- Header -->
+        <div class="text-center space-y-2 mb-5">
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 shadow-xs mb-1">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
+          </div>
+          <h2 class="text-xl font-black text-slate-900 tracking-tight">Đăng Nhập Tài Khoản</h2>
+          <p id="login-modal-subtitle" class="text-xs text-slate-500 font-medium">Vui lòng đăng nhập để đặt hàng hoặc quản trị</p>
+        </div>
+
+        <!-- Form Đăng Nhập -->
+        <form onsubmit="handleLoginFormSubmit(event)" class="space-y-3.5">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Tên đăng nhập (Username):</label>
+            <div class="relative">
+              <input
+                id="login-username"
+                type="text"
+                placeholder="Nhập 'user' hoặc 'admin'..."
+                required
+                class="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
+              />
+              <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Mật khẩu (Password):</label>
+            <div class="relative">
+              <input
+                id="login-password"
+                type="password"
+                placeholder="Mật khẩu (123 hoặc 333)..."
+                required
+                class="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
+              />
+              <i data-lucide="key" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            </div>
+          </div>
+
+          <div id="login-error-msg" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs font-bold text-rose-600"></div>
+
+          <button
+            type="submit"
+            class="w-full py-3 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-sm shadow-lg shadow-rose-600/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <span>Đăng Nhập</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </form>
+
+      </div>
+    </div>
+
+    <!-- 3. STOREFRONT VIEW (TRANG NGƯỜI DÙNG - MẶC ĐỊNH HIỂN THỊ ĐẦU TIÊN THEO Ý BẠN) -->
+    <main id="view-store" class="flex-1">
+      
+      <!-- HERO BANNER -->
+      <section class="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white py-12 md:py-16">
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-rose-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            <!-- Left Hero Content -->
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-rose-400 text-xs font-bold">
+                <i data-lucide="flame" class="w-3.5 h-3.5 fill-rose-500"></i> BỘ SƯU TẬP HUYỀN THOẠI 2025
+              </div>
+
+              <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+                Đỉnh Cao Phong Cách <br class="hidden sm:inline" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-amber-400 to-rose-400">
+                  Sneaker Chính Hãng
+                </span>
+              </h1>
+
+              <p class="text-sm sm:text-base text-slate-300 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                Khám phá hàng trăm mẫu giày hot trend từ Nike, Jordan, Adidas, New Balance cam kết 100% chuẩn Auth. Đổi trả miễn phí 7 ngày và bảo hành keo chỉ trọn đời.
+              </p>
+
+              <!-- CTAs -->
+              <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+                <button
+                  onclick="document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' })"
+                  class="px-6 py-3.5 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-extrabold text-sm shadow-xl shadow-rose-600/30 transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  Mua Sắm Ngay <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+                <button
+                  onclick="openShoeDetail('shoe-1')"
+                  class="px-5 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 backdrop-blur-md transition-all cursor-pointer"
+                >
+                  Xem Bestseller #1
+                </button>
+              </div>
+
+              <!-- Badges -->
+              <div class="grid grid-cols-3 gap-3 pt-4 border-t border-white/10 max-w-lg mx-auto lg:mx-0 text-left">
+                <div class="flex items-center gap-2">
+                  <div class="p-2 rounded-xl bg-white/5 border border-white/10 text-emerald-400">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-white">100% Auth</div>
+                    <div class="text-[10px] text-slate-400">Check trọn đời</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="p-2 rounded-xl bg-white/5 border border-white/10 text-amber-400">
+                    <i data-lucide="truck" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-white">Freeship</div>
+                    <div class="text-[10px] text-slate-400">Đơn từ 3 triệu</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="p-2 rounded-xl bg-white/5 border border-white/10 text-rose-400">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-white">7 Ngày</div>
+                    <div class="text-[10px] text-slate-400">Đổi size dễ dàng</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Showcase Card -->
+            <div class="lg:col-span-5 relative flex justify-center">
+              <div class="relative w-full max-w-md group cursor-pointer" onclick="openShoeDetail('shoe-1')">
+                <div class="absolute top-4 left-4 z-10 bg-rose-600 text-white text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-lg flex items-center gap-1">
+                  <i data-lucide="flame" class="w-3.5 h-3.5 fill-white"></i> BESTSELLER #1
+                </div>
+                
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-slate-800/80">
+                  <img
+                    src="https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=1000&q=80"
+                    alt="Air Jordan 1 High Chicago"
+                    class="w-full h-80 sm:h-96 object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
+                  
+                  <div class="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-between">
+                    <div>
+                      <span class="text-[10px] font-bold tracking-wider text-rose-400 uppercase">Hàng Mới Về</span>
+                      <h2 class="text-sm sm:text-base font-extrabold text-white">Air Jordan 1 Retro Chicago</h2>
+                      <p class="text-xs text-amber-400 font-black">4.850.000 ₫</p>
+                    </div>
+                    <button class="px-3.5 py-2 rounded-xl bg-white text-slate-900 font-extrabold text-xs hover:bg-rose-50 hover:text-rose-600 transition-colors">
+                      Xem ngay
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- PRODUCTS SECTION -->
+      <section id="products-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
+        
+        <!-- Brand Filters Bar & Chọn Hiển Thị Sản Phẩm -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-5">
+          <div class="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-none" id="brand-filter-bar">
+            <button onclick="setBrandFilter('all')" data-brand="all" class="px-4 py-2 rounded-2xl text-xs font-black transition-all bg-slate-900 text-white shadow-sm cursor-pointer whitespace-nowrap">
+              Tất Cả
+            </button>
+            <button onclick="setBrandFilter('Nike')" data-brand="Nike" class="px-4 py-2 rounded-2xl text-xs font-bold transition-all bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 cursor-pointer whitespace-nowrap">
+              Nike
+            </button>
+            <button onclick="setBrandFilter('Jordan')" data-brand="Jordan" class="px-4 py-2 rounded-2xl text-xs font-bold transition-all bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 cursor-pointer whitespace-nowrap">
+              Jordan
+            </button>
+            <button onclick="setBrandFilter('Adidas')" data-brand="Adidas" class="px-4 py-2 rounded-2xl text-xs font-bold transition-all bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 cursor-pointer whitespace-nowrap">
+              Adidas
+            </button>
+            <button onclick="setBrandFilter('New Balance')" data-brand="New Balance" class="px-4 py-2 rounded-2xl text-xs font-bold transition-all bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 cursor-pointer whitespace-nowrap">
+              New Balance
+            </button>
+            <button onclick="setBrandFilter('Puma')" data-brand="Puma" class="px-4 py-2 rounded-2xl text-xs font-bold transition-all bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 cursor-pointer whitespace-nowrap">
+              Puma
+            </button>
+            <button onclick="setBrandFilter('Vans')" data-brand="Vans" class="px-4 py-2 rounded-2xl text-xs font-bold transition-all bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 cursor-pointer whitespace-nowrap">
+              Vans
+            </button>
+            <button onclick="setBrandFilter('Converse')" data-brand="Converse" class="px-4 py-2 rounded-2xl text-xs font-bold transition-all bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 cursor-pointer whitespace-nowrap">
+              Converse
+            </button>
+          </div>
+
+          <!-- Chọn hiển thị sản phẩm (chỉ để và chọn thôi không cần phải lọc) -->
+          <div class="flex items-center justify-between sm:justify-end gap-3 shrink-0">
+            <span id="product-count-label" class="text-xs font-bold text-slate-500 whitespace-nowrap">Đang tải...</span>
+            <select
+              id="sort-select"
+              class="px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-500/20 cursor-pointer"
+            >
+              <option value="featured">Nổi bật nhất</option>
+              <option value="price-asc">Giá: Thấp đến Cao</option>
+              <option value="price-desc">Giá: Cao đến Thấp</option>
+              <option value="rating">Đánh giá cao nhất</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Product Grid Container -->
+        <div id="product-grid-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <!-- Rendered by JS -->
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- 4. ADMIN MANAGEMENT VIEW -->
+    <main id="view-admin" class="hidden flex-1 bg-slate-100 py-8 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto space-y-6">
+        
+        <!-- Top Admin Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-purple-600 text-white flex items-center justify-center shadow-lg shadow-purple-600/20">
+              <i data-lucide="shield" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h2 class="text-lg font-black text-slate-900">Bảng Điều Khiển Quản Trị (Admin Panel)</h2>
+              <p class="text-xs text-slate-500">Quản lý kho giày thể thao, đơn hàng và danh sách thành viên</p>
+            </div>
+          </div>
+          <button
+            onclick="handleLogout()"
+            class="px-4 py-2.5 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm shadow-rose-600/20"
+          >
+            <i data-lucide="log-out" class="w-4 h-4"></i> Đăng xuất
+          </button>
+        </div>
+
+        <!-- Admin Stats 4 Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+              <i data-lucide="dollar-sign" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-400 uppercase">Tổng Doanh Thu</p>
+              <h3 id="stat-total-revenue" class="text-base sm:text-lg font-black text-slate-900">0 ₫</h3>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+              <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-400 uppercase">Đơn Hàng</p>
+              <h3 id="stat-total-orders" class="text-lg font-black text-slate-900">0</h3>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+              <i data-lucide="package" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-400 uppercase">Sản Phẩm</p>
+              <h3 id="stat-total-products" class="text-lg font-black text-slate-900">0</h3>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+              <i data-lucide="users" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-400 uppercase">Khách Hàng</p>
+              <h3 id="stat-total-users" class="text-lg font-black text-slate-900">0</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Tab Navigation & Search Bar -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3 rounded-2xl border border-slate-200">
+          <div class="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl w-fit">
+            <button id="admin-tab-products" onclick="switchAdminTab('products')" class="px-4 py-2 rounded-lg font-bold text-xs transition-all bg-slate-900 text-white shadow-xs cursor-pointer">
+              Quản Lý Sản Phẩm
+            </button>
+            <button id="admin-tab-orders" onclick="switchAdminTab('orders')" class="px-4 py-2 rounded-lg font-bold text-xs transition-all text-slate-600 hover:bg-slate-200 cursor-pointer">
+              Quản Lý Đơn Hàng
+            </button>
+            <button id="admin-tab-users" onclick="switchAdminTab('users')" class="px-4 py-2 rounded-lg font-bold text-xs transition-all text-slate-600 hover:bg-slate-200 cursor-pointer">
+              Quản Lý Người Dùng
+            </button>
+          </div>
+
+          <!-- Mục tìm kiếm (Chỉ hiện thị mà không cần hoạt động theo yêu cầu) -->
+          <div class="relative sm:w-72">
+            <input
+              type="text"
+              placeholder="Tìm kiếm sản phẩm, đơn hàng, người dùng..."
+              class="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 placeholder:text-slate-400 focus:outline-none cursor-default"
+              title="Mục tìm kiếm (Chỉ hiển thị theo yêu cầu)"
+              readonly
+            />
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+          </div>
+        </div>
+
+        <!-- Admin Tab Content Body -->
+        <div id="admin-content-container">
+          <!-- Rendered by JS -->
+        </div>
+
+      </div>
+    </main>
+
+    <!-- 5. FOOTER -->
+    <footer class="bg-white border-t border-slate-200 mt-auto py-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div class="space-y-3">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-xl bg-rose-600 text-white flex items-center justify-center">
+                <i data-lucide="flame" class="w-4 h-4 fill-white"></i>
+              </div>
+              <span class="text-base font-black text-slate-900">SNEAKER<span class="text-rose-600">ZONE</span></span>
+            </div>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Chuỗi bán lẻ giày thể thao sneaker chính hãng hàng đầu Việt Nam. Cam kết 100% chất lượng và nguồn gốc xuất xứ.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="text-xs font-black uppercase text-slate-900 tracking-wider mb-3">Về SneakerZone</h4>
+            <ul class="space-y-2 text-xs text-slate-500 font-semibold">
+              <li><a href="#" class="hover:text-rose-600 transition-colors">Giới thiệu cửa hàng</a></li>
+              <li><a href="#" class="hover:text-rose-600 transition-colors">Hệ thống chi nhánh</a></li>
+              <li><a href="#" class="hover:text-rose-600 transition-colors">Tuyển dụng nhân tài</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-xs font-black uppercase text-slate-900 tracking-wider mb-3">Chính Sách Khách Hàng</h4>
+            <ul class="space-y-2 text-xs text-slate-500 font-semibold">
+              <li><a href="#" class="hover:text-rose-600 transition-colors">Chính sách đổi trả 7 ngày</a></li>
+              <li><a href="#" class="hover:text-rose-600 transition-colors">Chính sách bảo hành trọn đời</a></li>
+              <li><a href="#" class="hover:text-rose-600 transition-colors">Hướng dẫn chọn size giày chuẩn</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-xs font-black uppercase text-slate-900 tracking-wider mb-3">Tổng Đài Hỗ Trợ</h4>
+            <div class="text-xs text-slate-500 space-y-1">
+              <p>Hotline tư vấn: <strong class="text-slate-900">1900 6868</strong></p>
+              <p>Email: <strong class="text-slate-900">hotro@sneakerzone.vn</strong></p>
+              <p>Địa chỉ: 123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-slate-100 text-center text-xs text-slate-400 font-medium">
+          © 2025 SneakerZone. Tất cả các quyền được bảo lưu. Dự án phát triển thuần HTML, CSS, JavaScript.
+        </div>
+      </div>
+    </footer>
+
+    <!-- MODAL 1: PRODUCT DETAIL MODAL -->
+    <div id="product-detail-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+      <div class="relative bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl border border-slate-100 overflow-hidden">
+        <button onclick="closeDetailModal()" class="absolute top-5 right-5 p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <div id="product-detail-content" class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 2: CART SLIDE-OVER DRAWER -->
+    <div id="cart-drawer" class="hidden fixed inset-0 z-50 overflow-hidden bg-slate-950/50 backdrop-blur-xs flex justify-end">
+      <div class="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col">
+        
+        <!-- Cart Drawer Header -->
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <i data-lucide="shopping-bag" class="w-5 h-5 text-rose-600"></i>
+            <h3 class="text-base font-extrabold text-slate-900">Giỏ Hàng Của Bạn</h3>
+          </div>
+          <button onclick="closeCartDrawer()" class="p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-700 cursor-pointer">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Cart Items List -->
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-3">
+          <!-- Rendered by JS -->
+        </div>
+
+        <!-- Cart Footer Section -->
+        <div id="cart-footer-section" class="p-5 border-t border-slate-100 bg-slate-50 space-y-4">
+          <!-- Coupon Input -->
+          <div class="flex gap-2">
+            <input
+              id="coupon-input"
+              type="text"
+              placeholder="Nhập mã (GIAM10 / FREESHIP)..."
+              class="flex-1 px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold uppercase placeholder:normal-case focus:outline-none focus:ring-2 focus:ring-rose-500/20"
+            />
+            <button onclick="applyCouponCode()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-rose-600 text-white text-xs font-bold transition-colors cursor-pointer">
+              Áp dụng
+            </button>
+          </div>
+
+          <!-- Price Calculation -->
+          <div class="space-y-1.5 text-xs">
+            <div class="flex justify-between text-slate-500 font-medium">
+              <span>Tạm tính:</span>
+              <span id="cart-subtotal" class="font-bold text-slate-800">0 ₫</span>
+            </div>
+            <div class="flex justify-between text-slate-500 font-medium">
+              <span>Giảm giá:</span>
+              <span id="cart-discount" class="font-bold text-emerald-600">0 ₫</span>
+            </div>
+            <div class="flex justify-between text-base font-extrabold text-slate-900 pt-2 border-t border-slate-200">
+              <span>Tổng thanh toán:</span>
+              <span id="cart-total" class="text-rose-600 font-black">0 ₫</span>
+            </div>
+          </div>
+
+          <button onclick="openPaymentModal()" class="w-full py-3.5 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-sm shadow-lg shadow-rose-600/25 transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Đặt Hàng
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- POP-UP ĐẶT HÀNG & CHỌN HÌNH THỨC THANH TOÁN (TIỀN MẶT / CHUYỂN KHOẢN) -->
+    <div id="payment-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+      <div class="relative bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-slate-100 animate-in fade-in zoom-in-95 duration-200">
+        <button onclick="closePaymentModal()" class="absolute top-5 right-5 p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-700 cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center">
+            <i data-lucide="credit-card" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-black text-slate-900">Xác Nhận Đặt Hàng</h3>
+            <p class="text-xs text-slate-500">Chọn hình thức thanh toán để hoàn tất đơn hàng</p>
+          </div>
+        </div>
+
+        <!-- Tóm tắt số tiền -->
+        <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-100 mb-4 space-y-1.5 text-xs">
+          <div class="flex justify-between text-slate-500">
+            <span>Sản phẩm trong giỏ:</span>
+            <span id="payment-items-summary" class="font-bold text-slate-800">0 sản phẩm</span>
+          </div>
+          <div class="flex justify-between text-slate-500 font-medium">
+            <span>Tổng tiền thanh toán:</span>
+            <span id="payment-total-amount" class="text-base font-black text-rose-600">0 ₫</span>
+          </div>
+        </div>
+
+        <!-- Chọn hình thức thanh toán: Tiền mặt hoặc Chuyển khoản -->
+        <div class="mb-4">
+          <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">
+            Hình thức thanh toán:
+          </label>
+          <div class="space-y-2.5">
+            <!-- Option 1: Tiền mặt -->
+            <label onclick="setPaymentMethod('cash')" id="label-method-cash" class="flex items-start gap-3 p-3.5 rounded-2xl border-2 border-rose-600 bg-rose-50/40 cursor-pointer transition-all">
+              <input type="radio" name="payment_choice" value="Tiền mặt" checked class="mt-0.5 text-rose-600 focus:ring-rose-500" />
+              <div class="flex-1">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-black text-slate-900">Tiền mặt</span>
+                  <span class="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-extrabold">COD</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-0.5">Thanh toán bằng tiền mặt trực tiếp khi nhận hàng tận nơi.</p>
+              </div>
+            </label>
+
+            <!-- Option 2: Chuyển khoản -->
+            <label onclick="setPaymentMethod('banking')" id="label-method-banking" class="flex items-start gap-3 p-3.5 rounded-2xl border-2 border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all">
+              <input type="radio" name="payment_choice" value="Chuyển khoản" class="mt-0.5 text-rose-600 focus:ring-rose-500" />
+              <div class="flex-1">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-black text-slate-900">Chuyển khoản</span>
+                  <span class="px-2 py-0.5 rounded-md bg-blue-100 text-blue-800 text-[10px] font-extrabold">VietQR / Banking</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-0.5">Chuyển khoản qua số tài khoản ngân hàng hoặc quét mã QR.</p>
+                
+                <!-- Hộp thông tin chuyển khoản ngân hàng -->
+                <div id="payment-banking-info" class="hidden mt-3 p-3 bg-slate-50 rounded-xl border border-blue-200 text-[11px] space-y-1">
+                  <div class="font-bold text-blue-900 flex items-center gap-1.5">
+                    <i data-lucide="building-2" class="w-3.5 h-3.5"></i> Thông tin tài khoản nhận:
+                  </div>
+                  <div class="text-slate-600 font-medium">Ngân hàng: <strong class="text-slate-900">MBBank (Quân Đội)</strong></div>
+                  <div class="text-slate-600 font-medium">Số tài khoản: <strong class="text-rose-600 font-mono text-xs">0988 888 888</strong></div>
+                  <div class="text-slate-600 font-medium">Chủ tài khoản: <strong class="text-slate-900">SNEAKERZONE VIETNAM</strong></div>
+                  <div class="text-slate-500 text-[10px] italic mt-1">* Vui lòng ghi nội dung chuyển khoản là Số điện thoại của bạn.</div>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Thông tin giao hàng -->
+        <div class="space-y-2.5 mb-5">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">Họ tên người nhận:</label>
+            <input id="order-customer-name" type="text" value="Người Dùng (User)" placeholder="Nguyễn Văn A" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold focus:ring-2 focus:ring-rose-500/20 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">Số điện thoại liên hệ:</label>
+            <input id="order-customer-phone" type="tel" value="0912 345 678" placeholder="0912 345 678" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold focus:ring-2 focus:ring-rose-500/20 focus:outline-none" />
+          </div>
+        </div>
+
+        <button onclick="handleCompleteOrder()" class="w-full py-3.5 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-sm shadow-lg shadow-rose-600/25 transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <i data-lucide="check" class="w-4 h-4"></i> Hoàn Tất Đặt Hàng
+        </button>
+      </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- PURE VANILLA JAVASCRIPT APP (Không React, không phụ thuộc trình biên dịch, chạy trực tiếp trên Live Server) -->
+    <script src="src/app.js"></script>
+  </body>
+</html>

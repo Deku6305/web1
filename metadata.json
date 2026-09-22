@@ -1,0 +1,6 @@
+{
+  "name": "Cửa Hàng Giày Thể Thao",
+  "description": "Website bán giày thể thao với giao diện mua sắm trực quan, hỗ trợ đăng nhập tài khoản (user: 123, admin: 333) khi đặt hàng và giữ nguyên trang sau khi hoàn tất.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

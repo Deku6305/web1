@@ -1,0 +1,142 @@
+import { User, Order } from '../types';
+import { AVATAR_IMAGES, SHOE_IMAGES } from '../imagie';
+
+export const PREDEFINED_ACCOUNTS = {
+  user: {
+    username: 'user',
+    password: '123',
+    userData: {
+      id: 'user-default-account',
+      name: 'Người Dùng (User)',
+      email: 'user@sneakerzone.vn',
+      username: 'user',
+      phone: '0912345678',
+      role: 'user' as const,
+      avatar: AVATAR_IMAGES.defaultUser,
+      status: 'active' as const,
+      createdAt: '2025-01-01',
+    },
+  },
+  admin: {
+    username: 'admin',
+    password: '123',
+    userData: {
+      id: 'admin-master-account',
+      name: 'Quản Trị Viên (Admin)',
+      email: 'admin@sneakerzone.vn',
+      username: 'admin',
+      phone: '0988888888',
+      role: 'admin' as const,
+      avatar: AVATAR_IMAGES.adminMaster,
+      status: 'active' as const,
+      createdAt: '2025-01-01',
+    },
+  },
+};
+
+export const INITIAL_USERS: User[] = [
+  PREDEFINED_ACCOUNTS.admin.userData,
+  PREDEFINED_ACCOUNTS.user.userData,
+  {
+    id: 'user-3',
+    name: 'Hoàng Anh Tú',
+    email: 'hoanganh@gmail.com',
+    username: 'hoanganh',
+    phone: '0901234567',
+    role: 'user',
+    avatar: AVATAR_IMAGES.userTu,
+    status: 'active',
+    createdAt: '2025-01-15',
+  },
+  {
+    id: 'user-4',
+    name: 'Lê Minh Tuấn',
+    email: 'minhtuan@gmail.com',
+    username: 'minhtuan',
+    phone: '0933221100',
+    role: 'user',
+    avatar: AVATAR_IMAGES.userTuan,
+    status: 'active',
+    createdAt: '2025-02-01',
+  },
+  {
+    id: 'user-5',
+    name: 'Trần Khánh Linh',
+    email: 'khanhlinh@gmail.com',
+    username: 'khanhlinh',
+    phone: '0977665544',
+    role: 'user',
+    avatar: AVATAR_IMAGES.userTrang,
+    status: 'blocked',
+    createdAt: '2025-02-10',
+  },
+];
+
+export const INITIAL_ORDERS: Order[] = [
+  {
+    id: 'SZ-89210',
+    customerName: 'Người Dùng (User)',
+    customerPhone: '0912345678',
+    customerAddress: '123 Nguyễn Trãi, Phường 3, Quận 5, TP. Hồ Chí Minh',
+    paymentMethod: 'banking',
+    totalAmount: 4850000,
+    status: 'shipping',
+    createdAt: '2025-02-20 14:30',
+    note: 'Giao hàng vào giờ hành chính, gọi trước khi đến',
+    items: [
+      {
+        shoeId: 'shoe-1',
+        shoeName: 'Nike Air Jordan 1 Retro High OG "Chicago"',
+        shoeImage: SHOE_IMAGES.jordan1Chicago,
+        size: 42,
+        color: '#dc2626',
+        price: 4850000,
+        quantity: 1,
+      },
+    ],
+  },
+  {
+    id: 'SZ-76431',
+    customerName: 'Trần Thị Mai',
+    customerPhone: '0908877665',
+    customerAddress: '45 Lê Duẩn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh',
+    paymentMethod: 'cod',
+    totalAmount: 2950000,
+    status: 'completed',
+    createdAt: '2025-02-18 09:15',
+    note: 'Đóng gói bọc hộp cẩn thận giúp mình nhé',
+    items: [
+      {
+        shoeId: 'shoe-2',
+        shoeName: 'Nike Dunk Low Retro "Panda Black White"',
+        shoeImage: SHOE_IMAGES.dunkLowPanda,
+        size: 40,
+        color: '#000000',
+        price: 2950000,
+        quantity: 1,
+      },
+    ],
+  },
+  {
+    id: 'SZ-54129',
+    customerName: 'Lê Minh Tuấn',
+    customerPhone: '0933221100',
+    customerAddress: '78 Bạch Đằng, Phường Hải Châu 1, Quận Hải Châu, Đà Nẵng',
+    paymentMethod: 'cod',
+    totalAmount: 2790000,
+    status: 'pending',
+    createdAt: '2025-02-21 10:45',
+    note: 'Giao sau 5 giờ chiều',
+    items: [
+      {
+        shoeId: 'shoe-4',
+        shoeName: 'Adidas Samba OG Cloud White Core Black',
+        shoeImage: SHOE_IMAGES.sambaOG,
+        size: 41,
+        color: '#ffffff',
+        price: 2790000,
+        quantity: 1,
+      },
+    ],
+  },
+];
