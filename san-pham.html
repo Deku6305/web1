@@ -29,6 +29,25 @@
     .tab-content-chi-tiet.active { display: block; }
     .sp-lien-quan { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 10px; }
     .sp-lq-card { flex: 0 0 200px; }
+    #sp-lien-quan .card-img { position: relative; overflow: hidden; border-radius: 8px; }
+    #sp-lien-quan .cart-concern {
+      position: absolute; z-index: 2; left: 50%; right: auto; bottom: 12px;
+      width: max-content; opacity: 0; transform: translate(-50%, 12px);
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    #sp-lien-quan .cart-button .btn {
+      display: inline-flex; align-items: center; justify-content: center; padding: 0;
+    }
+    #sp-lien-quan .product-card:hover .cart-concern {
+      opacity: 1; transform: translate(-50%, 0);
+    }
+    #sp-lien-quan .product-card:hover,
+    #sp-lien-quan .cart-button .btn:hover {
+      transform: none;
+    }
+    @media (hover: none) {
+      #sp-lien-quan .cart-concern { opacity: 1; transform: translate(-50%, 0); }
+    }
     .sp-lq-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; }
     .badge-sale-sp { position: absolute; top: 12px; left: 12px; background: #e74c3c; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; }
     .badge-moi-sp { position: absolute; top: 12px; right: 12px; background: #27ae60; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; }
@@ -341,16 +360,17 @@
 
     // Ảnh chính
     const anhChinh = document.getElementById('anh-chinh');
-    anhChinh.src = sp.anhGallery[0] || sp.anh;
+    const anhMacDinh = sp.anh || sp.anhChiTiet || sp.anhGallery?.[0];
+    anhTheoMau = [anhMacDinh, ...(sp.anhGallery || []).slice(1, sp.mauSac.length)].filter(Boolean);
+    anhChinh.src = anhTheoMau[0] || anhMacDinh;
     anhChinh.alt = sp.ten;
 
-    // Thumbnails
+    // Ảnh phụ được ghép theo thứ tự các màu đã khai báo.
     const anhThu = document.getElementById('anh-thu');
-    if (sp.anhGallery && sp.anhGallery.length > 1) {
-      anhThu.innerHTML = sp.anhGallery.map((anh, i) =>
-        `<img src="${anh}" alt="${sp.ten} ${i+1}" class="${i===0?'active':''}" onclick="doiAnh(this, '${anh}')">`
-      ).join('');
-    }
+    anhThu.innerHTML = anhTheoMau.map((anh, i) =>
+      `<img src="${anh}" alt="${sp.ten} - ${sp.mauSac[i] || 'Ảnh ' + (i + 1)}" class="${i === 0 ? 'active' : ''}" onclick="doiAnh(this, '${anh}', ${i})">`
+    ).join('');
+    anhThu.classList.toggle('d-none', anhTheoMau.length <= 1);
 
     const giamGia = sp.giaCu ? Math.round((1 - sp.gia / sp.giaCu) * 100) : 0;
 
@@ -424,17 +444,31 @@
 
   let sizeChon = null;
   let mauChon = null;
+  let anhTheoMau = [];
 
-  function doiAnh(el, src) {
+  function doiAnh(el, src, colorIndex) {
     document.getElementById('anh-chinh').src = src;
     document.querySelectorAll('#anh-thu img').forEach(img => img.classList.remove('active'));
     el.classList.add('active');
+    const mauBtn = document.querySelectorAll('#chon-mau .mau-btn')[colorIndex];
+    if (mauBtn) {
+      document.querySelectorAll('#chon-mau .mau-btn').forEach(btn => btn.classList.remove('selected'));
+      mauBtn.classList.add('selected');
+      mauChon = mauBtn.textContent;
+    }
   }
 
   function chonMau(el, mau) {
     document.querySelectorAll('.mau-btn').forEach(b => b.classList.remove('selected'));
     el.classList.add('selected');
     mauChon = mau;
+    const colorIndex = Array.from(document.querySelectorAll('#chon-mau .mau-btn')).indexOf(el);
+    const image = anhTheoMau[colorIndex] || anhTheoMau[0];
+    if (image) {
+      document.getElementById('anh-chinh').src = image;
+      const activeIndex = anhTheoMau[colorIndex] ? colorIndex : 0;
+      document.querySelectorAll('#anh-thu img').forEach((img, index) => img.classList.toggle('active', index === activeIndex));
+    }
   }
 
   function chonSize(el, size) {
