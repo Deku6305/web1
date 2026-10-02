@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <title>Cửa Hàng - ShoesLish</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ShoesLish - Khám phá toàn bộ bộ sưu tập giày thời trang chính hãng">
+  <link rel="stylesheet" href="css/vendor.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,900;1,900&family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+
+    /* ── Preloader ─────────────────────────────────── */
+    .preloader { position:fixed; top:0; left:0; width:100%; height:100%;
+      background:#fff; display:flex; align-items:center;
+      justify-content:center; z-index:9999; }
+
+    /* ── Search Box ────────────────────────────────── */
+    .search-box { position:fixed; top:0; left:0; width:100%; z-index:1050;
+      padding:30px 0; display:none; }
+    .search-box.active { display:block; }
+    .search-wrap { max-width:700px; margin:0 auto; padding:0 20px; position:relative; }
+    .search-wrap .close-button { position:absolute; right:30px; top:0; cursor:pointer; }
+    .search-input { width:100%; background:transparent; border:0;
+      border-bottom:2px solid #fff; color:#fff; font-size:2rem; outline:none; padding:10px 0; }
+
+    /* ── Cart Badge ────────────────────────────────── */
+    .cart-badge { position:absolute; top:-8px; right:-10px; background:#dc3545;
+      color:#fff; border-radius:50%; width:18px; height:18px; font-size:10px;
+      display:flex; align-items:center; justify-content:center; }
+
+    /* ── Breadcrumb ────────────────────────────────── */
+    .page-breadcrumb { background:#f9f9f9; border-bottom:1px solid #eee; }
+    .page-breadcrumb .breadcrumb-item a { color:#555; text-decoration:none; }
+    .page-breadcrumb .breadcrumb-item.active { color:#111; font-weight:600; }
+
+    /* ── Sidebar ───────────────────────────────────── */
+    .filter-sidebar { background:#fff; border:1px solid #eee; border-radius:12px; padding:24px; position:sticky; top:90px; }
+    .filter-sidebar .filter-title { font-size:1rem; font-weight:700; color:#111;
+      border-bottom:2px solid #111; padding-bottom:8px; margin-bottom:16px; }
+    .filter-sidebar .filter-group-title { font-size:.85rem; font-weight:700;
+      text-transform:uppercase; letter-spacing:.5px; color:#555; margin-bottom:10px; }
+    .filter-sidebar .form-check-label { font-size:.9rem; cursor:pointer; }
+    .filter-sidebar .form-check-input:checked { background-color:#111; border-color:#111; }
+    .filter-sidebar input[type="number"] { font-size:.85rem; }
+
+    /* ── Product Card ──────────────────────────────── */
+    .product-card { border-radius:10px; overflow:hidden; }
+    .product-card .card-img { position:relative; overflow:hidden; border-radius:10px; background:#f8f8f8; }
+    .product-card .product-image { width:100%; aspect-ratio:3/4; object-fit:cover;
+      transition:transform .4s ease; display:block; }
+    .product-card:hover .product-image { transform:scale(1.04); }
+    .product-card .cart-concern { bottom:0; left:0; right:0; padding:10px;
+      background:rgba(255,255,255,.92); transform:translateY(100%);
+      transition:transform .3s ease; border-radius:0 0 10px 10px; }
+    .product-card:hover .cart-concern { transform:translateY(0); }
+    .product-card .card-detail a { color:#111; text-decoration:none; font-size:.9rem; }
+    .product-card .card-detail a:hover { text-decoration:underline; }
+    .badge-moi { position:absolute; top:10px; left:10px; background:#28a745; color:#fff;
+      font-size:.65rem; padding:3px 8px; border-radius:20px; font-weight:600; z-index:2; }
+    .badge-sale { position:absolute; top:10px; left:10px; background:#dc3545; color:#fff;
+      font-size:.65rem; padding:3px 8px; border-radius:20px; font-weight:600; z-index:2; }
+    .badge-sale.offset { top:34px; }
+    .gia-cu { text-decoration:line-through; color:#aaa; font-size:.78rem; }
+    .gia-moi { color:#dc3545; font-weight:700; }
+
+    /* ── Toolbar ───────────────────────────────────── */
+    .shop-toolbar { background:#f9f9f9; border:1px solid #eee; border-radius:8px;
+      padding:12px 16px; margin-bottom:20px; }
+    .shop-toolbar select { font-size:.85rem; border-radius:6px; }
+
+    /* ── Pagination ────────────────────────────────── */
+    .pagination .page-link { color:#111; border-color:#ddd; }
+    .pagination .page-item.active .page-link { background:#111; border-color:#111; color:#fff; }
+    .pagination .page-link:hover { background:#f0f0f0; }
+
+    /* ── Empty State ───────────────────────────────── */
+    .empty-state { text-align:center; padding:60px 20px; }
+    .empty-state .empty-icon { font-size:4rem; margin-bottom:16px; opacity:.4; }
+
+    /* ── Footer ────────────────────────────────────── */
+    #footer a { color:#555; text-decoration:none; }
+    #footer a:hover { color:#111; }
+    #footer .widget-title { font-size:1rem; font-weight:700; }
+
+    /* ── Input search ──────────────────────────────── */
+    #input-tim-kiem { border-radius:8px; border:1px solid #ddd; padding:8px 14px;
+      font-size:.9rem; width:100%; outline:none; transition:border-color .2s; }
+    #input-tim-kiem:focus { border-color:#111; }
+
+    /* ── Responsive sidebar toggle ─────────────────── */
+    @media (max-width: 991px) {
+      .filter-sidebar { position:static; }
+      #sidebar-collapse { display:block; }
+    }
+    @media (min-width: 992px) {
+      #sidebar-collapse { display:block !important; }
+      #sidebar-toggle-btn { display:none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ════ SVG SYMBOLS ════ -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+    <symbol id="shopping-carriage" viewBox="0 0 24 24" fill="none">
+      <path d="M5 22H19C20.103 22 21 21.103 21 20V9C21 8.73478 20.8946 8.48043 20.7071 8.29289C20.5196 8.10536 20.2652 8 20 8H17V7C17 4.243 14.757 2 12 2C9.243 2 7 4.243 7 7V8H4C3.73478 8 3.48043 8.10536 3.29289 8.29289C3.10536 8.48043 3 8.73478 3 9V20C3 21.103 3.897 22 5 22ZM9 7C9 5.346 10.346 4 12 4C13.654 4 15 5.346 15 7V8H9V7ZM5 10H7V12H9V10H15V12H17V10H19L19.002 20H5V10Z" fill="black"/>
+    </symbol>
+    <symbol id="quick-view" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396l1.414-1.414l-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8s3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6s-6-2.691-6-6s2.691-6 6-6z"/>
+    </symbol>
+    <symbol id="shopping-cart" viewBox="0 0 24 24" fill="none">
+      <path d="M21 4H2V6H4.3L7.582 15.025C7.79362 15.6029 8.1773 16.1021 8.68134 16.4552C9.18539 16.8083 9.78556 16.9985 10.401 17H19V15H10.401C9.982 15 9.604 14.735 9.461 14.342L8.973 13H18.246C19.136 13 19.926 12.402 20.169 11.549L21.962 5.275C22.0039 5.12615 22.0109 4.96962 21.9823 4.81763C21.9537 4.66565 21.8904 4.52234 21.7973 4.39889C21.7041 4.27544 21.5837 4.1752 21.4454 4.106C21.3071 4.0368 21.1546 4.00053 21 4ZM18.246 11H8.246L6.428 6H19.675L18.246 11Z" fill="black"/>
+      <path d="M10.5 21C11.3284 21 12 20.3284 12 19.5C12 18.6716 11.3284 18 10.5 18C9.67157 18 9 18.6716 9 19.5C9 20.3284 9.67157 21 10.5 21Z" fill="black"/>
+      <path d="M16.5 21C17.3284 21 18 20.3284 18 19.5C18 18.6716 17.3284 18 16.5 18C15.6716 18 15 18.6716 15 19.5C15 20.3284 15.6716 21 16.5 21Z" fill="black"/>
+    </symbol>
+    <symbol id="navbar-icon" viewBox="0 0 16 16">
+      <path d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z"/>
+    </symbol>
+    <symbol id="close" viewBox="0 0 16 16">
+      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+    </symbol>
+    <symbol id="plus" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z"/>
+    </symbol>
+    <symbol id="minus" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M19 12.998H5v-2h14z"/>
+    </symbol>
+    <symbol id="dropdown" viewBox="0 0 24 24">
+      <path fill="currentColor" d="m7 10l5 5l5-5H7Z"/>
+    </symbol>
+    <symbol id="user" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 2a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"/>
+    </symbol>
+    <symbol id="arrow-right" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M13.3 17.275q-.3-.3-.288-.725t.313-.725L16.15 13H5q-.425 0-.713-.288T4 12q0-.425.288-.713T5 11h11.15L13.3 8.15q-.3-.3-.3-.713t.3-.712q.3-.3.713-.3t.712.3L19.3 11.3q.15.15.213.325t.062.375q0 .2-.063.375t-.212.325l-4.6 4.6q-.275.275-.687.275t-.713-.3Z"/>
+    </symbol>
+    <symbol id="facebook" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.01h-2l-.396 3.98h2.396v8.01Z"/>
+    </symbol>
+    <symbol id="twitter" viewBox="0 0 512 512">
+      <path fill="currentColor" d="M496 109.5a201.8 201.8 0 0 1-56.55 15.3a97.51 97.51 0 0 0 43.33-53.6a197.74 197.74 0 0 1-62.56 23.5A99.14 99.14 0 0 0 348.31 64c-54.42 0-98.46 43.4-98.46 96.9a93.21 93.21 0 0 0 2.54 22.1a280.7 280.7 0 0 1-203-101.3A95.69 95.69 0 0 0 36 130.4c0 33.6 17.53 63.3 44 80.7A97.5 97.5 0 0 1 35.22 199v1.2c0 47 34 86.1 79 95a100.76 100.76 0 0 1-25.94 3.4a94.38 94.38 0 0 1-18.51-1.8c12.51 38.5 48.92 66.5 92.05 67.3A199.59 199.59 0 0 1 39.5 405.6a203 203 0 0 1-23.5-1.4A278.68 278.68 0 0 0 166.74 448c181.36 0 280.44-147.7 280.44-275.8c0-4.2-.11-8.4-.31-12.5A198.48 198.48 0 0 0 496 109.5Z"/>
+    </symbol>
+    <symbol id="youtube" viewBox="0 0 32 32">
+      <path fill="currentColor" d="M29.41 9.26a3.5 3.5 0 0 0-2.47-2.47C24.76 6.2 16 6.2 16 6.2s-8.76 0-10.94.59a3.5 3.5 0 0 0-2.47 2.47A36.13 36.13 0 0 0 2 16a36.13 36.13 0 0 0 .59 6.74a3.5 3.5 0 0 0 2.47 2.47c2.18.59 10.94.59 10.94.59s8.76 0 10.94-.59a3.5 3.5 0 0 0 2.47-2.47A36.13 36.13 0 0 0 30 16a36.13 36.13 0 0 0-.59-6.74ZM13.2 20.2v-8.4l7.27 4.2Z"/>
+    </symbol>
+    <symbol id="instagram" viewBox="0 0 256 256">
+      <path fill="currentColor" d="M128 80a48 48 0 1 0 48 48a48.05 48.05 0 0 0-48-48Zm0 80a32 32 0 1 1 32-32a32 32 0 0 1-32 32Zm48-136H80a56.06 56.06 0 0 0-56 56v96a56.06 56.06 0 0 0 56 56h96a56.06 56.06 0 0 0 56-56V80a56.06 56.06 0 0 0-56-56Zm40 152a40 40 0 0 1-40 40H80a40 40 0 0 1-40-40V80a40 40 0 0 1 40-40h96a40 40 0 0 1 40 40ZM192 76a12 12 0 1 1-12-12a12 12 0 0 1 12 12Z"/>
+    </symbol>
+    <symbol id="pinterest" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M9.04 21.54c.96.29 1.93.46 2.96.46a10 10 0 0 0 10-10A10 10 0 0 0 12 2A10 10 0 0 0 2 12c0 4.25 2.67 7.9 6.44 9.34c-.09-.78-.18-2.07 0-2.96l1.15-4.94s-.29-.58-.29-1.5c0-1.38.86-2.41 1.84-2.41c.86 0 1.26.63 1.26 1.44c0 .86-.57 2.09-.86 3.27c-.17.98.52 1.84 1.52 1.84c1.78 0 3.16-1.9 3.16-4.58c0-2.4-1.72-4.04-4.19-4.04c-2.82 0-4.48 2.1-4.48 4.31c0 .86.28 1.73.74 2.3c.09.06.09.14.06.29l-.29 1.09c0 .17-.11.23-.28.11c-1.28-.56-2.02-2.38-2.02-3.85c0-3.16 2.24-6.03 6.56-6.03c3.44 0 6.12 2.47 6.12 5.75c0 3.44-2.13 6.2-5.18 6.2c-.97 0-1.92-.52-2.26-1.13l-.67 2.37c-.23.86-.86 2.01-1.29 2.7v-.03Z"/>
+    </symbol>
+    <symbol id="search" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396l1.414-1.414l-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8s3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6s-6-2.691-6-6s2.691-6 6-6z"/>
+    </symbol>
+  </svg>
+
+  <!-- ════ PRELOADER ════ -->
+  <div class="preloader">
+    <svg version="1.1" id="L4" width="100" height="100" xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 100" enable-background="new 0 0 0 0" xml:space="preserve">
+      <circle fill="#111" stroke="none" cx="6" cy="50" r="6">
+        <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.1"/>
+      </circle>
+      <circle fill="#111" stroke="none" cx="26" cy="50" r="6">
+        <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.2"/>
+      </circle>
+      <circle fill="#111" stroke="none" cx="46" cy="50" r="6">
+        <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.3"/>
+      </circle>
+    </svg>
+  </div>
+
+  <!-- ════ SEARCH BOX ════ -->
+  <div class="search-box bg-dark position-relative">
+    <div class="search-wrap">
+      <div class="close-button">
+        <svg class="close" style="fill:white;" width="24" height="24"><use xlink:href="#close"></use></svg>
+      </div>
+      <form id="search-form" class="text-lg-center pt-3" action="cua-hang.html" method="get">
+        <input type="text" name="q" class="search-input" placeholder="Tìm kiếm giày...">
+        <svg class="search" style="fill:#fff;width:28px;height:28px;position:absolute;right:60px;top:10px;"><use xlink:href="#search"></use></svg>
+      </form>
+    </div>
+  </div>
+
+  <!-- ════ MODAL GIỎ HÀNG MINI ════ -->
+  <div class="modal fade" id="modallong" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold">Giỏ Hàng Của Bạn</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="max-height:60vh;overflow-y:auto;">
+          <div id="mini-cart-items"></div>
+        </div>
+        <div class="modal-footer flex-column">
+          <div class="d-flex justify-content-between w-100 mb-2">
+            <span class="fw-bold">Tạm tính:</span>
+            <span class="fw-bold" id="mini-cart-tong">0đ</span>
+          </div>
+          <div class="d-flex gap-2 w-100">
+            <a href="gio-hang.html" class="btn btn-outline-dark flex-fill" data-bs-dismiss="modal">Xem Giỏ Hàng</a>
+            <a href="thanh-toan.html" class="btn btn-dark flex-fill">Thanh Toán</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ MODAL ĐĂNG NHẬP / ĐĂNG KÝ ════ -->
+  <div class="modal fade" id="modallogin" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+      <div class="modal-content p-3">
+        <div class="modal-header border-0 pb-0">
+          <ul class="nav nav-tabs border-0" id="tabDangNhapKy">
+            <li class="nav-item">
+              <button class="nav-link active fw-bold px-4" data-bs-toggle="tab" data-bs-target="#tab-dang-nhap">Đăng Nhập</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link fw-bold px-4" data-bs-toggle="tab" data-bs-target="#tab-dang-ky">Đăng Ký</button>
+            </li>
+          </ul>
+          <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="tab-dang-nhap">
+              <form id="form-dang-nhap">
+                <div class="mb-3">
+                  <label class="form-label">Email *</label>
+                  <input type="email" name="email" class="form-control" placeholder="email@example.com" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Mật khẩu *</label>
+                  <input type="password" name="matkhau" class="form-control" placeholder="Mật khẩu" required>
+                </div>
+                <p class="text-danger small mb-2" id="loi-dang-nhap"></p>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="remember-me">
+                    <label class="form-check-label" for="remember-me">Ghi nhớ đăng nhập</label>
+                  </div>
+                  <a href="#" class="text-muted small">Quên mật khẩu?</a>
+                </div>
+                <button type="submit" class="btn btn-dark w-100">Đăng Nhập</button>
+              </form>
+            </div>
+            <div class="tab-pane fade" id="tab-dang-ky">
+              <form id="form-dang-ky">
+                <div class="mb-3">
+                  <label class="form-label">Họ và tên *</label>
+                  <input type="text" name="ten" class="form-control" placeholder="Nguyễn Văn A" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Email *</label>
+                  <input type="email" name="email" class="form-control" placeholder="email@example.com" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Mật khẩu * (ít nhất 6 ký tự)</label>
+                  <input type="password" name="matkhau" class="form-control" placeholder="Mật khẩu" required minlength="6">
+                </div>
+                <p class="text-danger small mb-2" id="loi-dang-ky"></p>
+                <button type="submit" class="btn btn-dark w-100">Đăng Ký</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ HEADER ════ -->
+  <header id="header" class="site-header text-black">
+    <div class="header-top border-bottom py-2">
+      <div class="container-lg">
+        <div class="row justify-content-evenly align-items-center">
+          <div class="col">
+            <ul class="social-links list-unstyled d-flex m-0">
+              <li class="pe-2"><a href="#"><svg class="facebook" width="20" height="20"><use xlink:href="#facebook"></use></svg></a></li>
+              <li class="pe-2"><a href="#"><svg class="instagram" width="20" height="20"><use xlink:href="#instagram"></use></svg></a></li>
+              <li class="pe-2"><a href="#"><svg class="youtube" width="20" height="20"><use xlink:href="#youtube"></use></svg></a></li>
+            </ul>
+          </div>
+          <div class="col d-none d-md-block">
+            <p class="text-center text-black m-0"><strong>Ưu Đãi Đặc Biệt</strong>: Miễn phí vận chuyển cho đơn hàng từ 500.000đ</p>
+          </div>
+          <div class="col">
+            <ul class="d-flex justify-content-end gap-3 list-unstyled m-0">
+              <li><a href="lien-he.html">Liên Hệ</a></li>
+              <li><a href="gio-hang.html">Giỏ Hàng</a></li>
+              <li><a href="#" class="btn-show-login" data-bs-toggle="modal" data-bs-target="#modallogin">Đăng Nhập</a></li>
+              <li class="menu-tai-khoan" style="display:none"><a href="tai-khoan.html">Tài Khoản</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav id="header-nav" class="navbar navbar-expand-lg">
+      <div class="container-lg">
+        <a class="navbar-brand" href="index.html">
+          <img src="images/main-logo.png" class="logo" alt="ShoesLish">
+          <span class="brand-name ms-2 fw-bold fs-4">ShoesLish</span>
+        </a>
+        <button class="navbar-toggler d-flex d-lg-none order-3 border-0 p-1 ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar">
+          <svg class="navbar-icon"><use xlink:href="#navbar-icon"></use></svg>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar">
+          <div class="offcanvas-header px-4 pb-0">
+            <a class="navbar-brand ps-3" href="index.html"><span class="fw-bold">ShoesLish</span></a>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul id="navbar" class="navbar-nav fw-bold justify-content-end align-items-center flex-grow-1">
+              <li class="nav-item"><a class="nav-link me-4" href="index.html">Trang Chủ</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link me-4 dropdown-toggle" href="#" data-bs-toggle="dropdown">Danh Mục</a>
+                <ul class="dropdown-menu fw-bold">
+                  <li><a href="cua-hang.html?danh-muc=nam" class="dropdown-item">Giày Nam</a></li>
+                  <li><a href="cua-hang.html?danh-muc=nu" class="dropdown-item">Giày Nữ</a></li>
+                  <li><a href="cua-hang.html?danh-muc=the-thao" class="dropdown-item">Thể Thao</a></li>
+                  <li><a href="cua-hang.html?danh-muc=lifestyle" class="dropdown-item">Lifestyle / Casual</a></li>
+                </ul>
+              </li>
+              <li class="nav-item"><a class="nav-link me-4 active" href="cua-hang.html">Cửa Hàng</a></li>
+              <li class="nav-item"><a class="nav-link me-4" href="cua-hang.html?chi-sale=1">Khuyến Mãi</a></li>
+              <li class="nav-item"><a class="nav-link me-4" href="lien-he.html">Liên Hệ</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="user-items ps-0 ps-md-4">
+          <ul class="d-flex justify-content-end list-unstyled align-items-center m-0 gap-3">
+            <li>
+              <a href="#" class="btn-show-login border-0" data-bs-toggle="modal" data-bs-target="#modallogin">
+                <svg class="user" width="24" height="24"><use xlink:href="#user"></use></svg>
+                <span class="ten-nguoi-dung d-none d-lg-inline ms-1 fs-7">Tài khoản</span>
+              </a>
+            </li>
+            <li>
+              <a href="gio-hang.html" class="border-0 position-relative">
+                <svg class="shopping-cart" width="24" height="24"><use xlink:href="#shopping-cart"></use></svg>
+                <span class="cart-badge" style="display:none;">0</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="search-item border-0">
+                <svg class="search" width="24" height="24"><use xlink:href="#search"></use></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ════ BREADCRUMB ════ -->
+  <div class="page-breadcrumb py-3">
+    <div class="container-lg">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="index.html">Trang Chủ</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Cửa Hàng</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ════ PAGE HERO ════ -->
+  <div class="bg-light py-4 mb-4" style="border-bottom:1px solid #eee;">
+    <div class="container-lg">
+      <h1 class="fw-bold fs-3 mb-1">Cửa Hàng</h1>
+      <p class="text-muted mb-0">Khám phá toàn bộ bộ sưu tập giày thời trang chính hãng của ShoesLish</p>
+    </div>
+  </div>
+
+  <!-- ════ MAIN CONTENT ════ -->
+  <main class="py-4 mb-4">
+    <div class="container-lg">
+      <div class="row g-4">
+
+        <!-- ── SIDEBAR LỌC (col-lg-3) ── -->
+        <div class="col-lg-3">
+
+          <!-- Toggle button on mobile -->
+          <button id="sidebar-toggle-btn" class="btn btn-outline-dark w-100 mb-3 d-lg-none"
+            type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-collapse" aria-expanded="false">
+            <svg width="16" height="16"><use xlink:href="#dropdown"></use></svg>
+            Bộ Lọc Sản Phẩm
+          </button>
+
+          <div class="collapse d-lg-block" id="sidebar-collapse">
+            <div class="filter-sidebar">
+              <h5 class="filter-title">Bộ Lọc Sản Phẩm</h5>
+
+              <!-- Danh mục -->
+              <div class="mb-4">
+                <p class="filter-group-title">Danh Mục</p>
+                <div class="d-flex flex-column gap-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="danh-muc" id="dm-tat-ca" value="tat-ca" checked>
+                    <label class="form-check-label" for="dm-tat-ca">Tất Cả</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="danh-muc" id="dm-nam" value="nam">
+                    <label class="form-check-label" for="dm-nam">Giày Nam</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="danh-muc" id="dm-nu" value="nu">
+                    <label class="form-check-label" for="dm-nu">Giày Nữ</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="danh-muc" id="dm-the-thao" value="the-thao">
+                    <label class="form-check-label" for="dm-the-thao">Thể Thao</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="danh-muc" id="dm-lifestyle" value="lifestyle">
+                    <label class="form-check-label" for="dm-lifestyle">Lifestyle / Casual</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Khoảng giá -->
+              <div class="mb-4">
+                <p class="filter-group-title">Khoảng Giá (nghìn đồng)</p>
+                <div class="row g-2 mb-2">
+                  <div class="col-6">
+                    <label class="form-label small text-muted mb-1">Từ</label>
+                    <input type="number" id="gia-tu" class="form-control form-control-sm" placeholder="0" min="0">
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label small text-muted mb-1">Đến</label>
+                    <input type="number" id="gia-den" class="form-control form-control-sm" placeholder="0" min="0">
+                  </div>
+                </div>
+                <button id="btn-ap-dung-gia" class="btn btn-dark btn-sm w-100">Áp Dụng</button>
+              </div>
+
+              <!-- Lọc nhanh -->
+              <div class="mb-4">
+                <p class="filter-group-title">Lọc Nhanh</p>
+                <div class="d-flex flex-column gap-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="filter-moi">
+                    <label class="form-check-label" for="filter-moi">
+                      <span class="badge bg-success me-1" style="font-size:.65rem;">MỚI</span>
+                      Hàng Mới
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="filter-sale">
+                    <label class="form-check-label" for="filter-sale">
+                      <span class="badge bg-danger me-1" style="font-size:.65rem;">SALE</span>
+                      Đang Giảm Giá
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Nút xóa lọc -->
+              <button id="btn-xoa-loc" class="btn btn-outline-dark w-100 btn-sm">
+                <svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg> Xóa Bộ Lọc
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- /sidebar -->
+
+        <!-- ── VÙNG SẢN PHẨM (col-lg-9) ── -->
+        <div class="col-lg-9">
+
+          <!-- Thanh công cụ -->
+          <div class="shop-toolbar d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div class="d-flex align-items-center gap-3 flex-wrap">
+              <span id="so-ket-qua" class="text-muted small fw-semibold">Đang tải...</span>
+            </div>
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <!-- Tìm kiếm nhanh -->
+              <input type="text" id="input-tim-kiem" placeholder="Tìm kiếm..." style="max-width:200px;">
+              <!-- Sắp xếp -->
+              <select id="select-sap-xep" class="form-select form-select-sm" style="width:auto;">
+                <option value="mac-dinh">Mặc Định</option>
+                <option value="moi-nhat">Mới Nhất</option>
+                <option value="gia-tang">Giá Tăng Dần</option>
+                <option value="gia-giam">Giá Giảm Dần</option>
+                <option value="pho-bien">Phổ Biến</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Grid sản phẩm -->
+          <div id="danh-sach-san-pham" class="row row-cols-2 row-cols-sm-2 row-cols-md-3 g-3">
+            <!-- Render bởi JS -->
+            <div class="col-12 text-center py-5">
+              <div class="spinner-border" role="status"><span class="visually-hidden">Đang tải...</span></div>
+            </div>
+          </div>
+
+          <!-- Phân trang -->
+          <div id="phan-trang" class="mt-4"></div>
+        </div>
+        <!-- /product area -->
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ════ FOOTER ════ -->
+  <footer id="footer" class="py-5 border-top mt-5">
+    <div class="container-lg">
+      <div class="row">
+        <div class="col-lg-3 col-md-6 pb-4">
+          <h5 class="widget-title pb-2 fw-bold">ShoesLish</h5>
+          <p class="text-muted">Thương hiệu giày uy tín hàng đầu Việt Nam với hơn 10 năm kinh nghiệm. Mang đến những đôi giày chất lượng, thời trang và thoải mái nhất.</p>
+          <ul class="social-links list-unstyled d-flex gap-3">
+            <li><a href="#"><svg class="facebook" width="20" height="20"><use xlink:href="#facebook"></use></svg></a></li>
+            <li><a href="#"><svg class="instagram" width="20" height="20"><use xlink:href="#instagram"></use></svg></a></li>
+            <li><a href="#"><svg class="youtube" width="20" height="20"><use xlink:href="#youtube"></use></svg></a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 pb-4">
+          <h5 class="widget-title pb-2">Danh Mục</h5>
+          <ul class="menu-list list-unstyled">
+            <li class="pb-2"><a href="cua-hang.html?danh-muc=nam">Giày Nam</a></li>
+            <li class="pb-2"><a href="cua-hang.html?danh-muc=nu">Giày Nữ</a></li>
+            <li class="pb-2"><a href="cua-hang.html?danh-muc=the-thao">Thể Thao</a></li>
+            <li class="pb-2"><a href="cua-hang.html?danh-muc=lifestyle">Lifestyle</a></li>
+            <li class="pb-2"><a href="cua-hang.html?chi-sale=1">Khuyến Mãi</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 pb-4">
+          <h5 class="widget-title pb-2">Hỗ Trợ</h5>
+          <ul class="menu-list list-unstyled">
+            <li class="pb-2"><a href="#">Theo Dõi Đơn Hàng</a></li>
+            <li class="pb-2"><a href="#">Chính Sách Đổi Trả</a></li>
+            <li class="pb-2"><a href="#">Chính Sách Vận Chuyển</a></li>
+            <li class="pb-2"><a href="#">Câu Hỏi Thường Gặp</a></li>
+            <li class="pb-2"><a href="lien-he.html">Liên Hệ</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 pb-4">
+          <h5 class="widget-title pb-2">Tài Khoản</h5>
+          <ul class="menu-list list-unstyled">
+            <li class="pb-2"><a href="#" class="btn-show-login" data-bs-toggle="modal" data-bs-target="#modallogin">Đăng Nhập</a></li>
+            <li class="pb-2"><a href="tai-khoan.html">Tài Khoản Của Tôi</a></li>
+            <li class="pb-2"><a href="gio-hang.html">Giỏ Hàng</a></li>
+            <li class="pb-2"><a href="tai-khoan.html#don-hang">Đơn Hàng Của Tôi</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6 pb-4">
+          <h5 class="widget-title pb-3">Liên Hệ</h5>
+          <div class="footer-contact-text">
+            <p class="mb-1"><strong>Địa chỉ:</strong> 123 Nguyễn Huệ, Q.1, TP.HCM</p>
+            <p class="mb-1"><strong>Hotline:</strong> 1800 6868</p>
+            <p class="mb-1"><strong>Email:</strong> <a href="mailto:info@shoeslish.vn">info@shoeslish.vn</a></p>
+            <p class="mb-0"><strong>Giờ làm việc:</strong> 8:00 - 22:00 (T2-CN)</p>
+          </div>
+        </div>
+      </div>
+      <div class="row border-top pt-4 mt-2">
+        <div class="col-md-6">
+          <p class="m-0 text-muted">© 2024 ShoesLish. Bảo lưu mọi quyền.</p>
+        </div>
+        <div class="col-md-6 text-lg-end">
+          <p class="m-0 text-muted">Thanh toán an toàn: COD | Chuyển khoản | Ví điện tử</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════ SCRIPTS ════ -->
+  <script src="js/jquery-1.11.0.min.js"></script>
+  <script src="js/plugins.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/script.js"></script>
+
+  <script>
+  // ── Preloader ──────────────────────────────────────
+  window.addEventListener('load', function () {
+    const preloader = document.querySelector('.preloader');
+    if (preloader) { preloader.style.opacity = '0'; setTimeout(() => preloader.remove(), 400); }
+  });
+
+  // ── Trang cửa hàng ─────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function() {
+    if (!window.ShoesLish) {
+      // Fallback nếu app.js chưa load
+      document.getElementById('danh-sach-san-pham').innerHTML =
+        '<div class="col-12 text-center text-muted py-5"><p>Không thể tải dữ liệu sản phẩm. Vui lòng kiểm tra file js/app.js</p></div>';
+      document.getElementById('so-ket-qua').textContent = '';
+      return;
+    }
+
+    const { TimKiem, UI } = window.ShoesLish;
+
+    let boLocHienTai = {
+      danhMuc: 'tat-ca',
+      tuKhoa: '',
+      giaTu: null,
+      giaDen: null,
+      chySale: false,
+      chyMoi: false,
+      sapXep: 'mac-dinh'
+    };
+    let trangHienTai = 1;
+    const SO_SP_MOI_TRANG = 12;
+
+    // ── Đọc URL params ──────────────────────────────
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('danh-muc')) {
+      boLocHienTai.danhMuc = urlParams.get('danh-muc');
+      const radio = document.querySelector('input[name="danh-muc"][value="' + boLocHienTai.danhMuc + '"]');
+      if (radio) radio.checked = true;
+    }
+    if (urlParams.get('chi-sale') === '1') {
+      boLocHienTai.chySale = true;
+      const cb = document.getElementById('filter-sale');
+      if (cb) cb.checked = true;
+    }
+    if (urlParams.get('q')) {
+      boLocHienTai.tuKhoa = urlParams.get('q');
+      const inp = document.getElementById('input-tim-kiem');
+      if (inp) inp.value = boLocHienTai.tuKhoa;
+    }
+
+    // ── renderSanPham ──────────────────────────────
+    function renderSanPham() {
+      let ketQua;
+      if (TimKiem && TimKiem.loc) {
+        ketQua = TimKiem.loc(boLocHienTai);
+      } else {
+        // Lọc thủ công nếu TimKiem.loc không tồn tại
+        const { DANH_SACH_SAN_PHAM } = window.ShoesLish;
+        ketQua = (DANH_SACH_SAN_PHAM || []).filter(function(sp) {
+          if (boLocHienTai.danhMuc !== 'tat-ca' && sp.danhMuc !== boLocHienTai.danhMuc) return false;
+          if (boLocHienTai.tuKhoa) {
+            const kw = boLocHienTai.tuKhoa.toLowerCase();
+            if (!sp.ten.toLowerCase().includes(kw)) return false;
+          }
+          if (boLocHienTai.chySale && !sp.giamGia) return false;
+          if (boLocHienTai.chyMoi && !sp.moi) return false;
+          if (boLocHienTai.giaTu && sp.gia < boLocHienTai.giaTu) return false;
+          if (boLocHienTai.giaDen && sp.gia > boLocHienTai.giaDen) return false;
+          return true;
+        });
+        // Sắp xếp
+        if (boLocHienTai.sapXep === 'gia-tang') ketQua.sort(function(a,b){return a.gia-b.gia;});
+        else if (boLocHienTai.sapXep === 'gia-giam') ketQua.sort(function(a,b){return b.gia-a.gia;});
+        else if (boLocHienTai.sapXep === 'moi-nhat') ketQua.sort(function(a,b){return (b.moi?1:0)-(a.moi?1:0);});
+        else if (boLocHienTai.sapXep === 'pho-bien') ketQua.sort(function(a,b){return (b.noiBat?1:0)-(a.noiBat?1:0);});
+      }
+
+      const tongSo = ketQua.length;
+      const tongTrang = Math.ceil(tongSo / SO_SP_MOI_TRANG);
+      const start = (trangHienTai - 1) * SO_SP_MOI_TRANG;
+      const paged = ketQua.slice(start, start + SO_SP_MOI_TRANG);
+
+      const container = document.getElementById('danh-sach-san-pham');
+      const soKetQua = document.getElementById('so-ket-qua');
+
+      if (soKetQua) {
+        soKetQua.textContent = 'Hiển thị ' + paged.length + ' / ' + tongSo + ' sản phẩm';
+      }
+
+      if (paged.length === 0) {
+        container.innerHTML = '<div class="col-12"><div class="empty-state"><div class="empty-icon"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></div><h5 class="fw-bold">Không tìm thấy sản phẩm</h5><p class="text-muted">Hãy thử thay đổi bộ lọc hoặc từ khóa tìm kiếm</p><button class="btn btn-dark" id="btn-xoa-loc-empty">Xóa Bộ Lọc</button></div></div>';
+        document.getElementById('btn-xoa-loc-empty')?.addEventListener('click', xoaBoLoc);
+      } else {
+        let html = '';
+        paged.forEach(function(sp) {
+          html += UI.renderCardSanPham
+            ? UI.renderCardSanPham(sp)
+            : '<div class="col mb-3">' + renderCardFallback(sp) + '</div>';
+        });
+        container.innerHTML = html;
+      }
+
+      renderPhanTrang(tongTrang);
+    }
+
+    // ── Fallback card render ─────────────────────
+    function renderCardFallback(sp) {
+      const giaMoi = sp.giamGia ? Math.round(sp.gia * (1 - sp.giamGia / 100)) : sp.gia;
+      const giaHien = new Intl.NumberFormat('vi-VN').format(giaMoi) + 'đ';
+      const giaCu = sp.giamGia ? '<span class="gia-cu me-1">' + new Intl.NumberFormat('vi-VN').format(sp.gia) + 'đ</span>' : '';
+      const badgeMoi = sp.moi ? '<span class="badge-moi">MỚI</span>' : '';
+      const badgeSale = sp.giamGia ? '<span class="badge-sale' + (sp.moi ? ' offset' : '') + '">-' + sp.giamGia + '%</span>' : '';
+      return '<div class="product-card position-relative">'
+        + '<div class="card-img">'
+        + '<img src="' + (sp.anh || 'images/card-item1.jpg') + '" alt="' + sp.ten + '" class="product-image img-fluid">'
+        + badgeMoi + badgeSale
+        + '<div class="cart-concern position-absolute d-flex justify-content-center">'
+        + '<div class="cart-button d-flex gap-2 justify-content-center align-items-center">'
+        + '<button type="button" class="btn btn-dark btn-sm w-100" onclick="window.ShoesLish && window.ShoesLish.GioHang && window.ShoesLish.GioHang.them(' + sp.id + ')">Thêm Vào Giỏ</button>'
+        + '</div></div>'
+        + '</div>'
+        + '<div class="card-detail d-flex justify-content-between align-items-center mt-2">'
+        + '<h3 class="card-title fs-6 fw-normal m-0 me-2"><a href="san-pham.html?id=' + sp.id + '">' + sp.ten + '</a></h3>'
+        + '<span class="text-end">' + giaCu + '<span class="fw-bold' + (sp.giamGia ? ' gia-moi' : '') + '">' + giaHien + '</span></span>'
+        + '</div></div>';
+    }
+
+    // ── renderPhanTrang ────────────────────────────
+    function renderPhanTrang(tongTrang) {
+      const container = document.getElementById('phan-trang');
+      if (!container) return;
+      if (tongTrang <= 1) { container.innerHTML = ''; return; }
+      let html = '<nav aria-label="Phân trang"><ul class="pagination justify-content-center">';
+      // Prev
+      html += '<li class="page-item ' + (trangHienTai === 1 ? 'disabled' : '') + '">'
+        + '<a class="page-link" href="#" data-trang="' + (trangHienTai - 1) + '">‹</a></li>';
+      for (let i = 1; i <= tongTrang; i++) {
+        html += '<li class="page-item ' + (i === trangHienTai ? 'active' : '') + '">'
+          + '<a class="page-link" href="#" data-trang="' + i + '">' + i + '</a></li>';
+      }
+      // Next
+      html += '<li class="page-item ' + (trangHienTai === tongTrang ? 'disabled' : '') + '">'
+        + '<a class="page-link" href="#" data-trang="' + (trangHienTai + 1) + '">›</a></li>';
+      html += '</ul></nav>';
+      container.innerHTML = html;
+      container.querySelectorAll('.page-link:not(.disabled)').forEach(function(a) {
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          const t = parseInt(a.dataset.trang);
+          if (t >= 1 && t <= tongTrang && t !== trangHienTai) {
+            trangHienTai = t;
+            renderSanPham();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        });
+      });
+    }
+
+    // ── Xóa bộ lọc ──────────────────────────────
+    function xoaBoLoc() {
+      boLocHienTai = { danhMuc: 'tat-ca', tuKhoa: '', giaTu: null, giaDen: null,
+        chySale: false, chyMoi: false, sapXep: 'mac-dinh' };
+      trangHienTai = 1;
+      const radioAll = document.querySelector('input[name="danh-muc"][value="tat-ca"]');
+      if (radioAll) radioAll.checked = true;
+      const cbSale = document.getElementById('filter-sale');
+      if (cbSale) cbSale.checked = false;
+      const cbMoi = document.getElementById('filter-moi');
+      if (cbMoi) cbMoi.checked = false;
+      const inputTim = document.getElementById('input-tim-kiem');
+      if (inputTim) inputTim.value = '';
+      const inputGiaTu = document.getElementById('gia-tu');
+      if (inputGiaTu) inputGiaTu.value = '';
+      const inputGiaDen = document.getElementById('gia-den');
+      if (inputGiaDen) inputGiaDen.value = '';
+      const selectSX = document.getElementById('select-sap-xep');
+      if (selectSX) selectSX.value = 'mac-dinh';
+      renderSanPham();
+    }
+
+    // ── Event listeners ──────────────────────────
+    // Danh mục
+    document.querySelectorAll('input[name="danh-muc"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        boLocHienTai.danhMuc = radio.value;
+        trangHienTai = 1;
+        renderSanPham();
+      });
+    });
+
+    // Tìm kiếm
+    const inputTim = document.getElementById('input-tim-kiem');
+    if (inputTim) {
+      inputTim.addEventListener('input', function() {
+        boLocHienTai.tuKhoa = inputTim.value;
+        trangHienTai = 1;
+        renderSanPham();
+      });
+    }
+
+    // Áp dụng giá
+    document.getElementById('btn-ap-dung-gia')?.addEventListener('click', function() {
+      const tu = parseFloat(document.getElementById('gia-tu')?.value || 0) || null;
+      const den = parseFloat(document.getElementById('gia-den')?.value || 0) || null;
+      boLocHienTai.giaTu = tu ? tu * 1000 : null;
+      boLocHienTai.giaDen = den ? den * 1000 : null;
+      trangHienTai = 1;
+      renderSanPham();
+    });
+
+    // Filter sale
+    document.getElementById('filter-sale')?.addEventListener('change', function(e) {
+      boLocHienTai.chySale = e.target.checked;
+      trangHienTai = 1;
+      renderSanPham();
+    });
+
+    // Filter mới
+    document.getElementById('filter-moi')?.addEventListener('change', function(e) {
+      boLocHienTai.chyMoi = e.target.checked;
+      trangHienTai = 1;
+      renderSanPham();
+    });
+
+    // Sắp xếp
+    document.getElementById('select-sap-xep')?.addEventListener('change', function(e) {
+      boLocHienTai.sapXep = e.target.value;
+      trangHienTai = 1;
+      renderSanPham();
+    });
+
+    // Xóa bộ lọc
+    document.getElementById('btn-xoa-loc')?.addEventListener('click', xoaBoLoc);
+
+    // ── Render lần đầu ──────────────────────────
+    renderSanPham();
+  });
+  </script>
+</body>
+</html>

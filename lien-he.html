@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <title>Liên Hệ - ShoesLish</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="author" content="ShoesLish">
+  <meta name="keywords" content="Liên hệ, ShoesLish, giày dép">
+  <meta name="description" content="Liên hệ với ShoesLish - Chúng tôi luôn sẵn sàng hỗ trợ bạn">
+
+  <link rel="stylesheet" href="css/vendor.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,900;1,900&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ---- Trang Liên Hệ ---- */
+    .lh-hero {
+      background: linear-gradient(135deg, #f5f5f5 0%, #ebebeb 100%);
+      padding: 70px 0 50px;
+      text-align: center;
+      margin-bottom: 0;
+    }
+    .lh-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: #111;
+      margin-bottom: 12px;
+    }
+    .lh-hero .breadcrumb {
+      justify-content: center;
+      font-size: 14px;
+    }
+    .lh-hero .breadcrumb-item + .breadcrumb-item::before {
+      content: "›";
+    }
+    .lh-section {
+      padding: 60px 0;
+    }
+    .contact-info-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px;
+      background: #f8f8f8;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      transition: box-shadow 0.2s;
+    }
+    .contact-info-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .contact-info-card .icon {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+    .contact-info-card h6 {
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #111;
+    }
+    .contact-info-card p {
+      color: #555;
+      margin: 0;
+      font-size: 14px;
+    }
+    .social-contact-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: #111;
+      color: white;
+      border-radius: 50%;
+      margin-right: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .social-contact-links a:hover {
+      background: #ce071e;
+      transform: translateY(-3px);
+    }
+    /* Form styles */
+    .lh-form .form-control,
+    .lh-form .form-select {
+      border-radius: 8px;
+      border: 1.5px solid #ddd;
+      padding: 12px 16px;
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+    .lh-form .form-control:focus,
+    .lh-form .form-select:focus {
+      border-color: #111;
+      box-shadow: none;
+    }
+    .lh-form label {
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: #333;
+    }
+    .lh-form textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+    .btn-send {
+      background: #111;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 40px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: background 0.2s, transform 0.15s;
+      cursor: pointer;
+    }
+    .btn-send:hover {
+      background: #ce071e;
+      transform: translateY(-2px);
+    }
+    .map-section {
+      padding: 0 0 60px;
+    }
+    .faq-section {
+      background: #f8f8f8;
+      padding: 60px 0;
+    }
+    .faq-section .accordion-button:not(.collapsed) {
+      background: #111;
+      color: white;
+      box-shadow: none;
+    }
+    .faq-section .accordion-button:not(.collapsed)::after {
+      filter: invert(1);
+    }
+    .faq-section .accordion-button {
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .faq-section .accordion-body {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.8;
+    }
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      color: #111;
+    }
+    /* Toast */
+    .sl-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: white;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 99999;
+      max-width: 380px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .sl-toast.show { opacity: 1; transform: translateY(0); }
+    .sl-toast-success { background: #27ae60; }
+    .sl-toast-info    { background: #2980b9; }
+    .sl-toast-warning { background: #e67e22; }
+    .sl-toast-error   { background: #e74c3c; }
+  </style>
+</head>
+
+<body>
+  <!-- SVG Symbols -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="shopping-carriage" viewBox="0 0 24 24" fill="none">
+      <path d="M5 22H19C20.103 22 21 21.103 21 20V9C21 8.73478 20.8946 8.48043 20.7071 8.29289C20.5196 8.10536 20.2652 8 20 8H17V7C17 4.243 14.757 2 12 2C9.243 2 7 4.243 7 7V8H4C3.73478 8 3.48043 8.10536 3.29289 8.29289C3.10536 8.48043 3 8.73478 3 9V20C3 21.103 3.897 22 5 22ZM9 7C9 5.346 10.346 4 12 4C13.654 4 15 5.346 15 7V8H9V7ZM5 10H7V12H9V10H15V12H17V10H19L19.002 20H5V10Z" fill="black"/>
+    </symbol>
+    <symbol id="shopping-cart" viewBox="0 0 24 24" fill="none">
+      <path d="M21 4H2V6H4.3L7.582 15.025C7.79362 15.6029 8.1773 16.1021 8.68134 16.4552C9.18539 16.8083 9.78556 16.9985 10.401 17H19V15H10.401C9.982 15 9.604 14.735 9.461 14.342L8.973 13H18.246C19.136 13 19.926 12.402 20.169 11.549L21.962 5.275C22.0039 5.12615 22.0109 4.96962 21.9823 4.81763C21.9537 4.66565 21.8904 4.52234 21.7973 4.39889C21.7041 4.27544 21.5837 4.1752 21.4454 4.106C21.3071 4.0368 21.1546 4.00053 21 4ZM18.246 11H8.246L6.428 6H19.675L18.246 11Z" fill="black"/>
+      <path d="M10.5 21C11.3284 21 12 20.3284 12 19.5C12 18.6716 11.3284 18 10.5 18C9.67157 18 9 18.6716 9 19.5C9 20.3284 9.67157 21 10.5 21Z" fill="black"/>
+      <path d="M16.5 21C17.3284 21 18 20.3284 18 19.5C18 18.6716 17.3284 18 16.5 18C15.6716 18 15 18.6716 15 19.5C15 20.3284 15.6716 21 16.5 21Z" fill="black"/>
+    </symbol>
+    <symbol id="navbar-icon" viewBox="0 0 16 16">
+      <path d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z"/>
+    </symbol>
+    <symbol id="close" viewBox="0 0 16 16">
+      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+    </symbol>
+    <symbol id="user" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 2a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"/>
+    </symbol>
+    <symbol id="facebook" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.01h-2l-.396 3.98h2.396v8.01Z"/>
+    </symbol>
+    <symbol id="instagram" viewBox="0 0 256 256">
+      <path fill="currentColor" d="M128 80a48 48 0 1 0 48 48a48.05 48.05 0 0 0-48-48Zm0 80a32 32 0 1 1 32-32a32 32 0 0 1-32 32Zm48-136H80a56.06 56.06 0 0 0-56 56v96a56.06 56.06 0 0 0 56 56h96a56.06 56.06 0 0 0 56-56V80a56.06 56.06 0 0 0-56-56Zm40 152a40 40 0 0 1-40 40H80a40 40 0 0 1-40-40V80a40 40 0 0 1 40-40h96a40 40 0 0 1 40 40ZM192 76a12 12 0 1 1-12-12a12 12 0 0 1 12 12Z"/>
+    </symbol>
+    <symbol id="youtube" viewBox="0 0 32 32">
+      <path fill="currentColor" d="M29.41 9.26a3.5 3.5 0 0 0-2.47-2.47C24.76 6.2 16 6.2 16 6.2s-8.76 0-10.94.59a3.5 3.5 0 0 0-2.47 2.47A36.13 36.13 0 0 0 2 16a36.13 36.13 0 0 0 .59 6.74a3.5 3.5 0 0 0 2.47 2.47c2.18.59 10.94.59 10.94.59s8.76 0 10.94-.59a3.5 3.5 0 0 0 2.47-2.47A36.13 36.13 0 0 0 30 16a36.13 36.13 0 0 0-.59-6.74ZM13.2 20.2v-8.4l7.27 4.2Z"/>
+    </symbol>
+    <symbol id="search" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396l1.414-1.414l-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8s3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6s-6-2.691-6-6s2.691-6 6-6z"/>
+    </symbol>
+    <symbol id="plus" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z"/>
+    </symbol>
+    <symbol id="minus" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M19 12.998H5v-2h14z"/>
+    </symbol>
+    <symbol id="pinterest" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M9.04 21.54c.96.29 1.93.46 2.96.46a10 10 0 0 0 10-10A10 10 0 0 0 12 2A10 10 0 0 0 2 12c0 4.25 2.67 7.9 6.44 9.34c-.09-.78-.18-2.07 0-2.96l1.15-4.94s-.29-.58-.29-1.5c0-1.38.86-2.41 1.84-2.41c.86 0 1.26.63 1.26 1.44c0 .86-.57 2.09-.86 3.27c-.17.98.52 1.84 1.52 1.84c1.78 0 3.16-1.9 3.16-4.58c0-2.4-1.72-4.04-4.19-4.04c-2.82 0-4.48 2.1-4.48 4.31c0 .86.28 1.73.74 2.3c.09.06.09.14.06.29l-.29 1.09c0 .17-.11.23-.28.11c-1.28-.56-2.02-2.38-2.02-3.85c0-3.16 2.24-6.03 6.56-6.03c3.44 0 6.12 2.47 6.12 5.75c0 3.44-2.13 6.2-5.18 6.2c-.97 0-1.92-.52-2.26-1.13l-.67 2.37c-.23.86-.86 2.01-1.29 2.7v-.03Z"/>
+    </symbol>
+    <symbol id="twitter" viewBox="0 0 512 512">
+      <path fill="currentColor" d="M496 109.5a201.8 201.8 0 0 1-56.55 15.3a97.51 97.51 0 0 0 43.33-53.6a197.74 197.74 0 0 1-62.56 23.5A99.14 99.14 0 0 0 348.31 64c-54.42 0-98.46 43.4-98.46 96.9a93.21 93.21 0 0 0 2.54 22.1a280.7 280.7 0 0 1-203-101.3A95.69 95.69 0 0 0 36 130.4c0 33.6 17.53 63.3 44 80.7A97.5 97.5 0 0 1 35.22 199v1.2c0 47 34 86.1 79 95a100.76 100.76 0 0 1-25.94 3.4a94.38 94.38 0 0 1-18.51-1.8c12.51 38.5 48.92 66.5 92.05 67.3A199.59 199.59 0 0 1 39.5 405.6a203 203 0 0 1-23.5-1.4A278.68 278.68 0 0 0 166.74 448c181.36 0 280.44-147.7 280.44-275.8c0-4.2-.11-8.4-.31-12.5A198.48 198.48 0 0 0 496 109.5Z"/>
+    </symbol>
+    <symbol id="dropdown" viewBox="0 0 24 24">
+      <path fill="currentColor" d="m7 10l5 5l5-5H7Z"/>
+    </symbol>
+    <symbol id="arrow-right" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M13.3 17.275q-.3-.3-.288-.725t.313-.725L16.15 13H5q-.425 0-.713-.288T4 12q0-.425.288-.713T5 11h11.15L13.3 8.15q-.3-.3-.3-.713t.3-.712q.3-.3.713-.3t.712.3L19.3 11.3q.15.15.213.325t.062.375q0 .2-.063.375t-.212.325l-4.6 4.6q-.275.275-.687.275t-.713-.3Z"/>
+    </symbol>
+  </svg>
+
+  <!-- Preloader -->
+  <div class="preloader" style="position:fixed;top:0;left:0;width:100%;height:100%;background-color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;">
+    <svg version="1.1" id="L4" width="100" height="100" xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      viewBox="0 0 50 100" enable-background="new 0 0 0 0" xml:space="preserve">
+      <circle fill="#111" stroke="none" cx="6" cy="50" r="6">
+        <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.1"/>
+      </circle>
+      <circle fill="#111" stroke="none" cx="26" cy="50" r="6">
+        <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.2"/>
+      </circle>
+      <circle fill="#111" stroke="none" cx="46" cy="50" r="6">
+        <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.3"/>
+      </circle>
+    </svg>
+  </div>
+
+  <!-- Search Box -->
+  <div class="search-box bg-dark position-relative">
+    <div class="search-wrap">
+      <div class="close-button">
+        <svg class="close" style="fill: white;">
+          <use xlink:href="#close"></use>
+        </svg>
+      </div>
+      <form id="search-form" class="text-lg-center text-md-left pt-3" action="index.html" method="get">
+        <input type="text" class="search-input" placeholder="Tìm kiếm...">
+        <svg class="search">
+          <use xlink:href="#search"></use>
+        </svg>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Giỏ Hàng -->
+  <div class="modal fade" id="modallong" tabindex="-1" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-fullscreen-md-down modal-md modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5">Giỏ Hàng</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="shopping-cart">
+            <div class="shopping-cart-content">
+              <div class="mini-cart cart-list p-0 mt-3">
+                <div class="mini-cart-item d-flex border-bottom pb-3">
+                  <div class="col-lg-2 col-md-3 col-sm-2 me-4">
+                    <a href="#" title="product-image">
+                      <img src="images/single-product-thumb1.jpg" class="img-fluid" alt="sản phẩm">
+                    </a>
+                  </div>
+                  <div class="col-lg-9 col-md-8 col-sm-8">
+                    <div class="product-header d-flex justify-content-between align-items-center mb-3">
+                      <h4 class="product-title fs-6 me-5">Giày Thể Thao Nam</h4>
+                      <a href="" class="remove" aria-label="Xóa sản phẩm">
+                        <svg class="close"><use xlink:href="#close"></use></svg>
+                      </a>
+                    </div>
+                    <div class="quantity-price d-flex justify-content-between align-items-center">
+                      <div class="input-group product-qty">
+                        <button type="button" class="quantity-left-minus btn btn-light rounded-0 rounded-start btn-number" data-type="minus">
+                          <svg width="16" height="16"><use xlink:href="#minus"></use></svg>
+                        </button>
+                        <input type="text" name="quantity" class="form-control input-number quantity" value="1">
+                        <button type="button" class="quantity-right-plus btn btn-light rounded-0 rounded-end btn-number" data-type="plus">
+                          <svg width="16" height="16"><use xlink:href="#plus"></use></svg>
+                        </button>
+                      </div>
+                      <div class="price-code">
+                        <span class="product-price fs-6">1.290.000₫</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mini-cart-total d-flex justify-content-between py-4">
+                <span class="fs-6">Tạm tính:</span>
+                <span class="special-price-code">
+                  <span class="price-amount amount fs-6" style="opacity:1;">
+                    <bdi>1.290.000₫</bdi>
+                  </span>
+                </span>
+              </div>
+              <div class="modal-footer my-4 justify-content-center">
+                <button type="button" class="btn btn-red hvr-sweep-to-right dark-sweep">Xem Giỏ Hàng</button>
+                <button type="button" class="btn btn-outline-gray hvr-sweep-to-right dark-sweep">Thanh Toán</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Đăng Nhập -->
+  <div class="modal fade" id="modallogin" tabindex="-1" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-fullscreen-md-down modal-md modal-dialog-centered" role="document">
+      <div class="modal-content p-4">
+        <div class="modal-header mx-auto border-0">
+          <h2 class="modal-title fs-3 fw-normal">Đăng Nhập</h2>
+        </div>
+        <div class="modal-body">
+          <div class="login-detail">
+            <div class="login-form p-0">
+              <div class="col-lg-12 mx-auto">
+                <form id="login-form">
+                  <input type="text" name="username" placeholder="Tên đăng nhập hoặc Email *" class="mb-3 ps-3 text-input">
+                  <input type="password" name="password" placeholder="Mật khẩu" class="ps-3 text-input">
+                  <div class="checkbox d-flex justify-content-between mt-4">
+                    <p class="checkbox-form">
+                      <label>
+                        <input name="rememberme" type="checkbox" id="remember-me" value="forever"> Ghi nhớ đăng nhập
+                      </label>
+                    </p>
+                    <p class="lost-password">
+                      <a href="#">Quên mật khẩu?</a>
+                    </p>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer mt-5 d-flex justify-content-center">
+              <button type="button" class="btn btn-red hvr-sweep-to-right dark-sweep">Đăng Nhập</button>
+              <button type="button" class="btn btn-outline-gray hvr-sweep-to-right dark-sweep">Đăng Ký</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header id="header" class="site-header text-black">
+    <div class="header-top border-bottom py-2">
+      <div class="container-lg">
+        <div class="row justify-content-evenly">
+          <div class="col">
+            <ul class="social-links list-unstyled d-flex m-0">
+              <li class="pe-2">
+                <a href="#" aria-label="Facebook">
+                  <svg class="facebook" width="20" height="20"><use xlink:href="#facebook"></use></svg>
+                </a>
+              </li>
+              <li class="pe-2">
+                <a href="#" aria-label="Instagram">
+                  <svg class="instagram" width="20" height="20"><use xlink:href="#instagram"></use></svg>
+                </a>
+              </li>
+              <li class="pe-2">
+                <a href="#" aria-label="YouTube">
+                  <svg class="youtube" width="20" height="20"><use xlink:href="#youtube"></use></svg>
+                </a>
+              </li>
+              <li>
+                <a href="#" aria-label="Pinterest">
+                  <svg class="pinterest" width="20" height="20"><use xlink:href="#pinterest"></use></svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col d-none d-md-block">
+            <p class="text-center text-black m-0"><strong>Ưu Đãi Đặc Biệt</strong>: Miễn phí vận chuyển cho đơn hàng từ 500.000₫</p>
+          </div>
+          <div class="col">
+            <ul class="d-flex justify-content-end gap-3 list-unstyled m-0">
+              <li><a href="lien-he.html">Liên Hệ</a></li>
+              <li><a href="#" data-bs-toggle="modal" data-bs-target="#modallong">Giỏ Hàng</a></li>
+              <li><a href="#" data-bs-toggle="modal" data-bs-target="#modallogin">Đăng Nhập</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav id="header-nav" class="navbar navbar-expand-lg">
+      <div class="container-lg">
+        <a class="navbar-brand" href="index.html">
+          <img src="images/main-logo.png" class="logo" alt="ShoesLish Logo">
+        </a>
+        <button class="navbar-toggler d-flex d-lg-none order-3 border-0 p-1 ms-2" type="button"
+          data-bs-toggle="offcanvas" data-bs-target="#bdNavbar"
+          aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <svg class="navbar-icon"><use xlink:href="#navbar-icon"></use></svg>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar">
+          <div class="offcanvas-header px-4 pb-0">
+            <a class="navbar-brand ps-3" href="index.html">
+              <img src="images/main-logo.png" class="logo" alt="ShoesLish Logo">
+            </a>
+            <button type="button" class="btn-close btn-close-black p-5" data-bs-dismiss="offcanvas"
+              aria-label="Close" data-bs-target="#bdNavbar"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul id="navbar" class="navbar-nav fw-bold justify-content-end align-items-center flex-grow-1">
+              <li class="nav-item">
+                <a class="nav-link me-5" href="index.html">Trang Chủ</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link me-5" href="#">Nam</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link me-5" href="#">Nữ</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link me-5" href="shop.html">Cửa Hàng</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link me-5" href="#">Sale</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link me-5 active" href="lien-he.html">Liên Hệ</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="user-items ps-0 ps-md-5">
+          <ul class="d-flex justify-content-end list-unstyled align-item-center m-0">
+            <li class="pe-3">
+              <a href="#" data-bs-toggle="modal" data-bs-target="#modallogin" class="border-0" aria-label="Đăng nhập">
+                <svg class="user" width="24" height="24"><use xlink:href="#user"></use></svg>
+              </a>
+            </li>
+            <li class="pe-3">
+              <a href="#" data-bs-toggle="modal" data-bs-target="#modallong" class="border-0" aria-label="Giỏ hàng">
+                <svg class="shopping-cart" width="24" height="24"><use xlink:href="#shopping-cart"></use></svg>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="search-item border-0" data-bs-toggle="collapse" data-bs-target="#search-box" aria-label="Tìm kiếm">
+                <svg class="search" width="24" height="24"><use xlink:href="#search"></use></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="lh-hero">
+    <div class="container">
+      <h1>Liên Hệ Với Chúng Tôi</h1>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="index.html" class="text-dark">Trang Chủ</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Liên Hệ</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Section Thông Tin + Form Liên Hệ -->
+  <section class="lh-section">
+    <div class="container">
+      <div class="row g-5">
+        <!-- Cột Thông Tin -->
+        <div class="col-lg-5">
+          <h2 class="section-heading mb-4" style="font-size:1.8rem;">Thông Tin Liên Hệ</h2>
+          <p class="text-muted mb-4" style="font-size:14px;">Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn. Hãy liên hệ với chúng tôi qua các kênh dưới đây hoặc gửi tin nhắn trực tiếp.</p>
+
+          <!-- Địa chỉ -->
+          <div class="contact-info-card">
+            <span class="icon"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <div>
+              <h6>Địa Chỉ</h6>
+              <p>123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</p>
+            </div>
+          </div>
+
+          <!-- Hotline -->
+          <div class="contact-info-card">
+            <span class="icon"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 3h4l2 5-3 2a15 15 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z"/></svg></span>
+            <div>
+              <h6>Hotline</h6>
+              <p>1800 6868 <br><small>(8:00 - 22:00 hàng ngày, kể cả cuối tuần)</small></p>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="contact-info-card">
+            <span class="icon"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+            <div>
+              <h6>Email</h6>
+              <p><a href="mailto:info@shoeslish.vn" style="color:#111;text-decoration:none;">info@shoeslish.vn</a></p>
+            </div>
+          </div>
+
+          <!-- Giờ làm việc -->
+          <div class="contact-info-card">
+            <span class="icon"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <div>
+              <h6>Giờ Làm Việc</h6>
+              <p>Thứ 2 - Chủ Nhật: 8:00 - 22:00<br><small>Không nghỉ lễ</small></p>
+            </div>
+          </div>
+
+          <!-- Mạng xã hội -->
+          <div class="mt-4">
+            <h6 class="fw-bold mb-3" style="font-size:14px;text-transform:uppercase;letter-spacing:0.5px;">Theo Dõi Chúng Tôi</h6>
+            <div class="social-contact-links">
+              <a href="#" aria-label="Facebook">
+                <svg width="18" height="18"><use xlink:href="#facebook"></use></svg>
+              </a>
+              <a href="#" aria-label="Instagram">
+                <svg width="18" height="18"><use xlink:href="#instagram"></use></svg>
+              </a>
+              <a href="#" aria-label="YouTube">
+                <svg width="18" height="18"><use xlink:href="#youtube"></use></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cột Form -->
+        <div class="col-lg-7">
+          <h2 class="section-heading mb-4" style="font-size:1.8rem;">Gửi Tin Nhắn</h2>
+          <form id="form-lien-he" class="lh-form" novalidate>
+            <div class="row g-3">
+              <!-- Họ và tên -->
+              <div class="col-md-6">
+                <label for="lh-ten">Họ và Tên <span class="text-danger">*</span></label>
+                <input type="text" id="lh-ten" class="form-control" placeholder="Nguyễn Văn A" required>
+              </div>
+              <!-- Email -->
+              <div class="col-md-6">
+                <label for="lh-email">Email <span class="text-danger">*</span></label>
+                <input type="email" id="lh-email" class="form-control" placeholder="example@email.com" required>
+              </div>
+              <!-- Số điện thoại -->
+              <div class="col-md-6">
+                <label for="lh-sdt">Số Điện Thoại</label>
+                <input type="tel" id="lh-sdt" class="form-control" placeholder="0912 345 678">
+              </div>
+              <!-- Chủ đề -->
+              <div class="col-md-6">
+                <label for="lh-chu-de">Chủ Đề</label>
+                <select id="lh-chu-de" class="form-select">
+                  <option value="hoi-san-pham">Hỏi về sản phẩm</option>
+                  <option value="tu-van-size">Tư vấn size</option>
+                  <option value="khieu-nai">Khiếu nại</option>
+                  <option value="hop-tac">Hợp tác kinh doanh</option>
+                  <option value="khac">Khác</option>
+                </select>
+              </div>
+              <!-- Nội dung -->
+              <div class="col-12">
+                <label for="lh-noi-dung">Nội Dung <span class="text-danger">*</span></label>
+                <textarea id="lh-noi-dung" class="form-control" placeholder="Nhập nội dung tin nhắn của bạn (tối thiểu 20 ký tự)..." required minlength="20"></textarea>
+              </div>
+              <!-- Nút gửi -->
+              <div class="col-12">
+                <button type="submit" class="btn-send">
+                  <svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4 20-7ZM22 2 11 13"/></svg> Gửi Tin Nhắn
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Google Maps -->
+  <section class="map-section">
+    <div class="container">
+      <h2 class="section-heading text-center mb-4" style="font-size:1.8rem;">Tìm Chúng Tôi Trên Bản Đồ</h2>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4241674197073!2d106.69785571480246!3d10.77603996229693!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f4670702a5b%3A0xc054b4adbe028acb!2zTmd1eeG7hW4gSHXhu4csIELhur9uIE5naOQ!5e0!3m2!1svi!2s!4v1234567890"
+        width="100%"
+        height="400"
+        style="border:0;border-radius:12px;"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Bản đồ ShoesLish">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- Section FAQ -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="section-heading" style="font-size:2rem;">Câu Hỏi Thường Gặp</h2>
+        <p class="text-muted mt-2" style="font-size:14px;">Những câu hỏi khách hàng hay thắc mắc</p>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="accordion" id="faqAccordion">
+
+            <!-- FAQ 1 -->
+            <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden shadow-sm">
+              <h2 class="accordion-header" id="faq1-heading">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
+                  Làm thế nào để chọn đúng size giày?
+                </button>
+              </h2>
+              <div id="faq1" class="accordion-collapse collapse show" aria-labelledby="faq1-heading" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Chúng tôi khuyên bạn nên đo chiều dài bàn chân (tính từ gót đến ngón dài nhất) khi đứng thẳng. Sau đó, tra cứu bảng size của chúng tôi trên trang sản phẩm để tìm size phù hợp. Thông thường, nên chọn size lớn hơn 0.5–1 size so với số đo thực tế để đảm bảo sự thoải mái. Nếu bạn vẫn chưa chắc chắn, hãy liên hệ hotline <strong>1800 6868</strong> để được tư vấn trực tiếp.
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden shadow-sm">
+              <h2 class="accordion-header" id="faq2-heading">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+                  Chính sách đổi trả như thế nào?
+                </button>
+              </h2>
+              <div id="faq2" class="accordion-collapse collapse" aria-labelledby="faq2-heading" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  ShoesLish chấp nhận đổi trả trong vòng <strong>30 ngày</strong> kể từ ngày nhận hàng, với điều kiện sản phẩm chưa qua sử dụng, còn nguyên tem nhãn và đầy đủ hộp. Đối với hàng lỗi do nhà sản xuất, chúng tôi đổi trả miễn phí 100%. Chi phí vận chuyển đổi trả (vì lý do cá nhân) sẽ do khách hàng chịu. Vui lòng liên hệ email hoặc hotline để được hướng dẫn thủ tục đổi trả.
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden shadow-sm">
+              <h2 class="accordion-header" id="faq3-heading">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+                  Bao lâu thì nhận được hàng?
+                </button>
+              </h2>
+              <div id="faq3" class="accordion-collapse collapse" aria-labelledby="faq3-heading" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Thời gian giao hàng tùy thuộc vào địa chỉ nhận hàng của bạn:<br>
+                  • <strong>TP. Hồ Chí Minh & Hà Nội:</strong> 1–2 ngày làm việc<br>
+                  • <strong>Các tỉnh thành khác:</strong> 3–5 ngày làm việc<br>
+                  • <strong>Vùng sâu, vùng xa:</strong> 5–7 ngày làm việc<br>
+                  Chúng tôi giao hàng từ Thứ 2 đến Thứ 7 (không bao gồm ngày lễ). Sau khi đặt hàng thành công, bạn sẽ nhận được mã vận đơn để theo dõi đơn hàng.
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden shadow-sm">
+              <h2 class="accordion-header" id="faq4-heading">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
+                  Có những hình thức thanh toán nào?
+                </button>
+              </h2>
+              <div id="faq4" class="accordion-collapse collapse" aria-labelledby="faq4-heading" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  ShoesLish hỗ trợ nhiều hình thức thanh toán tiện lợi:<br>
+                  • <strong>Thanh toán khi nhận hàng (COD)</strong><br>
+                  • <strong>Chuyển khoản ngân hàng</strong> (VietcomBank, Techcombank, MB Bank, ...)<br>
+                  • <strong>Ví điện tử:</strong> MoMo, ZaloPay, VNPay<br>
+                  • <strong>Thẻ tín dụng/ghi nợ:</strong> Visa, MasterCard, JCB<br>
+                  • <strong>Trả góp 0%</strong> qua thẻ tín dụng (áp dụng cho đơn từ 2.000.000₫)
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 5 -->
+            <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden shadow-sm">
+              <h2 class="accordion-header" id="faq5-heading">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5" aria-expanded="false" aria-controls="faq5">
+                  Sản phẩm có bảo hành không?
+                </button>
+              </h2>
+              <div id="faq5" class="accordion-collapse collapse" aria-labelledby="faq5-heading" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Tất cả sản phẩm tại ShoesLish đều được bảo hành chính hãng. Cụ thể:<br>
+                  • <strong>Đế giày:</strong> Bảo hành 6 tháng đối với lỗi kỹ thuật (tróc keo, bong đế)<br>
+                  • <strong>Chất liệu thân giày:</strong> Bảo hành 3 tháng đối với lỗi do nhà sản xuất<br>
+                  • <strong>Không bảo hành:</strong> Hư hỏng do sử dụng sai cách, tai nạn, hoặc tự ý sửa chữa<br>
+                  Để kích hoạt bảo hành, vui lòng giữ lại hóa đơn mua hàng hoặc email xác nhận đơn hàng.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer" class="site-footer py-5 mt-0">
+    <div class="container-lg">
+      <div class="row">
+        <div class="col-lg-2 pb-3">
+          <div class="footer-menu">
+            <h5 class="widget-title pb-2">Về ShoesLish</h5>
+            <ul class="menu-list list-unstyled">
+              <li class="pb-2"><a href="#">Giới Thiệu</a></li>
+              <li class="pb-2"><a href="#">Câu Chuyện Thương Hiệu</a></li>
+              <li class="pb-2"><a href="#">Tuyển Dụng</a></li>
+              <li class="pb-2"><a href="#">Đại Lý</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 pb-3">
+          <div class="footer-menu">
+            <h5 class="widget-title pb-2">Hỗ Trợ</h5>
+            <ul class="menu-list list-unstyled">
+              <li class="pb-2"><a href="lien-he.html">Liên Hệ</a></li>
+              <li class="pb-2"><a href="#">Chính Sách Đổi Trả</a></li>
+              <li class="pb-2"><a href="#">Chính Sách Vận Chuyển</a></li>
+              <li class="pb-2"><a href="#">Chính Sách Bảo Mật</a></li>
+              <li class="pb-2"><a href="#">FAQ</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 pb-3">
+          <div class="footer-menu">
+            <h5 class="widget-title pb-2">Giày Nam</h5>
+            <ul class="menu-list list-unstyled">
+              <li class="pb-2"><a href="#">Giày Thể Thao</a></li>
+              <li class="pb-2"><a href="#">Giày Da</a></li>
+              <li class="pb-2"><a href="#">Giày Sneaker</a></li>
+              <li class="pb-2"><a href="#">Giày Boot</a></li>
+              <li class="pb-2"><a href="#">Dép & Sandal</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 pb-3">
+          <div class="footer-menu">
+            <h5 class="widget-title pb-2">Giày Nữ</h5>
+            <ul class="menu-list list-unstyled">
+              <li class="pb-2"><a href="#">Giày Cao Gót</a></li>
+              <li class="pb-2"><a href="#">Giày Bệt</a></li>
+              <li class="pb-2"><a href="#">Giày Sneaker</a></li>
+              <li class="pb-2"><a href="#">Giày Boot</a></li>
+              <li class="pb-2"><a href="#">Dép & Sandal</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 pb-3">
+          <div class="footer-menu">
+            <h5 class="widget-title pb-2">Nổi Bật</h5>
+            <ul class="menu-list list-unstyled">
+              <li class="pb-2"><a href="#">Hàng Mới Về</a></li>
+              <li class="pb-2"><a href="#">Best Seller</a></li>
+              <li class="pb-2"><a href="#">Sale Sốc</a></li>
+              <li class="pb-2"><a href="#">Limited Edition</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 pb-3">
+          <div class="footer-menu">
+            <h5 class="widget-title pb-3">Liên Hệ</h5>
+            <div class="footer-contact-text">
+              <span>123 Nguyễn Huệ, Q.1, TP. HCM</span><br>
+              <span>Hotline: 1800 6868</span><br>
+              <span><a href="mailto:info@shoeslish.vn">info@shoeslish.vn</a></span>
+            </div>
+            <div class="mt-3 d-flex gap-2">
+              <a href="#" aria-label="Facebook" style="color:#555;">
+                <svg width="20" height="20"><use xlink:href="#facebook"></use></svg>
+              </a>
+              <a href="#" aria-label="Instagram" style="color:#555;">
+                <svg width="20" height="20"><use xlink:href="#instagram"></use></svg>
+              </a>
+              <a href="#" aria-label="YouTube" style="color:#555;">
+                <svg width="20" height="20"><use xlink:href="#youtube"></use></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row border-top pt-3 mt-2">
+        <div class="col-md-6">
+          <p class="mb-0" style="font-size:13px;color:#888;">© 2024 ShoesLish. Tất cả quyền được bảo lưu.</p>
+        </div>
+        <div class="col-md-6 text-lg-end">
+          <p class="mb-0" style="font-size:13px;color:#888;">Thiết kế tại Việt Nam</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/jquery-1.11.0.min.js"></script>
+  <script src="js/plugins.js"></script>
+  <script src="js/script.js"></script>
+
+  <script>
+    // ============================================================
+    // ShoesLish Utilities
+    // ============================================================
+    window.ShoesLish = window.ShoesLish || {};
+    window.ShoesLish.Utils = {
+      hienToast: function(message, type) {
+        type = type || 'success';
+        var toast = document.createElement('div');
+        toast.className = 'sl-toast sl-toast-' + type;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        // Trigger show
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            toast.classList.add('show');
+          });
+        });
+        setTimeout(function() {
+          toast.classList.remove('show');
+          setTimeout(function() {
+            if (toast.parentNode) toast.parentNode.removeChild(toast);
+          }, 400);
+        }, 4000);
+      }
+    };
+
+    // ============================================================
+    // Preloader
+    // ============================================================
+    window.addEventListener('load', function() {
+      var preloader = document.querySelector('.preloader');
+      if (preloader) {
+        preloader.style.opacity = '0';
+        preloader.style.transition = 'opacity 0.5s ease';
+        setTimeout(function() { preloader.style.display = 'none'; }, 500);
+      }
+    });
+
+    // ============================================================
+    // Form Liên Hệ
+    // ============================================================
+    document.getElementById('form-lien-he').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      var ten     = document.getElementById('lh-ten').value.trim();
+      var email   = document.getElementById('lh-email').value.trim();
+      var sdt     = document.getElementById('lh-sdt').value.trim();
+      var chuDe   = document.getElementById('lh-chu-de').value;
+      var noiDung = document.getElementById('lh-noi-dung').value.trim();
+
+      // Validate
+      if (!ten) {
+        window.ShoesLish.Utils.hienToast('Vui lòng nhập họ và tên.', 'warning');
+        document.getElementById('lh-ten').focus();
+        return;
+      }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        window.ShoesLish.Utils.hienToast('Vui lòng nhập email hợp lệ.', 'warning');
+        document.getElementById('lh-email').focus();
+        return;
+      }
+      if (!noiDung || noiDung.length < 20) {
+        window.ShoesLish.Utils.hienToast('Nội dung phải có ít nhất 20 ký tự.', 'warning');
+        document.getElementById('lh-noi-dung').focus();
+        return;
+      }
+
+      var data = {
+        ten: ten,
+        email: email,
+        sdt: sdt,
+        chuDe: chuDe,
+        noiDung: noiDung,
+        ngayGui: new Date().toISOString()
+      };
+
+      var ds = JSON.parse(localStorage.getItem('shoeslish_lien_he') || '[]');
+      ds.push(data);
+      localStorage.setItem('shoeslish_lien_he', JSON.stringify(ds));
+
+      window.ShoesLish.Utils.hienToast('Tin nhắn đã được gửi! Chúng tôi sẽ phản hồi trong vòng 24 giờ.', 'success');
+      this.reset();
+    });
+  </script>
+</body>
+
+</html>

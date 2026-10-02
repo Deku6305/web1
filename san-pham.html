@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <title>Chi Tiết Sản Phẩm - ShoesLish</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/vendor.css">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    .product-gallery-main img { width: 100%; height: 450px; object-fit: cover; border-radius: 12px; cursor: zoom-in; }
+    .product-gallery-thumb { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    .product-gallery-thumb img { width: 70px; height: 70px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: border-color .2s; }
+    .product-gallery-thumb img.active { border-color: #111; }
+    .size-btn { border: 2px solid #ddd; background: white; padding: 8px 16px; border-radius: 6px; cursor: pointer; transition: all .2s; font-weight: 500; }
+    .size-btn:hover, .size-btn.selected { border-color: #111; background: #111; color: white; }
+    .size-btn.het-hang { opacity: 0.4; cursor: not-allowed; text-decoration: line-through; }
+    .mau-btn { border: 2px solid #ddd; background: white; padding: 6px 14px; border-radius: 20px; cursor: pointer; transition: all .2s; font-size: 13px; }
+    .mau-btn.selected { border-color: #111; background: #f0f0f0; }
+    .qty-control { display: flex; align-items: center; gap: 0; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; width: fit-content; }
+    .qty-control button { border: none; background: #f8f8f8; padding: 8px 16px; cursor: pointer; font-size: 18px; transition: background .2s; }
+    .qty-control button:hover { background: #e0e0e0; }
+    .qty-control input { border: none; border-left: 1px solid #ddd; border-right: 1px solid #ddd; width: 60px; text-align: center; font-size: 16px; font-weight: 600; padding: 8px 0; }
+    .btn-them-gio-chinh { background: #111; color: white; border: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600; width: 100%; cursor: pointer; transition: background .3s; }
+    .btn-them-gio-chinh:hover { background: #333; }
+    .tab-btn { border: none; background: none; padding: 12px 24px; font-weight: 600; cursor: pointer; border-bottom: 3px solid transparent; color: #888; }
+    .tab-btn.active { color: #111; border-bottom-color: #111; }
+    .tab-content-chi-tiet { display: none; padding: 20px 0; }
+    .tab-content-chi-tiet.active { display: block; }
+    .sp-lien-quan { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 10px; }
+    .sp-lq-card { flex: 0 0 200px; }
+    .sp-lq-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; }
+    .badge-sale-sp { position: absolute; top: 12px; left: 12px; background: #e74c3c; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; }
+    .badge-moi-sp { position: absolute; top: 12px; right: 12px; background: #27ae60; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <!-- SVG Symbols -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol xmlns="http://www.w3.org/2000/svg" id="shopping-carriage" viewBox="0 0 24 24" fill="none">
+      <path d="M5 22H19C20.103 22 21 21.103 21 20V9C21 8.73478 20.8946 8.48043 20.7071 8.29289C20.5196 8.10536 20.2652 8 20 8H17V7C17 4.243 14.757 2 12 2C9.243 2 7 4.243 7 7V8H4C3.73478 8 3.48043 8.10536 3.29289 8.29289C3.10536 8.48043 3 8.73478 3 9V20C3 21.103 3.897 22 5 22ZM9 7C9 5.346 10.346 4 12 4C13.654 4 15 5.346 15 7V8H9V7ZM5 10H7V12H9V10H15V12H17V10H19L19.002 20H5V10Z" fill="black"/>
+    </symbol>
+    <symbol id="quick-view" viewBox="0 0 24 24"><path fill="currentColor" d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396l1.414-1.414l-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8s3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6s-6-2.691-6-6s2.691-6 6-6z"/></symbol>
+    <symbol id="shopping-cart" viewBox="0 0 24 24" fill="none">
+      <path d="M21 4H2V6H4.3L7.582 15.025C7.79362 15.6029 8.1773 16.1021 8.68134 16.4552C9.18539 16.8083 9.78556 16.9985 10.401 17H19V15H10.401C9.982 15 9.604 14.735 9.461 14.342L8.973 13H18.246C19.136 13 19.926 12.402 20.169 11.549L21.962 5.275C22.0039 5.12615 22.0109 4.96962 21.9823 4.81763C21.9537 4.66565 21.8904 4.52234 21.7973 4.39889C21.7041 4.27544 21.5837 4.1752 21.4454 4.106C21.3071 4.0368 21.1546 4.00053 21 4ZM18.246 11H8.246L6.428 6H19.675L18.246 11Z" fill="black"/>
+      <path d="M10.5 21C11.3284 21 12 20.3284 12 19.5C12 18.6716 11.3284 18 10.5 18C9.67157 18 9 18.6716 9 19.5C9 20.3284 9.67157 21 10.5 21Z" fill="black"/>
+      <path d="M16.5 21C17.3284 21 18 20.3284 18 19.5C18 18.6716 17.3284 18 16.5 18C15.6716 18 15 18.6716 15 19.5C15 20.3284 15.6716 21 16.5 21Z" fill="black"/>
+    </symbol>
+    <symbol id="navbar-icon" viewBox="0 0 16 16"><path d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z"/></symbol>
+    <symbol id="close" viewBox="0 0 16 16"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/></symbol>
+    <symbol id="plus" viewBox="0 0 24 24"><path fill="currentColor" d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z"/></symbol>
+    <symbol id="minus" viewBox="0 0 24 24"><path fill="currentColor" d="M19 12.998H5v-2h14z"/></symbol>
+    <symbol id="user" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"/></symbol>
+    <symbol id="search" viewBox="0 0 24 24"><path fill="currentColor" d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396l1.414-1.414l-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8s3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6s-6-2.691-6-6s2.691-6 6-6z"/></symbol>
+    <symbol id="facebook" viewBox="0 0 24 24"><path fill="currentColor" d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.01h-2l-.396 3.98h2.396v8.01Z"/></symbol>
+    <symbol id="instagram" viewBox="0 0 256 256"><path fill="currentColor" d="M128 80a48 48 0 1 0 48 48a48.05 48.05 0 0 0-48-48Zm0 80a32 32 0 1 1 32-32a32 32 0 0 1-32 32Zm48-136H80a56.06 56.06 0 0 0-56 56v96a56.06 56.06 0 0 0 56 56h96a56.06 56.06 0 0 0 56-56V80a56.06 56.06 0 0 0-56-56Zm40 152a40 40 0 0 1-40 40H80a40 40 0 0 1-40-40V80a40 40 0 0 1 40-40h96a40 40 0 0 1 40 40ZM192 76a12 12 0 1 1-12-12a12 12 0 0 1 12 12Z"/></symbol>
+    <symbol id="youtube" viewBox="0 0 32 32"><path fill="currentColor" d="M29.41 9.26a3.5 3.5 0 0 0-2.47-2.47C24.76 6.2 16 6.2 16 6.2s-8.76 0-10.94.59a3.5 3.5 0 0 0-2.47 2.47A36.13 36.13 0 0 0 2 16a36.13 36.13 0 0 0 .59 6.74a3.5 3.5 0 0 0 2.47 2.47c2.18.59 10.94.59 10.94.59s8.76 0 10.94-.59a3.5 3.5 0 0 0 2.47-2.47A36.13 36.13 0 0 0 30 16a36.13 36.13 0 0 0-.59-6.74ZM13.2 20.2v-8.4l7.27 4.2Z"/></symbol>
+  </svg>
+
+  <!-- Preloader -->
+  <div class="preloader" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;">
+    <svg width="100" height="100" viewBox="0 0 50 100"><circle fill="#111" cx="6" cy="50" r="6"><animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.1"/></circle><circle fill="#111" cx="26" cy="50" r="6"><animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.2"/></circle><circle fill="#111" cx="46" cy="50" r="6"><animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.3"/></circle></svg>
+  </div>
+
+  <!-- Modal Đăng Nhập -->
+  <div class="modal fade" id="modallogin" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-3">
+        <div class="modal-header border-0 pb-0">
+          <ul class="nav nav-tabs border-0">
+            <li class="nav-item"><button class="nav-link active fw-bold px-4" data-bs-toggle="tab" data-bs-target="#tab-dang-nhap">Đăng Nhập</button></li>
+            <li class="nav-item"><button class="nav-link fw-bold px-4" data-bs-toggle="tab" data-bs-target="#tab-dang-ky">Đăng Ký</button></li>
+          </ul>
+          <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="tab-dang-nhap">
+              <form id="form-dang-nhap">
+                <div class="mb-3"><label class="form-label">Email *</label><input type="email" name="email" class="form-control" required></div>
+                <div class="mb-3"><label class="form-label">Mật khẩu *</label><input type="password" name="matkhau" class="form-control" required></div>
+                <p class="text-danger small" id="loi-dang-nhap"></p>
+                <button type="submit" class="btn btn-dark w-100">Đăng Nhập</button>
+              </form>
+            </div>
+            <div class="tab-pane fade" id="tab-dang-ky">
+              <form id="form-dang-ky">
+                <div class="mb-3"><label class="form-label">Họ và tên *</label><input type="text" name="ten" class="form-control" required></div>
+                <div class="mb-3"><label class="form-label">Email *</label><input type="email" name="email" class="form-control" required></div>
+                <div class="mb-3"><label class="form-label">Mật khẩu * (≥6 ký tự)</label><input type="password" name="matkhau" class="form-control" required minlength="6"></div>
+                <p class="text-danger small" id="loi-dang-ky"></p>
+                <button type="submit" class="btn btn-dark w-100">Đăng Ký</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Giỏ Hàng Mini -->
+  <div class="modal fade" id="modallong" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title fw-bold">Giỏ Hàng</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+        <div class="modal-body" style="max-height:60vh;overflow-y:auto;"><div id="mini-cart-items"></div></div>
+        <div class="modal-footer flex-column">
+          <div class="d-flex justify-content-between w-100 mb-2"><span class="fw-bold">Tạm tính:</span><span class="fw-bold" id="mini-cart-tong">0đ</span></div>
+          <div class="d-flex gap-2 w-100">
+            <a href="gio-hang.html" class="btn btn-outline-dark flex-fill" data-bs-dismiss="modal">Xem Giỏ Hàng</a>
+            <a href="thanh-toan.html" class="btn btn-dark flex-fill">Thanh Toán</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header id="header" class="site-header text-black">
+    <div class="header-top border-bottom py-2">
+      <div class="container-lg">
+        <div class="row justify-content-evenly align-items-center">
+          <div class="col">
+            <ul class="social-links list-unstyled d-flex m-0">
+              <li class="pe-2"><a href="#"><svg class="facebook" width="20" height="20"><use xlink:href="#facebook"></use></svg></a></li>
+              <li class="pe-2"><a href="#"><svg class="instagram" width="20" height="20"><use xlink:href="#instagram"></use></svg></a></li>
+              <li class="pe-2"><a href="#"><svg class="youtube" width="20" height="20"><use xlink:href="#youtube"></use></svg></a></li>
+            </ul>
+          </div>
+          <div class="col d-none d-md-block">
+            <p class="text-center text-black m-0"><strong>Ưu Đãi Đặc Biệt</strong>: Miễn phí vận chuyển cho đơn hàng từ 500.000đ</p>
+          </div>
+          <div class="col">
+            <ul class="d-flex justify-content-end gap-3 list-unstyled m-0">
+              <li><a href="lien-he.html">Liên Hệ</a></li>
+              <li><a href="gio-hang.html">Giỏ Hàng</a></li>
+              <li><a href="#" class="btn-show-login" data-bs-toggle="modal" data-bs-target="#modallogin">Đăng Nhập</a></li>
+              <li class="menu-tai-khoan" style="display:none"><a href="tai-khoan.html">Tài Khoản</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav id="header-nav" class="navbar navbar-expand-lg">
+      <div class="container-lg">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <img src="images/main-logo.png" class="logo" alt="ShoesLish" style="height:40px;">
+          <span class="brand-name ms-2 fw-bold fs-5">ShoesLish</span>
+        </a>
+        <button class="navbar-toggler d-flex d-lg-none order-3 border-0 p-1 ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar">
+          <svg class="navbar-icon" width="24" height="24"><use xlink:href="#navbar-icon"></use></svg>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar">
+          <div class="offcanvas-header px-4 pb-0">
+            <span class="fw-bold fs-5">ShoesLish</span>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav fw-bold justify-content-end align-items-center flex-grow-1">
+              <li class="nav-item"><a class="nav-link me-4" href="index.html">Trang Chủ</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link me-4 dropdown-toggle" href="#" data-bs-toggle="dropdown">Danh Mục</a>
+                <ul class="dropdown-menu fw-bold">
+                  <li><a href="cua-hang.html?danh-muc=nam" class="dropdown-item">Giày Nam</a></li>
+                  <li><a href="cua-hang.html?danh-muc=nu" class="dropdown-item">Giày Nữ</a></li>
+                  <li><a href="cua-hang.html?danh-muc=the-thao" class="dropdown-item">Thể Thao</a></li>
+                  <li><a href="cua-hang.html?danh-muc=lifestyle" class="dropdown-item">Lifestyle / Casual</a></li>
+                </ul>
+              </li>
+              <li class="nav-item"><a class="nav-link me-4" href="cua-hang.html">Cửa Hàng</a></li>
+              <li class="nav-item"><a class="nav-link me-4" href="cua-hang.html?chi-sale=1">Khuyến Mãi</a></li>
+              <li class="nav-item"><a class="nav-link me-4" href="lien-he.html">Liên Hệ</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="user-items ps-0 ps-md-4">
+          <ul class="d-flex list-unstyled align-items-center m-0 gap-3">
+            <li>
+              <a href="#" class="btn-show-login border-0" data-bs-toggle="modal" data-bs-target="#modallogin">
+                <svg width="24" height="24"><use xlink:href="#user"></use></svg>
+                <span class="ten-nguoi-dung d-none d-lg-inline ms-1">Tài khoản</span>
+              </a>
+            </li>
+            <li class="position-relative">
+              <a href="gio-hang.html" class="border-0">
+                <svg width="24" height="24"><use xlink:href="#shopping-cart"></use></svg>
+                <span class="cart-badge" style="display:none;">0</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main style="padding-top: 20px;">
+    <div class="container-lg">
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Trang Chủ</a></li>
+          <li class="breadcrumb-item"><a href="cua-hang.html">Cửa Hàng</a></li>
+          <li class="breadcrumb-item active" id="breadcrumb-ten-sp">Chi tiết sản phẩm</li>
+        </ol>
+      </nav>
+
+      <!-- Khu vực thông tin sản phẩm -->
+      <div class="row mb-5">
+        <!-- Cột ảnh -->
+        <div class="col-lg-6 mb-4">
+          <div class="position-relative">
+            <div class="product-gallery-main">
+              <img id="anh-chinh" src="images/card-item1.jpg" alt="Sản phẩm">
+            </div>
+            <div class="product-gallery-thumb" id="anh-thu"></div>
+          </div>
+        </div>
+
+        <!-- Cột thông tin -->
+        <div class="col-lg-6">
+          <div id="thong-tin-sp">
+            <!-- JS sẽ render vào đây -->
+            <p class="text-muted">Đang tải sản phẩm...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs thông tin thêm -->
+      <div class="mb-5">
+        <div class="border-bottom mb-0">
+          <button class="tab-btn active" onclick="doiTab(this, 'tab-mo-ta')">Mô Tả</button>
+          <button class="tab-btn" onclick="doiTab(this, 'tab-van-chuyen')">Vận Chuyển</button>
+          <button class="tab-btn" onclick="doiTab(this, 'tab-doi-tra')">Đổi Trả</button>
+        </div>
+        <div id="tab-mo-ta" class="tab-content-chi-tiet active">
+          <p id="mo-ta-chi-tiet">Đang tải...</p>
+        </div>
+        <div id="tab-van-chuyen" class="tab-content-chi-tiet">
+          <h5>Chính Sách Vận Chuyển</h5>
+          <ul>
+            <li>Miễn phí vận chuyển cho đơn hàng từ 500.000đ</li>
+            <li>Phí ship 30.000đ cho đơn dưới 500.000đ</li>
+            <li>Giao hàng 2-5 ngày làm việc toàn quốc</li>
+            <li>Giao hàng nhanh 1-2 ngày tại TP.HCM và Hà Nội</li>
+          </ul>
+        </div>
+        <div id="tab-doi-tra" class="tab-content-chi-tiet">
+          <h5>Chính Sách Đổi Trả</h5>
+          <ul>
+            <li>Đổi trả miễn phí trong vòng 30 ngày</li>
+            <li>Sản phẩm còn nguyên vẹn, chưa sử dụng</li>
+            <li>Đổi size miễn phí 1 lần</li>
+            <li>Liên hệ hotline 1800 6868 để được hỗ trợ</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Sản phẩm liên quan -->
+      <div class="mb-5">
+        <h3 class="fw-bold mb-4">Sản Phẩm Liên Quan</h3>
+        <div class="row row-cols-2 row-cols-md-4" id="sp-lien-quan"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer" class="py-5 border-top mt-5">
+    <div class="container-lg">
+      <div class="row">
+        <div class="col-lg-3 col-md-6 pb-4">
+          <h5 class="fw-bold pb-2">ShoesLish</h5>
+          <p class="text-muted small">Thương hiệu giày uy tín hàng đầu Việt Nam. Chất lượng chính hãng, giá tốt nhất.</p>
+        </div>
+        <div class="col-lg-2 col-md-6 pb-4">
+          <h5 class="pb-2">Danh Mục</h5>
+          <ul class="list-unstyled">
+            <li class="pb-2"><a href="cua-hang.html?danh-muc=nam">Giày Nam</a></li>
+            <li class="pb-2"><a href="cua-hang.html?danh-muc=nu">Giày Nữ</a></li>
+            <li class="pb-2"><a href="cua-hang.html?danh-muc=the-thao">Thể Thao</a></li>
+            <li class="pb-2"><a href="cua-hang.html?danh-muc=lifestyle">Lifestyle</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 pb-4">
+          <h5 class="pb-2">Hỗ Trợ</h5>
+          <ul class="list-unstyled">
+            <li class="pb-2"><a href="#">Theo Dõi Đơn Hàng</a></li>
+            <li class="pb-2"><a href="#">Đổi Trả</a></li>
+            <li class="pb-2"><a href="lien-he.html">Liên Hệ</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 pb-4">
+          <h5 class="pb-2">Tài Khoản</h5>
+          <ul class="list-unstyled">
+            <li class="pb-2"><a href="tai-khoan.html">Tài Khoản Của Tôi</a></li>
+            <li class="pb-2"><a href="gio-hang.html">Giỏ Hàng</a></li>
+            <li class="pb-2"><a href="tai-khoan.html">Đơn Hàng Của Tôi</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6 pb-4">
+          <h5 class="pb-2">Liên Hệ</h5>
+          <p class="small mb-1">123 Nguyễn Huệ, Q.1, TP.HCM</p>
+          <p class="small mb-1">Hotline: 1800 6868</p>
+          <p class="small mb-1">Email: info@shoeslish.vn</p>
+        </div>
+      </div>
+      <div class="row border-top pt-3">
+        <div class="col-md-6"><p class="text-muted small m-0">© 2024 ShoesLish. Bảo lưu mọi quyền.</p></div>
+        <div class="col-md-6 text-md-end"><p class="text-muted small m-0">COD | Chuyển khoản | Ví điện tử</p></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/jquery-1.11.0.min.js"></script>
+  <script src="js/plugins.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+  function doiTab(btn, tabId) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content-chi-tiet').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const { DANH_SACH_SAN_PHAM, GioHang, Utils, UI } = window.ShoesLish;
+    const id = new URLSearchParams(window.location.search).get('id');
+    const sp = DANH_SACH_SAN_PHAM.find(s => s.id === id);
+
+    if (!sp) {
+      document.getElementById('thong-tin-sp').innerHTML = '<div class="alert alert-warning">Không tìm thấy sản phẩm!</div>';
+      return;
+    }
+
+    // Cập nhật tiêu đề trang
+    document.title = sp.ten + ' - ShoesLish';
+    document.getElementById('breadcrumb-ten-sp').textContent = sp.ten;
+
+    // Cập nhật mô tả
+    document.getElementById('mo-ta-chi-tiet').textContent = sp.moTa;
+
+    // Ảnh chính
+    const anhChinh = document.getElementById('anh-chinh');
+    anhChinh.src = sp.anhGallery[0] || sp.anh;
+    anhChinh.alt = sp.ten;
+
+    // Thumbnails
+    const anhThu = document.getElementById('anh-thu');
+    if (sp.anhGallery && sp.anhGallery.length > 1) {
+      anhThu.innerHTML = sp.anhGallery.map((anh, i) =>
+        `<img src="${anh}" alt="${sp.ten} ${i+1}" class="${i===0?'active':''}" onclick="doiAnh(this, '${anh}')">`
+      ).join('');
+    }
+
+    const giamGia = sp.giaCu ? Math.round((1 - sp.gia / sp.giaCu) * 100) : 0;
+
+    // Render thông tin sản phẩm
+    document.getElementById('thong-tin-sp').innerHTML = `
+      <div class="mb-2">
+        ${sp.moi ? '<span class="badge bg-success me-2">Mới</span>' : ''}
+        ${sp.sale ? `<span class="badge bg-danger">Sale -${giamGia}%</span>` : ''}
+      </div>
+      <h1 class="fs-3 fw-bold mb-2">${sp.ten}</h1>
+      <div class="mb-3">
+        <span class="fs-2 fw-bold text-dark">${Utils.formatTien(sp.gia)}</span>
+        ${sp.giaCu ? `<span class="ms-3 text-muted text-decoration-line-through fs-5">${Utils.formatTien(sp.giaCu)}</span>` : ''}
+        ${giamGia > 0 ? `<span class="ms-2 badge bg-danger">-${giamGia}%</span>` : ''}
+      </div>
+      <p class="text-muted mb-4">${sp.moTa}</p>
+
+      <div class="mb-4">
+        <p class="fw-semibold mb-2">Chọn màu sắc:</p>
+        <div id="chon-mau" class="d-flex gap-2 flex-wrap">
+          ${sp.mauSac.map((mau, i) => `<button class="mau-btn ${i===0?'selected':''}" onclick="chonMau(this, '${mau}')">${mau}</button>`).join('')}
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <p class="fw-semibold mb-2">Chọn size:</p>
+        <div id="chon-size" class="d-flex gap-2 flex-wrap">
+          ${sp.size.map(s => {
+            const tonKho = sp.tonKho && sp.tonKho[s] !== undefined ? sp.tonKho[s] : 10;
+            return `<button class="size-btn ${tonKho <= 0 ? 'het-hang' : ''}" onclick="chonSize(this, ${s})" data-ton-kho="${tonKho}">${s}</button>`;
+          }).join('')}
+        </div>
+        <p class="text-muted small mt-2" id="thong-bao-ton-kho">* Vui lòng chọn size</p>
+      </div>
+
+      <div class="mb-4">
+        <p class="fw-semibold mb-2">Số lượng:</p>
+        <div class="qty-control">
+          <button onclick="thayDoiSoLuong(-1)">−</button>
+          <input type="number" id="so-luong" value="1" min="1" max="10" readonly>
+          <button onclick="thayDoiSoLuong(1)">+</button>
+        </div>
+      </div>
+
+      <button class="btn-them-gio-chinh mb-3" onclick="themVaoGio()">
+        <svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 7h12l1 14H5L6 7zM9 7a3 3 0 0 1 6 0"/></svg> Thêm Vào Giỏ Hàng
+      </button>
+      <a href="thanh-toan.html" class="btn btn-outline-dark w-100"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m13 2-9 12h7l-1 8 10-12h-7l1-8z"/></svg> Mua Ngay</a>
+
+      <div class="mt-4 p-3 bg-light rounded">
+        <div class="row text-center">
+          <div class="col-4"><div class="fw-bold"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></div><small>Hàng chính hãng</small></div>
+          <div class="col-4"><div class="fw-bold"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 10h11a6 6 0 0 1 0 12h-2M3 10l5-5M3 10l5 5"/></svg></div><small>Đổi trả 30 ngày</small></div>
+          <div class="col-4"><div class="fw-bold"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 7h11v11H3zM14 11h4l3 3v4h-7z"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="17.5" cy="18" r="1.5"/></svg></div><small>Ship toàn quốc</small></div>
+        </div>
+      </div>
+    `;
+
+    // Mặc định chọn màu đầu tiên
+    mauChon = sp.mauSac[0] || null;
+
+    // Sản phẩm liên quan
+    const spLQ = DANH_SACH_SAN_PHAM
+      .filter(s => s.id !== sp.id && s.danhMuc === sp.danhMuc)
+      .slice(0, 4);
+    const containerLQ = document.getElementById('sp-lien-quan');
+    if (containerLQ) {
+      containerLQ.innerHTML = spLQ.map(s => UI.renderCardSanPham(s)).join('');
+    }
+  });
+
+  let sizeChon = null;
+  let mauChon = null;
+
+  function doiAnh(el, src) {
+    document.getElementById('anh-chinh').src = src;
+    document.querySelectorAll('#anh-thu img').forEach(img => img.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function chonMau(el, mau) {
+    document.querySelectorAll('.mau-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    mauChon = mau;
+  }
+
+  function chonSize(el, size) {
+    if (el.classList.contains('het-hang')) return;
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    sizeChon = size;
+    const ton = el.dataset.tonKho;
+    document.getElementById('thong-bao-ton-kho').textContent = `Còn ${ton} đôi trong kho`;
+  }
+
+  function thayDoiSoLuong(delta) {
+    const input = document.getElementById('so-luong');
+    let val = parseInt(input.value) + delta;
+    if (val < 1) val = 1;
+    if (val > 10) val = 10;
+    input.value = val;
+  }
+
+  function themVaoGio() {
+    const { DANH_SACH_SAN_PHAM, GioHang, Utils } = window.ShoesLish;
+    const id = new URLSearchParams(window.location.search).get('id');
+    const sp = DANH_SACH_SAN_PHAM.find(s => s.id === id);
+    if (!sp) return;
+
+    if (!sizeChon) {
+      Utils.hienToast('Vui lòng chọn size trước!', 'warning');
+      return;
+    }
+
+    const soLuong = parseInt(document.getElementById('so-luong').value);
+    const mau = mauChon || sp.mauSac[0];
+
+    GioHang.them(id, sizeChon, mau, soLuong);
+  }
+  </script>
+</body>
+</html>

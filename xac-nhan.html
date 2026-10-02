@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đặt Hàng Thành Công – ShoesLish</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #f8f9fa; }
+    .site-header { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+    .social-links a, .header-top a { color: inherit; text-decoration: none; }
+    .header-top a:hover { opacity: .7; }
+    footer a { color: inherit; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .success-icon { width: 90px; height: 90px; background: #d1fae5; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 44px; }
+    .confirm-card { background: #fff; border-radius: 16px; box-shadow: 0 2px 16px rgba(0,0,0,.08); overflow: hidden; }
+    .confirm-card .card-header-custom { background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%); color: #fff; padding: 32px; text-align: center; }
+    .confirm-card .card-body-custom { padding: 28px; }
+    .info-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: #6c757d; font-size: 14px; flex-shrink: 0; margin-right: 16px; }
+    .info-value { font-weight: 600; font-size: 14px; text-align: right; }
+    .section-divider { background: #f8f9fa; padding: 12px 28px; font-weight: 700; font-size: 14px; color: #495057; text-transform: uppercase; letter-spacing: .5px; border-top: 1px solid #e9ecef; border-bottom: 1px solid #e9ecef; }
+    .progress-steps { display: flex; align-items: center; gap: 0; }
+    .step { display: flex; align-items: center; gap: 8px; }
+    .step-circle { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; border: 2px solid #dee2e6; background: #fff; color: #adb5bd; }
+    .step.done .step-circle { background: #198754; border-color: #198754; color: #fff; }
+    .step-label { font-size: 13px; color: #adb5bd; font-weight: 500; }
+    .step.done .step-label { color: #198754; font-weight: 700; }
+    .step-line { flex: 1; height: 2px; background: #198754; min-width: 40px; }
+    .cart-badge { position: absolute; top: -6px; right: -8px; background: #dc3545; color: #fff; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+    @keyframes bounceIn {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .success-icon { animation: bounceIn .6s ease-out; }
+  </style>
+</head>
+<body>
+
+<!-- SVG SYMBOLS -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="shopping-carriage" viewBox="0 0 24 24" fill="none"><path d="M5 22H19C20.103 22 21 21.103 21 20V9C21 8.73478 20.8946 8.48043 20.7071 8.29289C20.5196 8.10536 20.2652 8 20 8H17V7C17 4.243 14.757 2 12 2C9.243 2 7 4.243 7 7V8H4C3.73478 8 3.48043 8.10536 3.29289 8.29289C3.10536 8.48043 3 8.73478 3 9V20C3 21.103 3.897 22 5 22ZM9 7C9 5.346 10.346 4 12 4C13.654 4 15 5.346 15 7V8H9V7ZM5 10H7V12H9V10H15V12H17V10H19L19.002 20H5V10Z" fill="black"/></symbol>
+  <symbol id="shopping-cart" viewBox="0 0 24 24" fill="none"><path d="M21 4H2V6H4.3L7.582 15.025C7.79362 15.6029 8.1773 16.1021 8.68134 16.4552C9.18539 16.8083 9.78556 16.9985 10.401 17H19V15H10.401C9.982 15 9.604 14.735 9.461 14.342L8.973 13H18.246C19.136 13 19.926 12.402 20.169 11.549L21.962 5.275C22.0039 5.12615 22.0109 4.96962 21.9823 4.81763C21.9537 4.66565 21.8904 4.52234 21.7973 4.39889C21.7041 4.27544 21.5837 4.1752 21.4454 4.106C21.3071 4.0368 21.1546 4.00053 21 4ZM18.246 11H8.246L6.428 6H19.675L18.246 11Z" fill="black"/><path d="M10.5 21C11.3284 21 12 20.3284 12 19.5C12 18.6716 11.3284 18 10.5 18C9.67157 18 9 18.6716 9 19.5C9 20.3284 9.67157 21 10.5 21Z" fill="black"/><path d="M16.5 21C17.3284 21 18 20.3284 18 19.5C18 18.6716 17.3284 18 16.5 18C15.6716 18 15 18.6716 15 19.5C15 20.3284 15.6716 21 16.5 21Z" fill="black"/></symbol>
+  <symbol id="navbar-icon" viewBox="0 0 16 16"><path d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z"/></symbol>
+  <symbol id="close" viewBox="0 0 16 16"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/></symbol>
+  <symbol id="user" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24"><path fill="currentColor" d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396l1.414-1.414l-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8s3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6s-6-2.691-6-6s2.691-6 6-6z"/></symbol>
+  <symbol id="facebook" viewBox="0 0 24 24"><path fill="currentColor" d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.01h-2l-.396 3.98h2.396v8.01Z"/></symbol>
+  <symbol id="instagram" viewBox="0 0 256 256"><path fill="currentColor" d="M128 80a48 48 0 1 0 48 48a48.05 48.05 0 0 0-48-48Zm0 80a32 32 0 1 1 32-32a32 32 0 0 1-32 32Zm48-136H80a56.06 56.06 0 0 0-56 56v96a56.06 56.06 0 0 0 56 56h96a56.06 56.06 0 0 0 56-56V80a56.06 56.06 0 0 0-56-56Zm40 152a40 40 0 0 1-40 40H80a40 40 0 0 1-40-40V80a40 40 0 0 1 40-40h96a40 40 0 0 1 40 40ZM192 76a12 12 0 1 1-12-12a12 12 0 0 1 12 12Z"/></symbol>
+  <symbol id="youtube" viewBox="0 0 32 32"><path fill="currentColor" d="M29.41 9.26a3.5 3.5 0 0 0-2.47-2.47C24.76 6.2 16 6.2 16 6.2s-8.76 0-10.94.59a3.5 3.5 0 0 0-2.47 2.47A36.13 36.13 0 0 0 2 16a36.13 36.13 0 0 0 .59 6.74a3.5 3.5 0 0 0 2.47 2.47c2.18.59 10.94.59 10.94.59s8.76 0 10.94-.59a3.5 3.5 0 0 0 2.47-2.47A36.13 36.13 0 0 0 30 16a36.13 36.13 0 0 0-.59-6.74ZM13.2 20.2v-8.4l7.27 4.2Z"/></symbol>
+</svg>
+
+<!-- HEADER -->
+<header id="header" class="site-header text-black">
+  <div class="header-top border-bottom py-2">
+    <div class="container-lg">
+      <div class="row align-items-center">
+        <div class="col"><ul class="social-links list-unstyled d-flex m-0"><li class="pe-2"><a href="#"><svg class="facebook" width="20" height="20"><use xlink:href="#facebook"></use></svg></a></li><li class="pe-2"><a href="#"><svg class="instagram" width="20" height="20"><use xlink:href="#instagram"></use></svg></a></li></ul></div>
+        <div class="col d-none d-md-block"><p class="text-center m-0"><strong>Ưu Đãi</strong>: Miễn phí ship từ 500.000đ</p></div>
+        <div class="col"><ul class="d-flex justify-content-end gap-3 list-unstyled m-0"><li><a href="lien-he.html">Liên Hệ</a></li><li><a href="gio-hang.html">Giỏ Hàng</a></li><li><a href="#" class="btn-show-login" data-bs-toggle="modal" data-bs-target="#modallogin">Đăng Nhập</a></li><li class="menu-tai-khoan" style="display:none"><a href="tai-khoan.html">Tài Khoản</a></li></ul></div>
+      </div>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-lg">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="images/main-logo.png" style="height:36px;" alt="ShoesLish">
+        <span class="ms-2 fw-bold fs-5">ShoesLish</span>
+      </a>
+      <button class="navbar-toggler d-flex d-lg-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar"><svg width="24" height="24"><use xlink:href="#navbar-icon"></use></svg></button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar">
+        <div class="offcanvas-header"><span class="fw-bold fs-5">ShoesLish</span><button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button></div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav fw-bold justify-content-end align-items-center flex-grow-1">
+            <li class="nav-item"><a class="nav-link me-4" href="index.html">Trang Chủ</a></li>
+            <li class="nav-item dropdown"><a class="nav-link me-4 dropdown-toggle" href="#" data-bs-toggle="dropdown">Danh Mục</a><ul class="dropdown-menu"><li><a href="cua-hang.html?danh-muc=nam" class="dropdown-item">Giày Nam</a></li><li><a href="cua-hang.html?danh-muc=nu" class="dropdown-item">Giày Nữ</a></li><li><a href="cua-hang.html?danh-muc=the-thao" class="dropdown-item">Thể Thao</a></li><li><a href="cua-hang.html?danh-muc=lifestyle" class="dropdown-item">Lifestyle</a></li></ul></li>
+            <li class="nav-item"><a class="nav-link me-4" href="cua-hang.html">Cửa Hàng</a></li>
+            <li class="nav-item"><a class="nav-link me-4" href="lien-he.html">Liên Hệ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="user-items ms-3">
+        <ul class="d-flex list-unstyled align-items-center m-0 gap-3">
+          <li><a href="#" class="btn-show-login border-0" data-bs-toggle="modal" data-bs-target="#modallogin"><svg width="24" height="24"><use xlink:href="#user"></use></svg><span class="ten-nguoi-dung d-none d-lg-inline ms-1">Tài khoản</span></a></li>
+          <li class="position-relative"><a href="gio-hang.html" class="border-0"><svg width="24" height="24"><use xlink:href="#shopping-cart"></use></svg><span class="cart-badge" style="display:none;">0</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- MAIN -->
+<main class="py-5">
+  <div class="container-lg">
+
+    <!-- Progress Steps (tất cả done) -->
+    <div class="d-flex align-items-center mb-5 progress-steps">
+      <div class="step done">
+        <div class="step-circle"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></div>
+        <span class="step-label">Giỏ Hàng</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step done">
+        <div class="step-circle"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></div>
+        <span class="step-label">Thanh Toán</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step done">
+        <div class="step-circle"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></div>
+        <span class="step-label">Xác Nhận</span>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <!-- Icon thành công -->
+        <div class="text-center mb-4">
+          <div class="success-icon"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></div>
+          <h2 class="fw-bold">Đặt Hàng Thành Công!</h2>
+          <p class="text-muted">Cảm ơn bạn đã mua sắm tại ShoesLish. Chúng tôi sẽ liên hệ xác nhận đơn hàng sớm nhất.</p>
+        </div>
+
+        <!-- Card thông tin đơn hàng -->
+        <div class="confirm-card mb-4">
+          <!-- Header card -->
+          <div class="card-header-custom">
+            <p class="mb-1 small opacity-75">Mã đơn hàng</p>
+            <h4 class="fw-bold mb-1" id="ma-don-hang">--</h4>
+            <p class="mb-0 small opacity-75" id="ngay-dat">--</p>
+          </div>
+
+          <!-- Thông tin người nhận -->
+          <div class="section-divider"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m3 7 9-4 9 4v10l-9 4-9-4V7Z"/><path d="m3 7 9 4 9-4M12 11v10"/></svg> Thông Tin Giao Hàng</div>
+          <div class="card-body-custom">
+            <div class="info-row">
+              <span class="info-label">Người nhận</span>
+              <span class="info-value" id="ten-nguoi-nhan">--</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Số điện thoại</span>
+              <span class="info-value" id="sdt-nguoi-nhan">--</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Địa chỉ giao</span>
+              <span class="info-value" id="dia-chi-giao">--</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Phương thức thanh toán</span>
+              <span class="info-value" id="pttt-xn">--</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Thời gian dự kiến</span>
+              <span class="info-value text-success">2 – 5 ngày làm việc</span>
+            </div>
+          </div>
+
+          <!-- Danh sách sản phẩm -->
+          <div class="section-divider"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 7h12l1 14H5L6 7zM9 7a3 3 0 0 1 6 0"/></svg> Sản Phẩm Đã Đặt</div>
+          <div class="card-body-custom">
+            <div id="ds-sp-xn"></div>
+            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+              <span class="fw-bold fs-5">Tổng cộng</span>
+              <span class="fw-bold fs-4 text-danger" id="xn-tong-tien">--</span>
+            </div>
+          </div>
+
+          <!-- Hướng dẫn thanh toán -->
+          <div class="card-body-custom pt-0">
+            <div id="huong-dan-tt"></div>
+          </div>
+        </div>
+
+        <!-- Nút hành động -->
+        <div class="row g-3">
+          <div class="col-md-6">
+            <a href="tai-khoan.html" class="btn btn-dark w-100 py-3 fw-semibold">
+              <svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 3h10l4 4v14H3V3h4zM7 3v6h10V3M7 21v-8h10v8"/></svg> Xem Đơn Hàng Của Tôi
+            </a>
+          </div>
+          <div class="col-md-6">
+            <a href="index.html" class="btn btn-outline-dark w-100 py-3 fw-semibold">
+              <svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 7h12l1 14H5L6 7zM9 7a3 3 0 0 1 6 0"/></svg> Tiếp Tục Mua Sắm
+            </a>
+          </div>
+        </div>
+
+        <!-- Liên hệ hỗ trợ -->
+        <div class="text-center mt-4">
+          <p class="text-muted small mb-0">Cần hỗ trợ? Liên hệ hotline <strong>1800 6868</strong> hoặc email <strong>info@shoeslish.vn</strong></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="py-4 border-top mt-5">
+  <div class="container-lg">
+    <div class="row">
+      <div class="col-md-4 pb-3"><h5 class="fw-bold">ShoesLish</h5><p class="text-muted small">Giày thời trang chính hãng hàng đầu Việt Nam.</p></div>
+      <div class="col-md-2 pb-3"><h6>Danh Mục</h6><ul class="list-unstyled small"><li><a href="cua-hang.html?danh-muc=nam">Giày Nam</a></li><li><a href="cua-hang.html?danh-muc=nu">Giày Nữ</a></li><li><a href="cua-hang.html?danh-muc=the-thao">Thể Thao</a></li></ul></div>
+      <div class="col-md-2 pb-3"><h6>Hỗ Trợ</h6><ul class="list-unstyled small"><li><a href="lien-he.html">Liên Hệ</a></li><li><a href="#">Đổi Trả</a></li></ul></div>
+      <div class="col-md-4 pb-3"><h6>Liên Hệ</h6><p class="text-muted small mb-1">Hotline: 1800 6868</p><p class="text-muted small">Email: info@shoeslish.vn</p></div>
+    </div>
+    <div class="border-top pt-3"><p class="text-muted small text-center m-0">© 2024 ShoesLish. Bảo lưu mọi quyền.</p></div>
+  </div>
+</footer>
+
+<!-- MODAL ĐĂNG NHẬP -->
+<div class="modal fade" id="modallogin" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3">
+      <div class="modal-header border-0 pb-0">
+        <ul class="nav nav-tabs border-0"><li class="nav-item"><button class="nav-link active fw-bold px-4" data-bs-toggle="tab" data-bs-target="#tab-dang-nhap">Đăng Nhập</button></li><li class="nav-item"><button class="nav-link fw-bold px-4" data-bs-toggle="tab" data-bs-target="#tab-dang-ky">Đăng Ký</button></li></ul>
+        <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="tab-dang-nhap">
+            <form id="form-dang-nhap"><div class="mb-3"><label class="form-label">Email *</label><input type="email" name="email" class="form-control" required></div><div class="mb-3"><label class="form-label">Mật khẩu *</label><input type="password" name="matkhau" class="form-control" required></div><p class="text-danger small" id="loi-dang-nhap"></p><button type="submit" class="btn btn-dark w-100">Đăng Nhập</button></form>
+          </div>
+          <div class="tab-pane fade" id="tab-dang-ky">
+            <form id="form-dang-ky"><div class="mb-3"><label class="form-label">Họ và tên *</label><input type="text" name="ten" class="form-control" required></div><div class="mb-3"><label class="form-label">Email *</label><input type="email" name="email" class="form-control" required></div><div class="mb-3"><label class="form-label">Mật khẩu *</label><input type="password" name="matkhau" class="form-control" required minlength="6"></div><p class="text-danger small" id="loi-dang-ky"></p><button type="submit" class="btn btn-dark w-100">Đăng Ký</button></form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const { Utils } = window.ShoesLish;
+  const don = JSON.parse(localStorage.getItem('shoeslish_don_moi_nhat') || 'null');
+
+  if (!don) {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  document.getElementById('ma-don-hang').textContent = don.maDon;
+  document.getElementById('ngay-dat').textContent = new Date(don.ngayDat).toLocaleDateString('vi-VN', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+  document.getElementById('ten-nguoi-nhan').textContent = don.thongTinGiao.tenNguoiNhan;
+  document.getElementById('sdt-nguoi-nhan').textContent = don.thongTinGiao.soDienThoai;
+  document.getElementById('dia-chi-giao').textContent =
+    [don.thongTinGiao.diaChiCuThe, don.thongTinGiao.quanHuyen, don.thongTinGiao.tinhThanh]
+      .filter(Boolean).join(', ');
+  document.getElementById('pttt-xn').textContent = don.phuongThucThanhToan;
+
+  document.getElementById('ds-sp-xn').innerHTML = don.sanPham.map(item => `
+    <div class="d-flex align-items-center gap-3 py-2 border-bottom">
+      <img src="${item.anh}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;" alt="${item.ten}">
+      <div class="flex-grow-1">
+        <p class="mb-0 small fw-semibold">${item.ten}</p>
+        <p class="mb-0 small text-muted">Size ${item.size} x ${item.soLuong}</p>
+      </div>
+      <span class="small fw-bold">${Utils.formatTien(item.gia * item.soLuong)}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('xn-tong-tien').textContent = Utils.formatTien(don.tongTien);
+
+  // Hướng dẫn thanh toán
+  if (don.phuongThucThanhToan === 'Chuyển khoản ngân hàng') {
+    document.getElementById('huong-dan-tt').innerHTML = `
+      <div class="alert alert-info">
+        <strong>Thông tin chuyển khoản:</strong><br>
+        STK: <strong>1234567890</strong><br>
+        Ngân hàng: <strong>Vietcombank</strong><br>
+        Chủ TK: <strong>SHOESLISH</strong><br>
+        Nội dung: <strong>${don.maDon}</strong>
+      </div>`;
+  } else if (don.phuongThucThanhToan === 'Thanh toán khi nhận hàng') {
+    document.getElementById('huong-dan-tt').innerHTML =
+      '<div class="alert alert-success">Vui lòng chuẩn bị tiền mặt khi nhận hàng. Dự kiến giao trong 2–5 ngày làm việc.</div>';
+  }
+});
+</script>
+</body>
+</html>

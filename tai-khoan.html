@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tài Khoản – ShoesLish</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #f8f9fa; }
+    .site-header { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+    .social-links a, .header-top a { color: inherit; text-decoration: none; }
+    .header-top a:hover { opacity: .7; }
+    footer a { color: inherit; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* Sidebar */
+    .sidebar-card { background: #fff; border-radius: 14px; box-shadow: 0 1px 8px rgba(0,0,0,.07); overflow: hidden; }
+    .sidebar-avatar { width: 80px; height: 80px; border-radius: 50%; background: #212529; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; margin: 0 auto 12px; }
+    .tab-btn-tk { display: flex; align-items: center; gap: 10px; width: 100%; padding: 14px 20px; background: none; border: none; border-left: 3px solid transparent; text-align: left; font-size: 15px; font-weight: 500; color: #495057; cursor: pointer; transition: all .2s; }
+    .tab-btn-tk:hover { background: #f8f9fa; color: #212529; }
+    .tab-btn-tk.active { border-left-color: #212529; background: #f8f9fa; color: #212529; font-weight: 700; }
+    .tab-btn-tk.btn-logout { color: #dc3545; }
+    .tab-btn-tk.btn-logout:hover { background: #fff5f5; }
+
+    /* Content card */
+    .content-card { background: #fff; border-radius: 14px; box-shadow: 0 1px 8px rgba(0,0,0,.07); padding: 28px; }
+    .tab-content-tk { display: none; }
+    .tab-content-tk.active { display: block; }
+    .section-title { font-weight: 700; font-size: 18px; border-left: 4px solid #212529; padding-left: 12px; margin-bottom: 24px; }
+
+    /* Đơn hàng */
+    .table th { font-weight: 600; font-size: 13px; color: #6c757d; text-transform: uppercase; }
+    .order-empty { text-align: center; padding: 60px 20px; color: #adb5bd; }
+    .order-empty-icon { font-size: 56px; margin-bottom: 16px; }
+
+    /* Chưa đăng nhập */
+    .not-login-card { background: #fff; border-radius: 14px; box-shadow: 0 1px 8px rgba(0,0,0,.07); padding: 48px 24px; text-align: center; }
+    .not-login-icon { font-size: 60px; margin-bottom: 16px; }
+
+    /* Cart badge */
+    .cart-badge { position: absolute; top: -6px; right: -8px; background: #dc3545; color: #fff; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+
+    /* Toast */
+    .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; }
+  </style>
+</head>
+<body>
+
+<!-- SVG SYMBOLS -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="shopping-carriage" viewBox="0 0 24 24" fill="none"><path d="M5 22H19C20.103 22 21 21.103 21 20V9C21 8.73478 20.8946 8.48043 20.7071 8.29289C20.5196 8.10536 20.2652 8 20 8H17V7C17 4.243 14.757 2 12 2C9.243 2 7 4.243 7 7V8H4C3.73478 8 3.48043 8.10536 3.29289 8.29289C3.10536 8.48043 3 8.73478 3 9V20C3 21.103 3.897 22 5 22ZM9 7C9 5.346 10.346 4 12 4C13.654 4 15 5.346 15 7V8H9V7ZM5 10H7V12H9V10H15V12H17V10H19L19.002 20H5V10Z" fill="black"/></symbol>
+  <symbol id="shopping-cart" viewBox="0 0 24 24" fill="none"><path d="M21 4H2V6H4.3L7.582 15.025C7.79362 15.6029 8.1773 16.1021 8.68134 16.4552C9.18539 16.8083 9.78556 16.9985 10.401 17H19V15H10.401C9.982 15 9.604 14.735 9.461 14.342L8.973 13H18.246C19.136 13 19.926 12.402 20.169 11.549L21.962 5.275C22.0039 5.12615 22.0109 4.96962 21.9823 4.81763C21.9537 4.66565 21.8904 4.52234 21.7973 4.39889C21.7041 4.27544 21.5837 4.1752 21.4454 4.106C21.3071 4.0368 21.1546 4.00053 21 4ZM18.246 11H8.246L6.428 6H19.675L18.246 11Z" fill="black"/><path d="M10.5 21C11.3284 21 12 20.3284 12 19.5C12 18.6716 11.3284 18 10.5 18C9.67157 18 9 18.6716 9 19.5C9 20.3284 9.67157 21 10.5 21Z" fill="black"/><path d="M16.5 21C17.3284 21 18 20.3284 18 19.5C18 18.6716 17.3284 18 16.5 18C15.6716 18 15 18.6716 15 19.5C15 20.3284 15.6716 21 16.5 21Z" fill="black"/></symbol>
+  <symbol id="navbar-icon" viewBox="0 0 16 16"><path d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z"/></symbol>
+  <symbol id="close" viewBox="0 0 16 16"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/></symbol>
+  <symbol id="user" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24"><path fill="currentColor" d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396l1.414-1.414l-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8s3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6s-6-2.691-6-6s2.691-6 6-6z"/></symbol>
+  <symbol id="facebook" viewBox="0 0 24 24"><path fill="currentColor" d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.01h-2l-.396 3.98h2.396v8.01Z"/></symbol>
+  <symbol id="instagram" viewBox="0 0 256 256"><path fill="currentColor" d="M128 80a48 48 0 1 0 48 48a48.05 48.05 0 0 0-48-48Zm0 80a32 32 0 1 1 32-32a32 32 0 0 1-32 32Zm48-136H80a56.06 56.06 0 0 0-56 56v96a56.06 56.06 0 0 0 56 56h96a56.06 56.06 0 0 0 56-56V80a56.06 56.06 0 0 0-56-56Zm40 152a40 40 0 0 1-40 40H80a40 40 0 0 1-40-40V80a40 40 0 0 1 40-40h96a40 40 0 0 1 40 40ZM192 76a12 12 0 1 1-12-12a12 12 0 0 1 12 12Z"/></symbol>
+  <symbol id="youtube" viewBox="0 0 32 32"><path fill="currentColor" d="M29.41 9.26a3.5 3.5 0 0 0-2.47-2.47C24.76 6.2 16 6.2 16 6.2s-8.76 0-10.94.59a3.5 3.5 0 0 0-2.47 2.47A36.13 36.13 0 0 0 2 16a36.13 36.13 0 0 0 .59 6.74a3.5 3.5 0 0 0 2.47 2.47c2.18.59 10.94.59 10.94.59s8.76 0 10.94-.59a3.5 3.5 0 0 0 2.47-2.47A36.13 36.13 0 0 0 30 16a36.13 36.13 0 0 0-.59-6.74ZM13.2 20.2v-8.4l7.27 4.2Z"/></symbol>
+</svg>
+
+<!-- HEADER -->
+<header id="header" class="site-header text-black">
+  <div class="header-top border-bottom py-2">
+    <div class="container-lg">
+      <div class="row align-items-center">
+        <div class="col"><ul class="social-links list-unstyled d-flex m-0"><li class="pe-2"><a href="#"><svg class="facebook" width="20" height="20"><use xlink:href="#facebook"></use></svg></a></li><li class="pe-2"><a href="#"><svg class="instagram" width="20" height="20"><use xlink:href="#instagram"></use></svg></a></li></ul></div>
+        <div class="col d-none d-md-block"><p class="text-center m-0"><strong>Ưu Đãi</strong>: Miễn phí ship từ 500.000đ</p></div>
+        <div class="col"><ul class="d-flex justify-content-end gap-3 list-unstyled m-0"><li><a href="lien-he.html">Liên Hệ</a></li><li><a href="gio-hang.html">Giỏ Hàng</a></li><li><a href="#" class="btn-show-login" data-bs-toggle="modal" data-bs-target="#modallogin">Đăng Nhập</a></li><li class="menu-tai-khoan" style="display:none"><a href="tai-khoan.html">Tài Khoản</a></li></ul></div>
+      </div>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-lg">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="images/main-logo.png" style="height:36px;" alt="ShoesLish">
+        <span class="ms-2 fw-bold fs-5">ShoesLish</span>
+      </a>
+      <button class="navbar-toggler d-flex d-lg-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar"><svg width="24" height="24"><use xlink:href="#navbar-icon"></use></svg></button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar">
+        <div class="offcanvas-header"><span class="fw-bold fs-5">ShoesLish</span><button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button></div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav fw-bold justify-content-end align-items-center flex-grow-1">
+            <li class="nav-item"><a class="nav-link me-4" href="index.html">Trang Chủ</a></li>
+            <li class="nav-item dropdown"><a class="nav-link me-4 dropdown-toggle" href="#" data-bs-toggle="dropdown">Danh Mục</a><ul class="dropdown-menu"><li><a href="cua-hang.html?danh-muc=nam" class="dropdown-item">Giày Nam</a></li><li><a href="cua-hang.html?danh-muc=nu" class="dropdown-item">Giày Nữ</a></li><li><a href="cua-hang.html?danh-muc=the-thao" class="dropdown-item">Thể Thao</a></li><li><a href="cua-hang.html?danh-muc=lifestyle" class="dropdown-item">Lifestyle</a></li></ul></li>
+            <li class="nav-item"><a class="nav-link me-4" href="cua-hang.html">Cửa Hàng</a></li>
+            <li class="nav-item"><a class="nav-link me-4" href="lien-he.html">Liên Hệ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="user-items ms-3">
+        <ul class="d-flex list-unstyled align-items-center m-0 gap-3">
+          <li><a href="#" class="btn-show-login border-0" data-bs-toggle="modal" data-bs-target="#modallogin"><svg width="24" height="24"><use xlink:href="#user"></use></svg><span class="ten-nguoi-dung d-none d-lg-inline ms-1">Tài khoản</span></a></li>
+          <li class="position-relative"><a href="gio-hang.html" class="border-0"><svg width="24" height="24"><use xlink:href="#shopping-cart"></use></svg><span class="cart-badge" style="display:none;">0</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- MAIN -->
+<main class="py-5">
+  <div class="container-lg">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Trang Chủ</a></li>
+        <li class="breadcrumb-item active">Tài Khoản</li>
+      </ol>
+    </nav>
+
+    <!-- KHU CHƯA ĐĂNG NHẬP -->
+    <div id="khu-chua-dangnhap" style="display:none;">
+      <div class="row justify-content-center">
+        <div class="col-lg-5">
+          <div class="not-login-card">
+            <div class="not-login-icon"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="11" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg></div>
+            <h4 class="fw-bold mb-2">Bạn chưa đăng nhập</h4>
+            <p class="text-muted mb-4">Vui lòng đăng nhập để xem thông tin tài khoản và lịch sử đơn hàng của bạn.</p>
+            <button class="btn btn-dark px-5 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#modallogin">
+              Đăng Nhập Ngay
+            </button>
+            <div class="mt-3">
+              <p class="text-muted small mb-0">Chưa có tài khoản?
+                <a href="#" data-bs-toggle="modal" data-bs-target="#modallogin" class="fw-semibold text-dark">Đăng ký miễn phí</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KHU ĐÃ ĐĂNG NHẬP -->
+    <div id="khu-tai-khoan" style="display:none;">
+      <div class="row g-4">
+
+        <!-- SIDEBAR -->
+        <div class="col-lg-3">
+          <div class="sidebar-card">
+            <!-- Avatar & tên -->
+            <div class="text-center pt-4 pb-3 px-3 border-bottom">
+              <div class="sidebar-avatar" id="avatar-chu">U</div>
+              <p class="fw-bold mb-0" id="ten-chao">Xin chào!</p>
+              <p class="text-muted small mb-0" id="email-sidebar"></p>
+            </div>
+            <!-- Menu tabs -->
+            <div class="py-2">
+              <button class="tab-btn-tk active" data-tab="tab-thong-tin" onclick="doiTab('tab-thong-tin')">
+                <svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> Thông Tin Cá Nhân
+              </button>
+              <button class="tab-btn-tk" data-tab="tab-don-hang" onclick="doiTab('tab-don-hang')">
+                <svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m3 7 9-4 9 4v10l-9 4-9-4V7Z"/><path d="m3 7 9 4 9-4M12 11v10"/></svg> Đơn Hàng Của Tôi
+              </button>
+              <button class="tab-btn-tk btn-logout" id="btn-dang-xuat">
+                <svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/></svg> Đăng Xuất
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- NỘI DUNG -->
+        <div class="col-lg-9">
+
+          <!-- TAB: THÔNG TIN CÁ NHÂN -->
+          <div class="content-card tab-content-tk active" id="tab-thong-tin">
+            <h5 class="section-title">Thông Tin Cá Nhân</h5>
+            <form id="form-cap-nhat" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Họ và tên <span class="text-danger">*</span></label>
+                  <input type="text" id="tk-ten" class="form-control" placeholder="Nguyễn Văn A" required>
+                  <div class="invalid-feedback">Vui lòng nhập họ tên.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Email</label>
+                  <input type="email" id="tk-email" class="form-control bg-light" readonly>
+                  <small class="text-muted">Email không thể thay đổi</small>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Số điện thoại</label>
+                  <input type="tel" id="tk-sdt" class="form-control" placeholder="0912345678"
+                    pattern="(0|\+84)[0-9]{9}">
+                  <div class="invalid-feedback">Vui lòng nhập số điện thoại hợp lệ.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Địa chỉ</label>
+                  <input type="text" id="tk-diachi" class="form-control" placeholder="Số nhà, đường, quận, tỉnh...">
+                </div>
+                <div class="col-12 pt-2">
+                  <button type="submit" class="btn btn-dark px-5 py-2 fw-semibold">
+                    <svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg> Lưu Thay Đổi
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- TAB: ĐƠN HÀNG -->
+          <div class="content-card tab-content-tk" id="tab-don-hang">
+            <h5 class="section-title">Đơn Hàng Của Tôi</h5>
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Mã Đơn</th>
+                    <th>Ngày Đặt</th>
+                    <th>Tổng Tiền</th>
+                    <th>Trạng Thái</th>
+                    <th>Hành Động</th>
+                  </tr>
+                </thead>
+                <tbody id="ds-don-hang">
+                  <!-- Render bởi JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="py-4 border-top mt-5">
+  <div class="container-lg">
+    <div class="row">
+      <div class="col-md-4 pb-3"><h5 class="fw-bold">ShoesLish</h5><p class="text-muted small">Giày thời trang chính hãng hàng đầu Việt Nam.</p></div>
+      <div class="col-md-2 pb-3"><h6>Danh Mục</h6><ul class="list-unstyled small"><li><a href="cua-hang.html?danh-muc=nam">Giày Nam</a></li><li><a href="cua-hang.html?danh-muc=nu">Giày Nữ</a></li><li><a href="cua-hang.html?danh-muc=the-thao">Thể Thao</a></li></ul></div>
+      <div class="col-md-2 pb-3"><h6>Hỗ Trợ</h6><ul class="list-unstyled small"><li><a href="lien-he.html">Liên Hệ</a></li><li><a href="#">Đổi Trả</a></li></ul></div>
+      <div class="col-md-4 pb-3"><h6>Liên Hệ</h6><p class="text-muted small mb-1">Hotline: 1800 6868</p><p class="text-muted small">Email: info@shoeslish.vn</p></div>
+    </div>
+    <div class="border-top pt-3"><p class="text-muted small text-center m-0">© 2024 ShoesLish. Bảo lưu mọi quyền.</p></div>
+  </div>
+</footer>
+
+<!-- MODAL ĐĂNG NHẬP -->
+<div class="modal fade" id="modallogin" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3">
+      <div class="modal-header border-0 pb-0">
+        <ul class="nav nav-tabs border-0"><li class="nav-item"><button class="nav-link active fw-bold px-4" data-bs-toggle="tab" data-bs-target="#tab-dang-nhap">Đăng Nhập</button></li><li class="nav-item"><button class="nav-link fw-bold px-4" data-bs-toggle="tab" data-bs-target="#tab-dang-ky">Đăng Ký</button></li></ul>
+        <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="tab-dang-nhap">
+            <form id="form-dang-nhap"><div class="mb-3"><label class="form-label">Email *</label><input type="email" name="email" class="form-control" required></div><div class="mb-3"><label class="form-label">Mật khẩu *</label><input type="password" name="matkhau" class="form-control" required></div><p class="text-danger small" id="loi-dang-nhap"></p><button type="submit" class="btn btn-dark w-100">Đăng Nhập</button></form>
+          </div>
+          <div class="tab-pane fade" id="tab-dang-ky">
+            <form id="form-dang-ky"><div class="mb-3"><label class="form-label">Họ và tên *</label><input type="text" name="ten" class="form-control" required></div><div class="mb-3"><label class="form-label">Email *</label><input type="email" name="email" class="form-control" required></div><div class="mb-3"><label class="form-label">Mật khẩu *</label><input type="password" name="matkhau" class="form-control" required minlength="6"></div><p class="text-danger small" id="loi-dang-ky"></p><button type="submit" class="btn btn-dark w-100">Đăng Ký</button></form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toast-container"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const { NguoiDung, DonHang, Utils } = window.ShoesLish;
+
+  const nguoi = NguoiDung.layHienTai();
+
+  if (!nguoi) {
+    document.getElementById('khu-chua-dangnhap').style.display = 'block';
+    document.getElementById('khu-tai-khoan').style.display = 'none';
+    return;
+  }
+
+  document.getElementById('khu-chua-dangnhap').style.display = 'none';
+  document.getElementById('khu-tai-khoan').style.display = 'block';
+
+  const nguoiDayDu = NguoiDung.layThongTinDayDu();
+
+  // Điền thông tin cá nhân
+  if (nguoiDayDu) {
+    document.getElementById('tk-ten').value = nguoiDayDu.ten || '';
+    document.getElementById('tk-email').value = nguoiDayDu.email || '';
+    document.getElementById('tk-sdt').value = nguoiDayDu.soDienThoai || '';
+    document.getElementById('tk-diachi').value = nguoiDayDu.diaChi || '';
+    // Avatar: chữ cái đầu
+    document.getElementById('avatar-chu').textContent = (nguoiDayDu.ten || 'U').charAt(0).toUpperCase();
+    document.getElementById('ten-chao').textContent = 'Xin chào, ' + nguoiDayDu.ten + '!';
+    const emailSidebar = document.getElementById('email-sidebar');
+    if (emailSidebar) emailSidebar.textContent = nguoiDayDu.email || '';
+  }
+
+  // Lưu thông tin cá nhân
+  document.getElementById('form-cap-nhat').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!this.checkValidity()) {
+      this.classList.add('was-validated');
+      return;
+    }
+    const ok = NguoiDung.capNhatThongTin({
+      ten: document.getElementById('tk-ten').value.trim(),
+      soDienThoai: document.getElementById('tk-sdt').value.trim(),
+      diaChi: document.getElementById('tk-diachi').value.trim(),
+    });
+    if (ok) {
+      Utils.hienToast('Đã cập nhật thông tin thành công!', 'success');
+      // Cập nhật lại avatar và tên chào
+      const newTen = document.getElementById('tk-ten').value.trim();
+      document.getElementById('avatar-chu').textContent = (newTen || 'U').charAt(0).toUpperCase();
+      document.getElementById('ten-chao').textContent = 'Xin chào, ' + newTen + '!';
+    } else {
+      Utils.hienToast('Có lỗi xảy ra, vui lòng thử lại!', 'danger');
+    }
+  });
+
+  // Đăng xuất
+  document.getElementById('btn-dang-xuat').addEventListener('click', () => {
+    if (confirm('Bạn có chắc muốn đăng xuất không?')) {
+      NguoiDung.dangXuat();
+    }
+  });
+
+  // Render đơn hàng
+  const donHangs = DonHang.layTheoNguoiDung(nguoi.id);
+  const container = document.getElementById('ds-don-hang');
+
+  if (donHangs.length === 0) {
+    container.innerHTML = `
+      <tr>
+        <td colspan="5">
+          <div class="order-empty">
+            <div class="order-empty-icon"><svg class="sl-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m3 7 9-4 9 4v10l-9 4-9-4V7Z"/><path d="m3 7 9 4 9-4M12 11v10"/></svg></div>
+            <p class="fw-semibold mb-1">Bạn chưa có đơn hàng nào</p>
+            <p class="text-muted small mb-3">Hãy mua sắm và đặt hàng đầu tiên của bạn!</p>
+            <a href="cua-hang.html" class="btn btn-dark px-4">Mua Sắm Ngay</a>
+          </div>
+        </td>
+      </tr>`;
+  } else {
+    container.innerHTML = donHangs.map(don => `
+      <tr>
+        <td><strong class="small">${don.maDon}</strong></td>
+        <td class="small">${new Date(don.ngayDat).toLocaleDateString('vi-VN')}</td>
+        <td class="small fw-semibold">${Utils.formatTien(don.tongTien)}</td>
+        <td><span class="badge bg-warning text-dark">${don.trangThai || 'Đang xử lý'}</span></td>
+        <td>
+          <button class="btn btn-sm btn-outline-dark" onclick="xemChiTiet('${don.maDon}')">
+            Xem
+          </button>
+        </td>
+      </tr>
+      <tr id="chi-tiet-${don.maDon}" style="display:none;">
+        <td colspan="5">
+          <div class="p-3 bg-light rounded">
+            <p class="fw-semibold mb-2 small">Sản phẩm đã đặt:</p>
+            ${don.sanPham.map(sp => `
+              <div class="d-flex gap-2 mb-2 align-items-center">
+                <img src="${sp.anh}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;" alt="${sp.ten}">
+                <div>
+                  <small class="fw-bold d-block">${sp.ten}</small>
+                  <small class="text-muted">Size ${sp.size} × ${sp.soLuong} — ${Utils.formatTien(sp.gia * sp.soLuong)}</small>
+                </div>
+              </div>`).join('')}
+            <hr class="my-2">
+            <p class="mb-1 small"><strong>Giao đến:</strong> ${[don.thongTinGiao.diaChiCuThe, don.thongTinGiao.quanHuyen, don.thongTinGiao.tinhThanh].filter(Boolean).join(', ')}</p>
+            <p class="mb-1 small"><strong>Thanh toán:</strong> ${don.phuongThucThanhToan}</p>
+            <p class="mb-0 small"><strong>Người nhận:</strong> ${don.thongTinGiao.tenNguoiNhan} – ${don.thongTinGiao.soDienThoai}</p>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+});
+
+function xemChiTiet(maDon) {
+  const row = document.getElementById('chi-tiet-' + maDon);
+  if (row) row.style.display = row.style.display === 'none' ? '' : 'none';
+}
+
+function doiTab(tabId) {
+  document.querySelectorAll('.tab-content-tk').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn-tk').forEach(b => b.classList.remove('active'));
+  const targetTab = document.getElementById(tabId);
+  if (targetTab) targetTab.classList.add('active');
+  const targetBtn = document.querySelector(`[data-tab="${tabId}"]`);
+  if (targetBtn) targetBtn.classList.add('active');
+}
+</script>
+</body>
+</html>
