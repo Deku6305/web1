@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="utf-8">
+        <title>CHECK BOOK STORE</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="eCommerce HTML Template Free Download" name="keywords">
+        <meta content="eCommerce HTML Template Free Download" name="description">
+
+        <!-- Favicon -->
+        <link href="img/tieude.jpg" rel="icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
+
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="lib/slick/slick.css" rel="stylesheet">
+        <link href="lib/slick/slick-theme.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/fix.css" rel="stylesheet">
+        <style>
+            .search input,
+            .form-control {
+            color: #000; /* đảm bảo chữ nhập vào màu đen */
+            }
+
+            /* Modern browsers */
+            .search input::placeholder,
+            .form-control::placeholder {
+            color: #000;
+            opacity: 1; /* nhiều trình duyệt dùng opacity mặc định <1 */
+            }
+.footer {
+    margin-top: 20px;
+}
+            /* WebKit (Chrome, Safari, newer) */
+            .search input::-webkit-input-placeholder {
+            color: #000;
+            opacity: 1;
+            }
+
+            /* Firefox 19+ */
+            .search input::-moz-placeholder {
+            color: #000;
+            opacity: 1;
+            }
+
+            /* IE 10+ */
+            .search input:-ms-input-placeholder {
+            color: #000;
+            }
+
+            /* Edge */
+            .search input::-ms-input-placeholder {
+            color: #000;
+            }
+
+            /* Container tổng cho vùng search */
+            .search-container {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                width: 100%;
+            }
+
+            /* Thanh search bên trái */
+            .search {
+                position: relative;
+                flex: 1;
+                display: flex;
+                align-items: center;
+            }
+
+            .search input {
+                width: 100%;
+                padding-right: 30px; /* Chừa chỗ cho nút search sát rìa */
+            }
+
+            .search button {
+                position: absolute !important;
+                right: 0 !important;
+                top: 0 !important;
+                bottom: 0 !important;
+                z-index: 2;
+                background: transparent !important;
+                border: none !important;
+                padding: 0 18px !important;
+                color: #ff6f61 !important;
+                height: 100% !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                border-radius: 0 !important;
+                cursor: pointer;
+                margin: 0 !important;
+            }
+
+            .search button:hover {
+                background: #ff6f61 !important;
+                color: white !important;
+            }
+
+            .search button i {
+                font-size: 16px;
+                line-height: 1;
+            }
+
+            /* Nút phễu bên phải thanh search */
+            .filter-button-container {
+                flex-shrink: 0;
+            }
+
+            /* Nút phễu lọc */
+            .filter-btn {
+                width: 45px;
+                height: 45px;
+                border-radius: 8px;
+                background: white;
+                border: 2px solid #28a745;
+                color: #28a745;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .filter-btn:hover {
+                background: #28a745;
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            }
+
+            /* Modal tìm kiếm nâng cao */
+            .advanced-search-modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.5);
+                animation: fadeIn 0.3s ease;
+            }
+
+            @keyframes fadeIn {
+                from {opacity: 0;}
+                to {opacity: 1;}
+            }
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+            .modal-content {
+                background-color: white;
+                margin: 3% auto;
+                padding: 0;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 500px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                animation: slideIn 0.3s ease;
+            }
+
+            @keyframes slideIn {
+                from {
+                    transform: translateY(-50px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .modal-header {
+                padding: 15px 20px;
+                border-bottom: 1px solid #eee;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .modal-header h3 {
+                margin: 0;
+                color: #333;
+            }
+
+            .close-modal {
+                background: none;
+                border: none;
+                font-size: 24px;
+                cursor: pointer;
+                color: #999;
+            }
+
+            .close-modal:hover {
+                color: #333;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: 600;
+                color: #333;
+            }
+
+            .form-group input,
+            .form-group select {
+                width: 100%;
+                padding: 8px 12px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 14px;
+                min-height: 42px;
+                box-sizing: border-box;
+            }
+
+            .price-range {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .price-range input {
+                width: calc(50% - 5px);
+            }
+
+            .form-actions {
+                display: flex;
+                gap: 10px;
+                justify-content: flex-end;
+            }
+
+            .btn-search {
+                background: #28a745;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: 600;
+            }
+
+            .btn-reset {
+                background: #6c757d;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+             select.form-control option[value=""] {
+  color: #999;
+}
+
+/* Style cho các option khác của select */
+select.form-control option {
+  color: #000;
+}
+        /* Các style hiện có giữ nguyên */
+        .search input,
+        .form-control {
+        color: #000;
+        }
+
+        .search input::placeholder,
+        .form-control::placeholder {
+        color: #999;
+        opacity: 1;
+        }
+
+        /* Style cho nút thêm địa chỉ mới */
+        .btn-new-address {
+            background-color: #ff7b00;
+            border-color: #ff7b00;
+            color: white;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn-new-address:hover {
+            background-color: #e66a00;
+            border-color: #e66a00;
+            color: white;
+        }
+        
+        /* Style cho modal form địa chỉ */
+        .address-form .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .address-form label {
+            font-weight: bold;
+        }
+        </style>
+    </head>
+
+    <body>
+        <!-- Header Start -->
+        
+         <div class="nav">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                  <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto">
+                            <a href="index2.html" class="nav-item nav-link active">Trang chủ</a>
+                            <a href="contact.html" class="nav-item nav-link">Liên hệ</a>
+                        </div>
+                        <div class="navbar-nav ml-auto">
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> <i class="fas fa-user"></i> &nbsp;Huynh Duc</a>
+                                <div class="dropdown-menu">
+                                      <a href="thongtintaikhoan.html" class="dropdown-item"><i class="fa fa-id-card me-2"></i>  &nbsp;Thông tin</a>
+                                    <a href="lichsumuahang.html" class="dropdown-item"> <i class="fa fa-history me-2"></i>&nbsp;Lịch sử mua hàng</a>
+
+                                    <a href="login.html" class="dropdown-item"> <i class="fa fa-sign-out-alt me-2"></i>&nbsp;Đăng xuất</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="bottom-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="logo">
+                            <a href="index2.html">
+                                <img src="img/logo.png" alt="Logo">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="search-container">
+                            <div class="search">
+                                <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm">
+                                <button id="searchBtn"><i class="fa fa-search"></i></button>
+                            </div>
+                            <div class="filter-button-container">
+                                <button id="filterBtn" class="filter-btn" title="Tìm kiếm nâng cao">
+                                    <i class="fas fa-filter"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="user">
+                            <a href="cart.html" class="btn cart">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb-wrap">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index2.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="cart.html">Giỏ hàng</a></li>
+                    <li class="breadcrumb-item active">Thanh toán</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+
+        <!-- Checkout Start -->
+        <div class="checkout">
+        <div class="container-fluid">
+            <!-- Error message placeholder (hidden by default) -->
+            <div class="alert alert-danger text-center" style="display: none;" id="error-message">
+                <i class="fa fa-exclamation-circle"></i> <span id="error-text"></span>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-8">
+                    <form method="POST" action="#" id="checkoutForm">
+                        <div class="checkout-inner">
+                            <div class="billing-address">
+                                <h2>DANH SÁCH SẢN PHẨM ĐÃ ĐẶT</h2>
+                                <div class="cart-page-inner">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="background-color: #ffffff; color: #000000;">Sản phẩm</th>
+                                                    <th style="background-color: #ffffff; color: #000000;">Giá</th>
+                                                    <th style="background-color: #ffffff; color: #000000;">Số lượng</th>
+                                                    <th style="background-color: #ffffff; color: #000000;">Tổng tiền</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="align-middle" id="product-list">
+                                                <!-- Sample product data -->
+                                                <tr>
+                                                    <td>
+                                                        <div class="img">
+                                                            <img src="img/book1.webp" alt="Image">
+                                                            <p>Hiểu về trái tim</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>70.000đ</td>
+                                                    <td>2</td>
+                                                    <td>140.000đ</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="img">
+                                                            <img src="img/book4.webp" alt="Image">
+                                                            <p>Sự im lặng của bầy cừu</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>150.000đ</td>
+                                                    <td>1</td>
+                                                    <td>150.000đ</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Shipping address form đã được cập nhật -->
+                            <div class="shipping-address mt-4" id="shipping-form">
+                                <h2>THÔNG TIN GIAO HÀNG</h2>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Họ và tên:</label>
+                                            <input class="form-control" type="text" value="Huỳnh Hữu Đức" name="fullname" placeholder="Nhập họ và tên" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Số điện thoại:</label>
+                                            <input class="form-control" type="tel" value="0123456789" name="phone" placeholder="Nhập số điện thoại" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Địa chỉ giao hàng:</label>
+                                            <select class="form-control" id="address-select" name="address" required>
+                                                <option value="" selected>Chọn địa chỉ giao hàng</option>
+                                                <option value="123 Đường Nguyễn Văn Linh, Phường Bình Thuận, Quận 7, Hồ Chí Minh">273 An Dương Vương, Phường Chợ Quán,Hồ Chí Minh</option>
+                                                <option value="456 Đường Lê Văn Việt, Phường Tăng Nhơn Phú A, Quận 9, Hồ Chí Minh">456 Lê Văn Việt,Phường Tăng Nhơn Phú A,Hồ Chí Minh</option>
+                                                <option value="789 Đường Nguyễn Thị Thập, Phường Tân Phú, Quận 7, Hồ Chí Minh">789 Nguyễn Thị Thập, Phường Tân Phú,Hồ Chí Minh</option>
+                                                
+                                            </select>
+                                            <button type="button" class="btn btn-new-address" id="btn-new-address">Thêm địa chỉ mới</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-lg-4">
+                    <div class="checkout-inner">
+                        <div class="checkout-summary">
+                            <h1>Thông tin đơn hàng</h1>
+                            <p class="sub-total">Tiền Hàng<span id="subtotal">290.000đ</span></p>
+                            <p class="ship-cost">Phí Ship<span>Freeship</span></p>
+                            <h2>Tổng Cộng<span id="total">290.000đ</span></h2>
+                        </div>
+
+                        <div class="checkout-payment">
+                            <div class="payment-methods">
+                                <h2>Phương Thức Thanh Toán</h2>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="payment-method">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="payment-1" name="payment_method" value="MOMO" onclick="showQRCode('momo')" required>
+                                                <label class="custom-control-label" for="payment-1">MOMO</label>
+                                            </div>
+                                        </div>
+                                        <div class="payment-method">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="payment-2" name="payment_method" value="Zalo Pay" onclick="showQRCode('zalo')" required>
+                                                <label class="custom-control-label" for="payment-2">Zalo Pay</label>
+                                            </div>
+                                        </div>
+                                        <div class="payment-method">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="payment-5" name="payment_method" value="COD" onclick="showQRCode('cod')" required>
+                                                <label class="custom-control-label" for="payment-5">COD</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div id="qr-code-container" style="display: none; text-align: center;">
+                                            <img id="qr-code-image" src="" alt="QR Code" style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 10px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="checkout-btn">
+                                    <a href="chitietdonhang.html" class="btn">Đặt hàng</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade address-modal" id="addressFormModal" tabindex="-1" role="dialog" aria-labelledby="addressFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title w-100" id="addressFormModalLabel">Thêm địa chỉ mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="address-form" class="address-form">
+                    <input type="hidden" id="edit-address-id" value="">
+                    <div class="form-group">
+                        <label for="address-street">Số nhà, tên đường:</label>
+                        <input type="text" class="form-control" id="address-street" placeholder="Nhập số nhà, tên đường">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="address-district">Phường/Xã:</label>
+                                <select class="form-control" id="address-district" required style="color: #000;">
+                                    <option value="" >Chọn Phường/Xã</option>
+                                    <option value="Phường 1">Phường 1</option>
+                                    <option value="Phường 2">Phường 2</option>
+                                    <option value="Phường 3">Phường 3</option>
+                                    <option value="Phường 4">Phường 4</option>
+                                    <option value="Phường 5">Phường 5</option>
+                                    <option value="Phường 6">Phường 6</option>
+                                    <option value="Phường 7">Phường 7</option>
+                                    <option value="Phường 8">Phường 8</option>
+                                    <option value="Phường 9">Phường 9</option>
+                                    <option value="Phường 10">Phường 10</option>
+                                    <option value="Phường 11">Phường 11</option>
+                                    <option value="Phường 12">Phường 12</option>
+                                    <option value="Phường 13">Phường 13</option>
+                                    <option value="Phường 14">Phường 14</option>
+                                    <option value="Phường 15">Phường 15</option>
+                                    <option value="Phường 16">Phường 16</option>
+                                    <option value="Phường 17">Phường 17</option>
+                                    <option value="Phường 18">Phường 18</option>
+                                    <option value="Phường 19">Phường 19</option>
+                                    <option value="Phường 20">Phường 20</option>
+                                    <option value="Phường An Khánh">Phường An Khánh</option>
+                                    <option value="Phường An Lợi Đông">Phường An Lợi Đông</option>
+                                    <option value="Phường An Phú">Phường An Phú</option>
+                                    <option value="Phường Bình An">Phường Bình An</option>
+                                    <option value="Phường Bình Khánh">Phường Bình Khánh</option>
+                                    <option value="Phường Bình Trưng Đông">Phường Bình Trưng Đông</option>
+                                    <option value="Phường Bình Trưng Tây">Phường Bình Trưng Tây</option>
+                                    <option value="Phường Cát Lái">Phường Cát Lái</option>
+                                    <option value="Phường Long Bình">Phường Long Bình</option>
+                                    <option value="Phường Long Phước">Phường Long Phước</option>
+                                    <option value="Phường Long Thạnh Mỹ">Phường Long Thạnh Mỹ</option>
+                                    <option value="Phường Long Trường">Phường Long Trường</option>
+                                    <option value="Phường Phú Hữu">Phường Phú Hữu</option>
+                                    <option value="Phường Phước Bình">Phường Phước Bình</option>
+                                    <option value="Phường Phước Long A">Phường Phước Long A</option>
+                                    <option value="Phường Phước Long B">Phường Phước Long B</option>
+                                    <option value="Phường Tân Hưng">Phường Tân Hưng</option>
+                                    <option value="Phường Tân Kiểng">Phường Tân Kiểng</option>
+                                    <option value="Phường Chợ Quán">Phường Chợ Quán</option>
+                                    <option value="Phường Tân Phong">Phường Tân Phong</option>
+                                    <option value="Phường Tân Phú">Phường Tân Phú</option>
+                                    <option value="Phường Tân Quy">Phường Tân Quy</option>
+                                    <option value="Phường Tân Thuận Đông">Phường Tân Thuận Đông</option>
+                                    <option value="Phường Tân Thuận Tây">Phường Tân Thuận Tây</option>
+                                    <option value="Phường Thảo Điền">Phường Thảo Điền</option>
+                                    <option value="Phường Thủ Thiêm">Phường Thủ Thiêm</option>
+                                    <option value="Phường Trường Thạnh">Phường Trường Thạnh</option>
+                                    <option value="Xã Bình Chánh">Xã Bình Chánh</option>
+                                    <option value="Xã Cần Thạnh">Xã Cần Thạnh</option>
+                                    <option value="Xã Long Hòa">Xã Long Hòa</option>
+                                    <option value="Xã Lý Nhơn">Xã Lý Nhơn</option>
+                                    <option value="Xã Nhơn Đức">Xã Nhơn Đức</option>
+                                    <option value="Xã Phú Xuân">Xã Phú Xuân</option>
+                                    <option value="Xã Vĩnh Lộc A">Xã Vĩnh Lộc A</option>
+                                    <option value="Xã Vĩnh Lộc B">Xã Vĩnh Lộc B</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="address-city">Tỉnh/Thành phố:</label>
+                                <select class="form-control" id="address-city" required>
+                                    <option value="">Chọn tỉnh/thành phố</option>
+                                    <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                                    <option value="Hà Nội">Hà Nội</option>
+                                    <option value="Đà Nẵng">Đà Nẵng</option>
+                                    <option value="Cần Thơ">Cần Thơ</option>
+                                    <option value="Hải Phòng">Hải Phòng</option>
+                                    <option value="Nha Trang">Nha Trang</option>
+                                    <option value="Đà Lạt">Đà Lạt</option>
+                                    <option value="Vũng Tàu">Vũng Tàu</option>
+                                    <option value="Huế">Huế</option>
+                                    <option value="Buôn Ma Thuột">Buôn Ma Thuột</option>
+                                    <option value="Vinh">Vinh</option>
+                                    <option value="Quy Nhơn">Quy Nhơn</option>
+                                    <option value="Long Xuyên">Long Xuyên</option>
+                                    <option value="Thái Nguyên">Thái Nguyên</option>
+                                    <option value="Nam Định">Nam Định</option>
+                                    <option value="Rạch Giá">Rạch Giá</option>
+                                    <option value="Thái Bình">Thái Bình</option>
+                                    <option value="Thanh Hóa">Thanh Hóa</option>
+                                    <option value="Hạ Long">Hạ Long</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- Nút Lưu địa chỉ với chiều dài bằng ô nhập số nhà -->
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary w-100" id="btn-save-address" style="background-color: #ff7b00; border-color: #ff7b00; margin-top: 20px; color: white;">Thêm</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Đã bỏ modal-footer để chỉ còn lại nút Lưu địa chỉ trong form -->
+        </div>
+    </div>
+</div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/slick/slick.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <script>
+        // Sự kiện khi nhấn nút "Thêm địa chỉ mới" trong form
+        document.getElementById('btn-new-address').addEventListener('click', function() {
+            $('#addressFormModal').modal('show');
+            document.getElementById('addressFormModalLabel').textContent = 'Thêm địa chỉ mới';
+            document.getElementById('edit-address-id').value = '';
+            document.getElementById('address-form').reset();
+        });
+
+        // Sự kiện khi nhấn nút "Lưu địa chỉ" trong modal form
+        document.getElementById('btn-save-address').addEventListener('click', function() {
+            alert('Thêm địa chỉ thành công!');
+            window.location.href='checkout.html'
+        });
+
+        // Các hàm khác giữ nguyên
+        function showQRCode(paymentMethod) {
+            const qrCodeContainer = document.getElementById('qr-code-container');
+            const qrCodeImage = document.getElementById('qr-code-image');
+
+            if (paymentMethod === 'momo') {
+                qrCodeImage.src = 'img/momo.jpg';
+                qrCodeContainer.style.display = 'block';
+            } else if (paymentMethod === 'zalo') {
+                qrCodeImage.src = 'img/zalopay.jpg';
+                qrCodeContainer.style.display = 'block';
+            } else {
+                qrCodeContainer.style.display = 'none';
+            }
+        }
+
+        // Static form validation (no backend processing)
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent actual form submission
+            
+            const paymentMethod = document.querySelector('input[name="payment_method"]:checked');
+            const fullname = document.querySelector('input[name="fullname"]').value;
+            const phone = document.querySelector('input[name="phone"]').value;
+            const addressIndex = document.getElementById('address-select').value;
+
+            // Basic validation
+            if (!paymentMethod) {
+                showError('Vui lòng chọn phương thức thanh toán!');
+                return;
+            }
+
+            if (!fullname || !phone || !addressIndex) {
+                showError('Vui lòng nhập đầy đủ thông tin địa chỉ giao hàng!');
+                return;
+            }
+
+            if (confirm('Bạn có chắc chắn muốn đặt hàng không?')) {
+                // Since this is a static page, just show a success message
+                alert('Đây là trang web tĩnh - không có chức năng xử lý đơn hàng thực tế!');
+            }
+        });
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            const errorText = document.getElementById('error-text');
+            errorText.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            // Hide error after 5 seconds
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+        <!-- Checkout End -->
+        
+        <!-- Footer Start -->
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Liên hệ</h2>
+                            <div class="contact-info">
+                                <p><i class="fa fa-map-marker"></i>273 An Dương Vương Phường 3 Quận 5 TPHCM</p>
+                                <p><i class="fa fa-envelope"></i>info@example.com</p>
+                                <p><i class="fa fa-phone"></i>+012-345-67890</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Theo dõi chúng tôi</h2>
+                            <div class="contact-info">
+                                <div class="social">
+                                    <a href=""><i class="fab fa-twitter"></i></a>
+                                    <a href=""><i class="fab fa-facebook-f"></i></a>
+                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                    <a href=""><i class="fab fa-instagram"></i></a>
+                                    <a href=""><i class="fab fa-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Thông tin công ty</h2>
+                            <ul>
+                                <li><a href="#">Về chúng tôi</a></li>
+                                <li><a href="#">Chính sách bảo mật</a></li>
+                                <li><a href="#">Điều khoản & Điều kiện</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Thông tin mua hàng</h2>
+                            <ul>
+                                <li><a href="#">Chính sách thanh toán</a></li>
+                                <li><a href="#">Chính sách vận chuyển</a></li>
+                                <li><a href="#">Chính sách đổi trả</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row payment align-items-center">
+                    <div class="col-md-6">
+                        <div class="payment-method">
+                            <h2>Chúng tôi chấp nhận:</h2>
+                            <img src="img/payment-method.png" alt="Payment Method" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="payment-security">
+                            <h2>Được bảo mật bởi:</h2>
+                            <img src="img/godaddy.svg" alt="Payment Security" />
+                            <img src="img/norton.svg" alt="Payment Security" />
+                            <img src="img/ssl.svg" alt="Payment Security" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+
+        <!-- Footer Bottom Start -->
+
+        <!-- Footer Bottom End -->
+
+        <!-- Form tìm kiếm nâng cao -->
+        <div id="advancedSearchModal" class="advanced-search-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Tìm kiếm nâng cao</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="advancedSearchForm">
+                        <div class="form-group">
+                            <label>Từ khóa:</label>
+                            <input type="text" name="keyword" placeholder="Nhập từ khóa tìm kiếm...">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Danh mục:</label>
+                            <select name="category">
+                                <option value="">Tất cả</option>
+                                <option value="thieunhi">Thiếu nhi</option>
+                                <option value="tamly">Tâm lý/tình cảm</option>
+                                <option value="tongiao">Tôn giáo</option>
+                                <option value="lichsu">Lịch sử</option>
+                                <option value="vanhoc">Văn học</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Khoảng giá:</label>
+                            <div class="price-range">
+                                <input type="text" name="minPrice" placeholder="Từ">
+                                <span>-</span>
+                                <input type="text" name="maxPrice" placeholder="Đến">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Sắp xếp theo:</label>
+                            <select name="sort">
+                                <option value="">Mặc định</option>
+                                <option value="price_asc">Giá tăng dần</option>
+                                <option value="price_desc">Giá giảm dần</option>
+                                <option value="name_asc">Tên A-Z</option>
+                                <option value="name_desc">Tên Z-A</option>
+                            </select>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-search">Tìm kiếm</button>
+                            <button type="button" class="btn-reset">Đặt lại</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Top -->
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/slick/slick.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+
+        <script>
+            function showQRCode(paymentMethod) {
+                const qrCodeContainer = document.getElementById('qr-code-container');
+                const qrCodeImage = document.getElementById('qr-code-image');
+
+                if (paymentMethod === 'momo') {
+                    qrCodeImage.src = 'img/momo.jpg';
+                    qrCodeContainer.style.display = 'block';
+                } else if (paymentMethod === 'zalo') {
+                    qrCodeImage.src = 'img/zalopay.jpg';
+                    qrCodeContainer.style.display = 'block';
+                } else {
+                    qrCodeContainer.style.display = 'none';
+                }
+            }
+
+            // Static form validation (no backend processing)
+            document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevent actual form submission
+                
+                const paymentMethod = document.querySelector('input[name="payment_method"]:checked');
+                const street = document.querySelector('input[name="street"]').value;
+                const district = document.querySelector('select[name="district"]').value;
+                const city = document.querySelector('select[name="city"]').value;
+
+                // Basic validation
+                if (!paymentMethod) {
+                    showError('Vui lòng chọn phương thức thanh toán!');
+                    return;
+                }
+
+                if (!street || !district || !city) {
+                    showError('Vui lòng nhập đầy đủ thông tin địa chỉ giao hàng!');
+                    return;
+                }
+
+                if (confirm('Bạn có chắc chắn muốn đặt hàng không?')) {
+                    // Since this is a static page, just show a success message
+                    alert('Đây là trang web tĩnh - không có chức năng xử lý đơn hàng thực tế!');
+                }
+            });
+
+            function showError(message) {
+                const errorDiv = document.getElementById('error-message');
+                const errorText = document.getElementById('error-text');
+                errorText.textContent = message;
+                errorDiv.style.display = 'block';
+                
+                // Hide error after 5 seconds
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 5000);
+            }
+
+            // Function to toggle between shipping form and saved address display
+            function toggleAddressDisplay(hasSavedAddress = false) {
+                const shippingForm = document.getElementById('shipping-form');
+                const existingAddress = document.getElementById('existing-address');
+                
+                if (hasSavedAddress) {
+                    shippingForm.style.display = 'none';
+                    existingAddress.style.display = 'block';
+                } else {
+                    shippingForm.style.display = 'block';
+                    existingAddress.style.display = 'none';
+                }
+            }
+
+            // Function to add/remove products from the list (for demo purposes)
+            function updateProductList(products = []) {
+                const tbody = document.getElementById('product-list');
+                if (products.length === 0) {
+                    // Show default sample products
+                    return;
+                }
+                
+                tbody.innerHTML = '';
+                let subtotal = 0;
+                
+                products.forEach(product => {
+                    const total = product.price * product.quantity;
+                    subtotal += total;
+                    
+                    const row = `
+                        <tr>
+                            <td>
+                                <div class="img">
+                                    <img src="${product.image}" alt="Image">
+                                    <p>${product.name}</p>
+                                </div>
+                            </td>
+                            <td>${formatPrice(product.price)}</td>
+                            <td>${product.quantity}</td>
+                            <td>${formatPrice(total)}</td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                });
+                
+                // Update totals
+                document.getElementById('subtotal').textContent = formatPrice(subtotal);
+                document.getElementById('total').textContent = formatPrice(subtotal + 20000);
+            }
+
+            function formatPrice(price) {
+                return new Intl.NumberFormat('vi-VN').format(price) + 'đ';
+            }
+            // JavaScript cho nút phễu lọc và form tìm kiếm nâng cao
+            document.addEventListener('DOMContentLoaded', function() {
+                const filterBtn = document.getElementById('filterBtn');
+                const modal = document.getElementById('advancedSearchModal');
+                const closeModal = document.querySelector('.close-modal');
+                const form = document.getElementById('advancedSearchForm');
+                const resetBtn = document.querySelector('.btn-reset');
+
+                // Hiển thị modal khi click nút phễu
+                filterBtn.addEventListener('click', function() {
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden'; // Ngăn cuộn trang
+                });
+
+                // Đóng modal
+                function closeModalHandler() {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+
+                closeModal.addEventListener('click', closeModalHandler);
+
+                // Đóng modal khi click bên ngoài
+                window.addEventListener('click', function(event) {
+                    if (event.target === modal) {
+                        closeModalHandler();
+                    }
+                });
+
+                // Đóng modal khi nhấn ESC
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && modal.style.display === 'block') {
+                        closeModalHandler();
+                    }
+                });
+
+                // Xử lý form submit
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    // Thu thập dữ liệu form
+                    const formData = new FormData(form);
+                    const searchParams = new URLSearchParams();
+
+                    for (let [key, value] of formData.entries()) {
+                        if (value.trim() !== '') {
+                            searchParams.append(key, value);
+                        }
+                    }
+
+                    // Đóng modal và chuyển hướng
+                    closeModalHandler();
+                    window.location.href = 'searchcotaikhoan.html?' + searchParams.toString();
+                });
+
+                // Reset form
+                resetBtn.addEventListener('click', function() {
+                    form.reset();
+                });
+            });
+
+            // Search functionality
+            const searchBtn = document.getElementById("searchBtn");
+            const searchInput = document.getElementById("searchInput");
+
+            // Khi click nút tìm kiếm
+            searchBtn.addEventListener("click", () => {
+              window.location.href = "searchcotaikhoan.html"; // 👉 trang bạn muốn chuyển tới
+            });
+
+            // Khi nhấn Enter trong ô tìm kiếm
+            searchInput.addEventListener("keypress", (e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                window.location.href = "searchcotaikhoan.html";
+              }
+            });
+        </script>
+        <script>
+        // Hàm định dạng số
+        function formatNumber(value) {
+            return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        // Hàm xử lý sự kiện input
+        function handleInput(event) {
+            let input = event.target;
+            let value = input.value.replace(/[^0-9]/g, '');  // Loại bỏ các ký tự không phải là số
+            input.value = formatNumber(value);  // Áp dụng định dạng
+        }
+
+        // Gán sự kiện cho các input
+        window.onload = function() {
+            const minPriceInput = document.querySelector('input[name="minPrice"]');
+            const maxPriceInput = document.querySelector('input[name="maxPrice"]');
+            
+            minPriceInput.addEventListener('input', handleInput);
+            maxPriceInput.addEventListener('input', handleInput);
+        };
+    </script>
+    </body>
+</html>

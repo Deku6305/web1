@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="utf-8">
+        <title>BOOK STORE</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="eCommerce HTML Template Free Download" name="keywords">
+        <meta content="eCommerce HTML Template Free Download" name="description">
+
+        <!-- Favicon -->
+        <link href="img/tieude.jpg" rel="icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
+
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="lib/slick/slick.css" rel="stylesheet">
+        <link href="lib/slick/slick-theme.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/fix.css" rel="stylesheet">
+        <style>
+            /* ================== GLOBAL RESETS ================== */
+            .container-fluid.p-0 { padding-right: 0 !important; padding-left: 0 !important; }
+            * { -webkit-tap-highlight-color: transparent; }
+
+            /* ================== VARIABLE-HEIGHT BANNER (SHOW FULL IMAGE PER SLIDE) ================== */
+            .header { position: relative; overflow: hidden; }
+            .header-slider { width: 100%; margin: 0 auto; }
+
+            /* Let Slick compute height per slide */
+            .header-slider .slick-list,
+            .header-slider .slick-track { height: auto !important; }
+
+            .header-slider .slide { position: relative; height: auto; overflow: hidden; }
+
+            /* Show entire image of each banner; no cropping; height varies by image */
+            .header-slider .slide img {
+              position: relative;      /* sits above blurred filler */
+              z-index: 1;
+              display: block;
+              width: 100%;
+              height: auto;            /* keep natural aspect ratio */
+              object-fit: contain;     /* safe even if any parent constrains height */
+              border: 0; outline: 0; box-shadow: none;
+            }
+
+            /* Avoid black flashes from any theme default backgrounds */
+            .header,
+            .header-slider,
+            .header-slider .slick-slide,
+            .header-slider .slick-track,
+            .header-slider .slick-list { background: transparent !important; }
+
+            /* Blurred backdrop filler using the same image — covers any leftover bands elegantly */
+            .header-slider .slide::before{
+              content: "";
+              position: absolute; inset: -8%;
+              background-image: var(--bg, none);
+              background-size: cover; background-position: center;
+              filter: blur(24px);
+              transform: scale(1.08);
+              opacity: .45;
+              z-index: 0;
+            }
+
+            /* Dots of banner */
+            .header-slider .slick-dots { bottom: 20px; }
+            .header-slider .slick-dots li button:before { font-size: 12px; color: #ddd; opacity: 1; }
+            .header-slider .slick-dots li.slick-active button:before { color: #ff6f61; opacity: 1; }
+
+            /* ================== OTHER EXISTING STYLES (unchanged) ================== */
+            /* Chỉ áp dụng cho tiêu đề ở khu Featured Product */
+            .featured-product .section-header h1{
+              color: #000 !important;
+            }
+
+            .pagination .page-btn.is-disabled {
+              opacity: 0.45;
+              pointer-events: none;
+            }
+
+            /* Toast notification styles */
+            .toast-notification {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: #4CAF50;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                z-index: 1000;
+                display: none;
+                animation: slideIn 0.5s ease-in-out;
+            }
+
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+
+            /* Thanh phân cách màu cam lớn với breadcrumb */
+            .breadcrumb-section {
+                background-color: #ff6f61;
+                padding: 15px 0;
+                margin: 40px 0;
+                width: 100%;
+            }
+            .breadcrumb-section{ margin: 0; }
+
+            .breadcrumb-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 15px;
+            }
+            
+            .breadcrumb {
+                background: transparent;
+                margin: 0;
+                padding: 0;
+                font-size: 16px;
+                font-weight: 600;
+            }
+            
+            .breadcrumb-item a { color: white; text-decoration: none; }
+            .breadcrumb-item.active { color: white; opacity: 0.8; }
+            .breadcrumb-item + .breadcrumb-item::before { content: ">"; color: white; }
+            
+            /* Style cho sản phẩm mới nhất */
+            .new-product-item {
+                background: #fff;
+                border-radius: 10px;
+                padding: 15px;
+                margin-bottom: 30px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+                transition: transform 0.3s, box-shadow 0.3s;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+                padding-bottom: 60px;
+                cursor: pointer; /* Thêm con trỏ tay khi hover */
+            }
+            .new-product-item:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+            .new-product-image { position: relative; margin-bottom: 15px; overflow: hidden; border-radius: 8px; height: 250px; display: flex; align-items: center; justify-content: center; }
+            .new-product-image img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.5s; }
+            .new-product-item:hover .new-product-image img { transform: scale(1.05); }
+            .new-product-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; height: 40px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+            .new-product-price { color: #ff6f61; font-weight: bold; font-size: 18px; margin-bottom: 5px; }
+            .freeship-badge { background: #e8f5e9; color: #4caf50; font-size: 12px; padding: 3px 10px; border-radius: 15px; display: inline-block; margin-bottom: 10px; }
+            .product-stats { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; font-size: 13px; color: #666; }
+            .product-rating { display: flex; align-items: center; gap: 5px; }
+            .rating-stars { color: #ffc107; display: flex; gap: 2px; }
+            .rating-count { color: #666; font-weight: 500; }
+            .product-sales { display: flex; align-items: center; gap: 5px; }
+            .sales-count { color: #666; font-weight: 500; }
+            .sales-icon { color: #ff6f61; }
+            .new-product-actions { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+
+            /* ==== Category filter ==== */
+            .category-filter { background: #fff; border-radius: 14px; padding: 20px; margin-bottom: 30px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+            .category-filter h3 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #eee; }
+            .category-filter ul{ list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+            .category-filter li{ margin:0; }
+            .category-filter a.cat-btn{ display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 12px 16px; border-radius: 999px; border: 1px solid #e9e9e9; background: #fff; color: #333; font-weight: 600; text-decoration: none; transition: background-color .2s, border-color .2s, color .2s, box-shadow .2s, transform .1s; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+            .category-filter a.cat-btn::before{ content:""; width: 8px; height: 8px; border-radius: 50%; background: #ff6f61; opacity: .55; margin-right: 8px; }
+            .category-filter a.cat-btn::after{ content: "›"; font-size: 16px; opacity: .35; transform: translateX(0); transition: transform .18s ease; }
+            .category-filter a.cat-btn:hover{ transform: translateY(-1px); border-color: #ffd1c9; background: #fff7f6; color: #ff6f61; box-shadow: 0 6px 16px rgba(255,111,97,.15); }
+            .category-filter a.cat-btn:hover::after{ transform: translateX(3px); opacity: .6; }
+            .category-filter a.cat-btn.active{ background: #ff6f61; color: #fff; border-color: #ff6f61; box-shadow: 0 8px 18px rgba(255,111,97,.35); }
+            .category-filter a.cat-btn.active::before{ background:#fff; opacity: 1; }
+            .category-filter a.cat-btn.active::after{ opacity: .9; color:#fff; }
+
+            /* QUICK VIEW */
+            .qv-overlay{ position: fixed; inset: 0; background: rgba(0,0,0,.45); display: none; align-items: center; justify-content: center; z-index: 2000; }
+            .qv-card{ background: #fff; border-radius: 14px; max-width: 980px; width: calc(100% - 32px); box-shadow: 0 20px 60px rgba(0,0,0,.25); position: relative; padding: 28px; }
+            .qv-close{ position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; border: 2px solid #1e6bd6; color: #1e6bd6; background: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
+            .qv-body{ display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; align-items: start; }
+            .qv-img{ border: none !important; padding: 0 !important; box-shadow: none !important; display: grid; place-items: center; }
+            .qv-img img{ max-width: 100%; height: auto; display: block; }
+            .qv-title{ font-size: 28px; font-weight: 700; margin: 0 0 6px; }
+            .qv-meta{ margin: 8px 0 14px; color: #1e6bd6; font-weight: 600; display: flex; gap: 8px; align-items: center; }
+            .qv-price{ font-size: 28px; font-weight: 800; color: #ff6f61; margin: 0 0 14px; }
+            .qv-desc{ color: #6b7280; line-height: 1.6; margin-bottom: 12px; }
+            .qv-note{ color: #1e6bd6; margin: 8px 0 18px; display: flex; gap: 10px; align-items: flex-start; }
+            .qv-add{ display: inline-flex; align-items: center; gap: 10px; border: none; cursor: pointer; padding: 12px 20px; border-radius: 999px; background: #1e6bd6; color: #fff; font-weight: 700; font-size: 18px; }
+            .qv-add i{ font-size: 18px; }
+            @media (max-width: 768px){ .qv-body{ grid-template-columns: 1fr; } }
+
+            /* Style cho các sản phẩm trong danh mục */
+            .category-product-item {
+                background: #fff;
+                border-radius: 10px;
+                padding: 15px;
+                margin-bottom: 30px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+                transition: transform 0.3s, box-shadow 0.3s;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+                padding-bottom: 60px;
+                cursor: pointer; /* Thêm con trỏ tay khi hover */
+            }
+            .category-product-item:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+            .category-product-image { position: relative; margin-bottom: 15px; overflow: hidden; border-radius: 8px; height: 250px; display: flex; align-items: center; justify-content: center; }
+            .category-product-image img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.5s; }
+            .category-product-item:hover .category-product-image img { transform: scale(1.05); }
+            .category-product-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; height: 40px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+            .category-product-price { color: #ff6f61; font-weight: bold; font-size: 18px; margin-bottom: 5px; }
+            .category-freeship-badge { background: #e8f5e9; color: #4caf50; font-size: 12px; padding: 3px 10px; border-radius: 15px; display: inline-block; margin-bottom: 10px; }
+            .product-actions { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+            .action-btn { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: none; transition: all 0.3s; cursor: pointer; text-decoration: none; }
+            .add-cart { background: #ff6f61; }
+            .view-detail { background: #4CAF50; }
+            .action-btn:hover { transform: scale(1.1); }
+
+            /* Phân trang (tĩnh, hình tròn) */
+            .pagination { display: flex; justify-content: center; margin: 30px 0; align-items: center; gap: 8px; }
+            .pagination .page-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #ddd; background: transparent; color: #333; font-weight: 600; cursor: pointer; outline: none; transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.1s; }
+            .pagination .page-btn:hover { transform: translateY(-1px); border-color: #ccc; }
+            .pagination .page-btn.active { background-color: #ff6f61; color: #fff; border-color: #ff6f61; }
+
+            /* Ẩn tất cả các trang mặc định */
+            .product-page { display: none; }
+            .product-page.active { display: block; }
+
+            /* Responsive */
+            @media (max-width: 768px) {
+                .new-product-image img { height: 180px; }
+                .category-product-image { height: 200px; }
+                .pagination a { padding: 6px 12px; margin: 0 2px; font-size: 14px; }
+                .br.paeadcrumb { font-size: 14px; }
+                .product-stats { flex-direction: column; gap: 5px; }
+            }
+
+            /* Search area */
+            .search-container { display: flex; align-items: center; gap: 10px; width: 100%; }
+            .search { position: relative; flex: 1; display: flex; align-items: center; }
+            .search input { width: 100%; padding-right: 30px; }
+            .search button { position: absolute !important; right: 0 !important; top: 0 !important; bottom: 0 !important; z-index: 2; background: transparent !important; border: none !important; padding: 0 18px !important; color: #ff6f61 !important; height: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important; border-radius: 0 !important; cursor: pointer; margin: 0 !important; }
+            .search button:hover { background: #ff6f61 !important; color: white !important; }
+            .search button i { font-size: 16px; line-height: 1; }
+
+            .filter-button-container { flex-shrink: 0; }
+            .filter-btn { width: 45px; height: 45px; border-radius: 8px; background: white; border: 2px solid #28a745; color: #28a745; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all 0.3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+            .filter-btn:hover { background: #28a745; color: white; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+            /* Modal tìm kiếm nâng cao */
+            .advanced-search-modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s ease; }
+            @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+            .modal-content { background-color: white; margin: 3% auto; padding: 0; border-radius: 10px; width: 90%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: slideIn 0.3s ease; }
+            @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+            .modal-header { padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+            .modal-header h3 { margin: 0; color: #333; }
+            .close-modal { background: none; border: none; font-size: 24px; cursor: pointer; color: #999; }
+            .close-modal:hover { color: #333; }
+            .modal-body { padding: 20px; }
+            .form-group { margin-bottom: 20px; }
+            .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #333; }
+            .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
+            .price-range { display: flex; align-items: center; gap: 10px; }
+            .price-range input { width: calc(50% - 5px); }
+            .form-actions { display: flex; gap: 10px; justify-content: flex-end; }
+            .btn-search { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: 600; }
+            .btn-reset { background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        </style>
+    </head>
+
+    <body>
+        <!-- Header -->
+         <div class="nav">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                  <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto">
+                            <a href="index2.html" class="nav-item nav-link active">Trang chủ</a>
+                            <a href="contact.html" class="nav-item nav-link">Liên hệ</a>
+                        </div>
+                        <div class="navbar-nav ml-auto">
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> <i class="fas fa-user"></i> &nbsp;Huynh Duc</a>
+                                <div class="dropdown-menu">
+                                      <a href="thongtintaikhoan.html" class="dropdown-item"><i class="fa fa-id-card me-2"></i>  &nbsp;Thông tin</a>
+                                    <a href="lichsumuahang.html" class="dropdown-item"> <i class="fa fa-history me-2"></i>&nbsp;Lịch sử mua hàng</a>
+
+                                    <a href="login.html" class="dropdown-item"> <i class="fa fa-sign-out-alt me-2"></i>&nbsp;Đăng xuất</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        
+        <div class="bottom-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="logo">
+                            <a href="index2.html">
+                                <img src="img/logo.png" alt="Logo">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="search-container">
+                            <div class="search">
+                                <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm">
+                                <button id="searchBtn"><i class="fa fa-search"></i></button>
+                            </div>
+                            <div class="filter-button-container">
+                                <button id="filterBtn" class="filter-btn" title="Tìm kiếm nâng cao">
+                                    <i class="fas fa-filter"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="user">
+                            <a href="cart.html" class="btn cart">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Slider Start -->
+        <div class="header">
+            <div class="container-fluid p-0">
+                <div class="header-slider">
+                    <div class="slide"><img src="img/banner1.webp" alt="Banner 1"></div>
+                    <div class="slide"><img src="img/banner2.webp" alt="Banner 2"></div>
+                    <div class="slide"><img src="img/banner3.webp" alt="Banner 3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Product Start - Sản phẩm mới nhất (giống ảnh đầu) -->
+        <div class="featured-product product">
+            <div class="container-fluid">
+                <div class="section-header">
+                    <h1>Sản Phẩm Mới Nhất</h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="new-product-item" data-product-id="1">
+                            <div class="new-product-image">
+                                <img src="img/book8.webp" alt="Tôi Thấy Hoa Vàng Trên Cỏ Xanh">
+                            </div>
+                            <div class="new-product-title">Mưa đỏ</div>
+                            <div class="new-product-price">99.000 đ</div>
+                            <div class="freeship-badge">Freeship</div>
+                            
+                            <div class="product-stats">
+                                <div class="product-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="rating-count">4.5</span>
+                                </div>
+                                <div class="product-sales">
+                                    <i class="fas fa-shopping-cart sales-icon"></i>
+                                    <span class="sales-count">2.5k</span>
+                                </div>
+                            </div>
+                            
+                            <div class="new-product-actions">
+                                <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </a>
+                                <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="new-product-item" data-product-id="2">
+                            <div class="new-product-image">
+                                <img src="img/newbook2.webp" alt="3 Người Thầy Vĩ Đại">
+                            </div>
+                            <div class="new-product-title">Khi hơi thở hóa thinh không</div>
+                            <div class="new-product-price">60.000 đ</div>
+                            <div class="freeship-badge">Freeship</div>
+                            
+                            <div class="product-stats">
+                                <div class="product-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-count">4.0</span>
+                                </div>
+                                <div class="product-sales">
+                                    <i class="fas fa-shopping-cart sales-icon"></i>
+                                    <span class="sales-count">1.8k</span>
+                                </div>
+                            </div>
+                            
+                            <div class="new-product-actions">
+                                <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </a>
+                                <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="new-product-item" data-product-id="3">
+                            <div class="new-product-image">
+                                <img src="img/book2.webp" alt="Nếu Chỉ Còn Một Ngày Để Sống">
+                            </div>
+                            <div class="new-product-title">Cây cam ngọt của tôi</div>
+                            <div class="new-product-price">200.000 đ</div>
+                            <div class="freeship-badge">Freeship</div>
+                            
+                            <div class="product-stats">
+                                <div class="product-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="rating-count">5.0</span>
+                                </div>
+                                <div class="product-sales">
+                                    <i class="fas fa-shopping-cart sales-icon"></i>
+                                    <span class="sales-count">3.2k</span>
+                                </div>
+                            </div>
+                            
+                            <div class="new-product-actions">
+                                <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </a>
+                                <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="new-product-item" data-product-id="4">
+                            <div class="new-product-image">
+                                <img src="img/book14.jpg" alt="Cây Cam Ngọt Của Tôi">
+                            </div>
+                            <div class="new-product-title">Quá trẻ để chết</div>
+                            <div class="new-product-price">220.000 đ</div>
+                            <div class="freeship-badge">Freeship</div>
+                            
+                            <div class="product-stats">
+                                <div class="product-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-count">3.5</span>
+                                </div>
+                                <div class="product-sales">
+                                    <i class="fas fa-shopping-cart sales-icon"></i>
+                                    <span class="sales-count">980</span>
+                                </div>
+                            </div>
+                            
+                            <div class="new-product-actions">
+                                <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </a>
+                                <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Featured Product End -->
+
+        <!-- Thanh phân cách màu cam với breadcrumb -->
+        <div class="breadcrumb-section">
+            <div class="breadcrumb-container">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index2.html">Trang chủ</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Sản phẩm</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Danh mục sản phẩm với phân loại và phân trang -->
+        <div class="category-products">
+            <div class="container-fluid">
+                <div class="section-header">
+                    <h1>Danh Mục Sản Phẩm</h1>
+                </div>
+                <div class="row">
+                    <!-- Phần lọc danh mục -->
+                    <div class="col-md-3">
+                        <div class="category-filter">
+                            
+                            <ul>
+  <li><a href="javascript:void(0)" class="cat-btn active" onclick="selectCategory(this)" role="button">Tất cả</a></li>
+  <li><a href="javascript:void(0)" class="cat-btn" onclick="selectCategory(this)" role="button">Thiếu nhi</a></li>
+  <li><a href="javascript:void(0)" class="cat-btn" onclick="selectCategory(this)" role="button">Tâm lý/tình cảm</a></li>
+  <li><a href="javascript:void(0)" class="cat-btn" onclick="selectCategory(this)" role="button">Tôn giáo</a></li>
+  <li><a href="javascript:void(0)" class="cat-btn" onclick="selectCategory(this)" role="button">Lịch sử</a></li>
+  <li><a href="javascript:void(0)" class="cat-btn" onclick="selectCategory(this)" role="button">Văn học</a></li>
+</ul>
+
+                        </div>
+                    </div>
+                    
+                    <!-- Phần sản phẩm -->
+                    <div class="col-md-9">
+                        <!-- Trang 1 -->
+                        <div id="product-page1" class="product-page active">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="category-product-item" data-product-id="5">
+                                        <div class="category-product-image">
+                                            <img src="img/book1.webp" alt="Hiểu về trái tim">
+                                        </div>
+                                        <div class="category-product-title">Hiểu về trái tim</div>
+                                        <div class="category-product-price">120.000 đ</div>
+                                        <div class="category-freeship-badge">Freeship</div>
+                                        
+                                        <div class="product-stats">
+                                            <div class="product-rating">
+                                                <div class="rating-stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </div>
+                                                <span class="rating-count">4.5</span>
+                                            </div>
+                                            <div class="product-sales">
+                                                <i class="fas fa-shopping-cart sales-icon"></i>
+                                                <span class="sales-count">2.1k</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-actions">
+                                            <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="category-product-item" data-product-id="6">
+                                        <div class="category-product-image">
+                                            <img src="img/book2.webp" alt="Cây cam ngọt của tôi">
+                                        </div>
+                                        <div class="category-product-title">Cây cam ngọt của tôi</div>
+                                        <div class="category-product-price">220.000 đ</div>
+                                        <div class="category-freeship-badge">Freeship</div>
+                                        
+                                        <div class="product-stats">
+                                            <div class="product-rating">
+                                                <div class="rating-stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">5.0</span>
+                                            </div>
+                                            <div class="product-sales">
+                                                <i class="fas fa-shopping-cart sales-icon"></i>
+                                                <span class="sales-count">3.2k</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-actions">
+                                            <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="category-product-item" data-product-id="7">
+                                        <div class="category-product-image">
+                                            <img src="img/book3.jpg" alt="Làm bạn với bầu trời">
+                                        </div>
+                                        <div class="category-product-title">Làm bạn với bầu trời</div>
+                                        <div class="category-product-price">139.000 đ</div>
+                                        <div class="category-freeship-badge">Freeship</div>
+                                        
+                                        <div class="product-stats">
+                                            <div class="product-rating">
+                                                <div class="rating-stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">4.0</span>
+                                            </div>
+                                            <div class="product-sales">
+                                                <i class="fas fa-shopping-cart sales-icon"></i>
+                                                <span class="sales-count">1.5k</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-actions">
+                                            <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="category-product-item" data-product-id="8">
+                                        <div class="category-product-image">
+                                            <img src="img/book5.webp" alt="Bản du ca cuối cùng">
+                                        </div>
+                                        <div class="category-product-title">Bản du ca cuối cùng</div>
+                                        <div class="category-product-price">150.000 đ</div>
+                                        <div class="category-freeship-badge">Freeship</div>
+                                        
+                                        <div class="product-stats">
+                                            <div class="product-rating">
+                                                <div class="rating-stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">3.5</span>
+                                            </div>
+                                            <div class="product-sales">
+                                                <i class="fas fa-shopping-cart sales-icon"></i>
+                                                <span class="sales-count">890</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-actions">
+                                            <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="category-product-item" data-product-id="9">
+                                        <div class="category-product-image">
+                                            <img src="img/book6.webp" alt="Ngôi nhà kỳ quái">
+                                        </div>
+                                        <div class="category-product-title">Ngôi nhà kỳ quái</div>
+                                        <div class="category-product-price">180.000 đ</div>
+                                        <div class="category-freeship-badge">Freeship</div>
+                                        
+                                        <div class="product-stats">
+                                            <div class="product-rating">
+                                                <div class="rating-stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </div>
+                                                <span class="rating-count">4.5</span>
+                                            </div>
+                                            <div class="product-sales">
+                                                <i class="fas fa-shopping-cart sales-icon"></i>
+                                                <span class="sales-count">1.7k</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-actions">
+                                            <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="category-product-item" data-product-id="10">
+                                        <div class="category-product-image">
+                                            <img src="img/book7.webp" alt="Nụ hôn của sói">
+                                        </div>
+                                        <div class="category-product-title">Nụ hôn của sói</div>
+                                        <div class="category-product-price">160.000 đ</div>
+                                        <div class="category-freeship-badge">Freeship</div>
+                                        
+                                        <div class="product-stats">
+                                            <div class="product-rating">
+                                                <div class="rating-stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">4.0</span>
+                                            </div>
+                                            <div class="product-sales">
+                                                <i class="fas fa-shopping-cart sales-icon"></i>
+                                                <span class="sales-count">1.2k</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-actions">
+                                            <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Phân trang -->
+                       <div class="pagination" role="navigation" aria-label="Phân trang (tĩnh)">
+  <button type="button" class="page-btn page-prev" aria-label="Trang trước">«</button>
+  <button type="button" class="page-btn active">1</button>
+  <button type="button" class="page-btn">2</button>
+  <button type="button" class="page-btn">3</button>
+  <button type="button" class="page-btn">4</button>
+  <button type="button" class="page-btn">5</button>
+  <button type="button" class="page-btn page-next" aria-label="Trang sau">»</button>
+</div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--kết thúc danh mục sản phẩm--> 
+
+        <!-- Feature Start-->
+        <div class="feature">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-6 feature-col">
+                        <div class="feature-content">
+                            <i class="fab fa-cc-mastercard"></i>
+                            <h2>Bảo mật thanh toán</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 feature-col">
+                        <div class="feature-content">
+                            <i class="fa fa-truck"></i>
+                            <h2>Free ship toàn quốc</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 feature-col">
+                        <div class="feature-content">
+                            <i class="fa fa-sync-alt"></i>
+                            <h2>Đổi trả trong 90 ngày</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 feature-col">
+                        <div class="feature-content">
+                            <i class="fa fa-comments"></i>
+                            <h2>Hỗ trợ 24/7</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Feature End-->
+
+        <!-- Footer Start -->
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Liên hệ</h2>
+                            <div class="contact-info">
+                                <p><i class="fa fa-map-marker"></i>273 An Dương Vương Phường 3 Quận 5 TPHCM</p>
+                                <p><i class="fa fa-envelope"></i>info@example.com</p>
+                                <p><i class="fa fa-phone"></i>+012-345-67890</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Theo dõi chúng tôi</h2>
+                            <div class="contact-info">
+                                <div class="social">
+                                    <a href=""><i class="fab fa-twitter"></i></a>
+                                    <a href=""><i class="fab fa-facebook-f"></i></a>
+                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                    <a href=""><i class="fab fa-instagram"></i></a>
+                                    <a href=""><i class="fab fa-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Thông tin công ty</h2>
+                            <ul>
+                                <li><a href="#">Về chúng tôi</a></li>
+                                <li><a href="#">Chính sách bảo mật</a></li>
+                                <li><a href="#">Điều khoản & Điều kiện</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Thông tin mua hàng</h2>
+                            <ul>
+                                <li><a href="#">Chính sách thanh toán</a></li>
+                                <li><a href="#">Chính sách vận chuyển</a></li>
+                                <li><a href="#">Chính sách đổi trả</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row payment align-items-center">
+                    <div class="col-md-6">
+                        <div class="payment-method">
+                            <h2>Chúng tôi chấp nhận:</h2>
+                            <img src="img/payment-method.png" alt="Payment Method" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="payment-security">
+                            <h2>Được bảo mật bởi:</h2>
+                            <img src="img/godaddy.svg" alt="Payment Security" />
+                            <img src="img/norton.svg" alt="Payment Security" />
+                            <img src="img/ssl.svg" alt="Payment Security" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+
+        <!-- Back to Top -->
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/slick/slick.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+        
+        <script>
+            // ========================= BANNER SLIDER (match index mới) =========================
+            function initializeSlider(){
+              if (typeof $ === 'undefined' || !$('.header-slider').length) return;
+              var $slider = $('.header-slider');
+
+              // Set blurred background source for each slide (used by CSS var --bg)
+              $slider.find('.slide').each(function(){
+                var $img = $(this).find('img').first();
+                var src = $img.attr('src');
+                if (src) { this.style.setProperty('--bg', 'url("'+src+'")'); }
+              });
+
+              $slider.slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 5000,
+                arrows: false,
+                dots: true,
+                speed: 500,
+                cssEase: 'linear',
+                pauseOnHover: false,
+                adaptiveHeight: true,   // height varies per slide (no fixed ratio)
+                lazyLoad: 'progressive'
+              });
+
+              // When images load or viewport changes, realign sizes and ensure bg is set
+              $slider.find('img').on('load', function(){
+                var $slide = $(this).closest('.slide');
+                var src = $(this).attr('src');
+                if (src) { $slide[0].style.setProperty('--bg', 'url("'+src+'")'); }
+                $slider.slick('setPosition');
+              });
+
+              $(window).on('resize orientationchange', function(){
+                $slider.slick('setPosition');
+              });
+            }
+        </script>
+
+        <script>
+            // Biến lưu trang hiện tại
+            let currentPage = 1;
+            const totalPages = 5;
+
+            function changeProductPage(page) {
+                if (page < 1 || page > totalPages) return;
+                document.querySelectorAll(".product-page").forEach(p => p.classList.remove("active"));
+                document.getElementById("product-page" + page).classList.add("active");
+                currentPage = page;
+                updatePagination();
+            }
+
+            function updatePagination() {
+                const paginationLinks = document.querySelectorAll(".pagination a");
+                paginationLinks.forEach(a => a.classList.remove("active"));
+                if (currentPage >= 1 && currentPage <= 5) {
+                    paginationLinks[currentPage].classList.add("active");
+                }
+                const prevBtn = document.querySelector(".page-prev");
+                const nextBtn = document.querySelector(".page-next");
+                if (currentPage === 1) prevBtn.classList.add("disabled"); else prevBtn.classList.remove("disabled");
+                if (currentPage === totalPages) nextBtn.classList.add("disabled"); else nextBtn.classList.remove("disabled");
+            }
+
+            function selectCategory(element) {
+                document.querySelectorAll(".category-filter a").forEach(a => a.classList.remove("active"));
+                element.classList.add("active");
+            }
+
+            // Khi vừa load trang
+            document.addEventListener("DOMContentLoaded", () => {
+                initializeSlider(); // << use new banner init
+                changeProductPage(1);
+            });
+
+            // Xử lý tìm kiếm
+            document.addEventListener("DOMContentLoaded", () => {
+                const searchBtn = document.getElementById("searchBtn");
+                const searchInput = document.getElementById("searchInput");
+
+                searchBtn.addEventListener("click", () => {
+                    window.location.href = "searchcotaikhoan.html";
+                });
+
+                searchInput.addEventListener("keypress", (e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        window.location.href = "searchcotaikhoan.html";
+                    }
+                });
+            });
+
+            // Phân trang tĩnh: chỉ đổi trạng thái nút, không đổi nội dung
+            document.addEventListener("DOMContentLoaded", () => {
+              const container = document.querySelector(".pagination");
+              const btns = [...container.querySelectorAll(".page-btn")];
+              const prev = container.querySelector(".page-prev");
+              const next = container.querySelector(".page-next");
+              const numberBtns = btns.filter(b => !b.classList.contains("page-prev") && !b.classList.contains("page-next"));
+
+              function setActiveByIndex(idx){
+                numberBtns.forEach(b => b.classList.remove("active"));
+                numberBtns[idx].classList.add("active");
+                prev.classList.toggle("is-disabled", idx === 0);
+                next.classList.toggle("is-disabled", idx === numberBtns.length - 1);
+              }
+
+              numberBtns.forEach((b, i) => {
+                b.addEventListener("click", e => {
+                  e.preventDefault();
+                  setActiveByIndex(i);
+                });
+              });
+
+              prev.addEventListener("click", e => {
+                e.preventDefault();
+                const cur = numberBtns.findIndex(b => b.classList.contains("active"));
+                if (cur > 0) setActiveByIndex(cur - 1);
+              });
+
+              next.addEventListener("click", e => {
+                e.preventDefault();
+                const cur = numberBtns.findIndex(b => b.classList.contains("active"));
+                if (cur < numberBtns.length - 1) setActiveByIndex(cur + 1);
+              });
+
+              setActiveByIndex(0);
+            });
+        </script>
+        <script>
+          // Tạo/hiện toast nhanh
+          function showToast(msg, time = 1200){
+            let toast = document.querySelector('.toast-notification');
+            if(!toast){
+              toast = document.createElement('div');
+              toast.className = 'toast-notification';
+              document.body.appendChild(toast);
+            }
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            toast.style.animation = 'slideIn .35s ease';
+            setTimeout(() => {
+              toast.style.animation = 'fadeOut .4s ease';
+              setTimeout(() => { toast.style.display = 'none'; }, 400);
+            }, time);
+          }
+
+          document.addEventListener('DOMContentLoaded', function(){
+            // Gỡ onclick cũ nếu có
+            document.querySelectorAll('.add-cart[onclick]').forEach(el => el.removeAttribute('onclick'));
+
+            // Bắt click vào .add-cart
+            document.addEventListener('click', function(e){
+              const btn = e.target.closest('.add-cart');
+              if(!btn) return;
+
+              e.preventDefault();
+              e.stopPropagation();
+
+              showToast('Thêm vào giỏ hàng thành công!');
+              setTimeout(() => {
+                window.location.href = 'cart.html';
+              }, 900);
+            });
+          });
+        </script>
+        <script>
+          // Quick View
+          const QV_FIXED_IMAGE = 'img/book8.webp';
+
+          function ensureQuickViewRoot(){
+            let root = document.querySelector('.qv-overlay');
+            if(root) return root;
+            root = document.createElement('div');
+            root.className = 'qv-overlay';
+            document.body.appendChild(root);
+            return root;
+          }
+
+          function openQuickViewFromCard(card){
+            const titleEl = card.querySelector('.category-product-title, .new-product-title');
+            const priceEl = card.querySelector('.category-product-price, .new-product-price');
+
+            const title = titleEl?.textContent?.trim() || 'Tên sản phẩm';
+            const price = priceEl?.textContent?.trim() || '';
+            const alt   = title;
+            const src   = QV_FIXED_IMAGE;
+
+            const root = ensureQuickViewRoot();
+           root.innerHTML = `
+  <div class="qv-card" role="dialog" aria-modal="true" aria-label="Xem nhanh sản phẩm">
+    <button class="qv-close" aria-label="Đóng">✖</button>
+    <div class="qv-body">
+      <div class="qv-img">
+        <img src="${src}" alt="${alt}">
+      </div>
+      <div class="qv-content" style="display:flex; flex-direction:column; height: 100%;">
+        <h2 class="qv-title">Mưa đỏ</h2>
+        <div class="qv-price">Giá: 180,000 VND</div>
+        <div class="qv-desc">Mô tả : "Mưa Đỏ" là một trong những tiểu thuyết chiến tranh đặc sắc nhất về 81 ngày đêm đỏ lửa tại Thành cổ Quảng Trị năm 1972. Không chỉ tái hiện sự khốc liệt của một trong những trận đánh ác liệt nhất lịch sử, tác phẩm còn mở ra một không gian nhân văn, nơi người đọc được chạm đến cả nỗi đau, sự hy sinh và khát vọng hòa bình.</div>
+        
+        <div class="qv-meta-container" style="margin-top: auto; display: flex; flex-direction: column; gap: 12px;">
+          <div class="qv-meta-item" style="display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-user" style="color: #1e6bd6; width: 20px;"></i>
+            <span style="font-weight: 500;">Tác giả: <em style="color: #333;">Chu Lai</em></span>
+          </div>
+          <div class="qv-meta-item" style="display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-book" style="color: #1e6bd6; width: 20px;"></i>
+            <span style="font-weight: 500;">Thể loại: <em style="color: #333;">Lịch sử</em></span>
+          </div>
+          <button class="qv-add" style="margin-top: 10px; width: 100%; padding: 12px; background: #1e6bd6; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <i class="fa fa-shopping-cart"></i>
+            <span>Thêm vào giỏ hàng</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+            root.style.display = 'flex';
+
+            const close = () => { root.style.display = 'none'; root.innerHTML = ''; };
+            root.addEventListener('click', (e) => { if(e.target === root) close(); });
+            root.querySelector('.qv-close').addEventListener('click', close);
+            const onEsc = (e) => { if(e.key === 'Escape') { close(); document.removeEventListener('keydown', onEsc);} };
+            document.addEventListener('keydown', onEsc);
+
+            root.querySelector('.qv-add').addEventListener('click', () => {
+              showToast('Thêm vào giỏ hàng thành công!');
+              setTimeout(() => {
+                window.location.href = 'cart.html';
+              }, 900);
+            });
+          }
+
+          // Xử lý click vào toàn bộ sản phẩm (trừ các nút giỏ hàng và xem chi tiết)
+          document.addEventListener('click', function(e){
+            // Kiểm tra nếu click vào nút giỏ hàng hoặc xem chi tiết thì không làm gì
+            if (e.target.closest('.add-cart') || e.target.closest('.view-detail')) {
+              return;
+            }
+            
+            // Kiểm tra nếu click vào sản phẩm
+            const productItem = e.target.closest('.new-product-item, .category-product-item');
+            if(!productItem) return;
+            
+            e.preventDefault();
+            openQuickViewFromCard(productItem);
+          });
+
+          // Xử lý click vào nút xem chi tiết (mắt)
+          document.addEventListener('click', function(e){
+            const viewBtn = e.target.closest('.view-detail');
+            if(!viewBtn) return;
+            e.preventDefault();
+            e.stopPropagation(); // Ngăn sự kiện lan ra sản phẩm cha
+            const card = viewBtn.closest('.category-product-item, .new-product-item');
+            if(!card) return;
+            openQuickViewFromCard(card);
+          });
+
+          ensureQuickViewRoot();
+        </script>
+
+        <!-- Form tìm kiếm nâng cao -->
+        <div id="advancedSearchModal" class="advanced-search-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Tìm kiếm nâng cao</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="advancedSearchForm">
+                        <div class="form-group">
+                            <label>Từ khóa:</label>
+                            <input type="text" name="keyword" placeholder="Nhập từ khóa tìm kiếm...">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Danh mục:</label>
+                            <select name="category">
+                                <option value="">Tất cả</option>
+                                <option value="thieunhi">Thiếu nhi</option>
+                                <option value="tamly">Tâm lý/tình cảm</option>
+                                <option value="tongiao">Tôn giáo</option>
+                                <option value="lichsu">Lịch sử</option>
+                                <option value="vanhoc">Văn học</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Khoảng giá:</label>
+                            <div class="price-range">
+                                <input type="text" name="minPrice" placeholder="Từ">
+                                <span>-</span>
+                                <input type="text" name="maxPrice" placeholder="Đến">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Sắp xếp theo:</label>
+                            <select name="sort">
+                                <option value="">Mặc định</option>
+                                <option value="price_asc">Giá tăng dần</option>
+                                <option value="price_desc">Giá giảm dần</option>
+                                <option value="name_asc">Tên A-Z</option>
+                                <option value="name_desc">Tên Z-A</option>
+                            </select>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-search">Tìm kiếm</button>
+                            <button type="button" class="btn-reset">Đặt lại</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // JavaScript cho nút phễu lọc và form tìm kiếm nâng cao
+            document.addEventListener('DOMContentLoaded', function() {
+                const filterBtn = document.getElementById('filterBtn');
+                const modal = document.getElementById('advancedSearchModal');
+                const closeModal = document.querySelector('.close-modal');
+                const form = document.getElementById('advancedSearchForm');
+                const resetBtn = document.querySelector('.btn-reset');
+
+                // Hiển thị modal khi click nút phễu
+                filterBtn.addEventListener('click', function() {
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden'; // Ngăn cuộn trang
+                });
+
+                // Đóng modal
+                function closeModalHandler() {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+
+                closeModal.addEventListener('click', closeModalHandler);
+
+                // Đóng modal khi click bên ngoài
+                window.addEventListener('click', function(event) {
+                    if (event.target === modal) {
+                        closeModalHandler();
+                    }
+                });
+
+                // Đóng modal khi nhấn ESC
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && modal.style.display === 'block') {
+                        closeModalHandler();
+                    }
+                });
+
+                // Xử lý form submit
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(form);
+                    const searchParams = new URLSearchParams();
+
+                    for (let [key, value] of formData.entries()) {
+                        if (value.trim() !== '') {
+                            searchParams.append(key, value);
+                        }
+                    }
+
+                    closeModalHandler();
+                    window.location.href = 'searchcotaikhoan.html?' + searchParams.toString();
+                });
+
+                // Reset form
+                resetBtn.addEventListener('click', function() {
+                    form.reset();
+                });
+            });
+        </script>
+        <script>
+        // Hàm định dạng số
+        function formatNumber(value) {
+            return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        // Hàm xử lý sự kiện input
+        function handleInput(event) {
+            let input = event.target;
+            let value = input.value.replace(/[^0-9]/g, '');  // Loại bỏ các ký tự không phải là số
+            input.value = formatNumber(value);  // Áp dụng định dạng
+        }
+
+        // Gán sự kiện cho các input
+        window.onload = function() {
+            const minPriceInput = document.querySelector('input[name="minPrice"]');
+            const maxPriceInput = document.querySelector('input[name="maxPrice"]');
+            
+            minPriceInput.addEventListener('input', handleInput);
+            maxPriceInput.addEventListener('input', handleInput);
+        };
+    </script>
+
+    </body>
+</html>

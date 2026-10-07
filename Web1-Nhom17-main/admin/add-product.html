@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" href="../img/ryicon.jpg">
+  <title>BookStore - Thêm sản phẩm</title>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="assets/css/pure-style.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family:'Roboto',sans-serif;
+      background-color:#f0f2f5;
+      color:#344767;
+      line-height:1.6;
+      overflow-x:hidden;
+    }
+
+    /* Card styles */
+    .card {
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+    
+    .card-header {
+      padding: 1.5rem 1.5rem 0.5rem;
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+    }
+    
+    /* Form styles */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #344767;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d2d6da;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+    
+    .form-control:focus {
+      border-color: #e91e63;
+      box-shadow: 0 0 0 2px rgba(233, 30, 99, 0.2);
+      outline: none;
+    }
+    
+    .form-text {
+      font-size: 0.75rem;
+      color: #6c757d;
+      margin-top: 0.25rem;
+    }
+    
+    /* Button styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+    
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+    
+    .btn-gradient {
+      background: linear-gradient(195deg, #ec407a, #d81b60);
+      color: white;
+    }
+    
+    .btn-gradient:hover {
+      background: linear-gradient(195deg, #f06292, #e91e63);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(233, 30, 99, 0.3);
+    }
+    
+    /* Image preview styles */
+    .image-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .image-preview {
+      width: 100%;
+      max-width: 200px;
+      border: 2px dashed #dee2e6;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f8f9fa;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      aspect-ratio: 1/1;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .image-preview:hover {
+      border-color: #e91e63;
+      background-color: #fff5f8;
+    }
+
+    .image-preview img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+    
+    .image-upload-text {
+      text-align: center;
+      color: #6c757d;
+      font-size: 0.875rem;
+      padding: 2rem;
+    }
+    
+    .form-group.image-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .form-group.image-group .form-label {
+      text-align: center;
+      width: 100%;
+    }
+    
+    /* Alert styles */
+    .alert {
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .alert-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <aside style="position:fixed;top:0;left:0;z-index:1000;width:250px;height:100vh;background:linear-gradient(195deg,#42424a,#191919);color:white;box-shadow:0 0 2rem rgba(0,0,0,0.15);">
+    <div style="padding:1.5em 1rem;">
+      <a href="#" style="display:flex;align-items:center;font-weight:700;color:white;text-decoration:none;">
+        <span>TRUNG TÂM ĐIỀU KHIỂN</span>
+      </a>
+    </div>
+    <hr style="border-top:1px solid rgba(255,255,255,0.1);margin:1rem 0;">
+    <ul style="list-style:none;padding:0;margin:0;">
+      <li><a href="index.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">dashboard</i>Tổng quan</a></li>
+      <li><a href="user.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">person</i>Quản lý khách hàng</a></li>
+      <li><a href="order.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">weekend</i>Quản lý đơn hàng</a></li>
+      <li><a href="products.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;background:linear-gradient(195deg,#ec407a,#d81b60);box-shadow:0 4px 20px rgba(0,0,0,0.14),0 7px 10px -5px rgba(233,30,99,0.4);"><i class="material-icons" style="margin-right:10px;">table_view</i>Quản lý sản phẩm</a></li>
+      <li><a href="category.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">category</i>Quản lý danh mục</a></li>
+      <li><a href="phieunhap.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">inventory_2</i>Quản lý nhập hàng</a></li>
+      <li><a href="giaban.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">attach_money</i>Quản lý giá bán</a></li>
+      <li><a href="tonkho.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">inventory</i>Quản lý tồn kho</a></li>
+    </ul>
+    <div style="position:absolute;bottom:0;width:100%;padding:1rem;">
+      <a href="login.html" style="display:inline-block;background:linear-gradient(195deg,#ec407a,#d81b60);color:white;padding:0.625rem 1.5rem;border-radius:0.25rem;text-decoration:none;width:100%;text-align:center;">Đăng xuất</a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main style="margin-left:250px;min-height:100vh;padding:1.5rem;">
+    <nav style="margin-bottom:1.5rem;padding:0.75rem 1.5rem;border-radius:0.75rem;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);background-color:white;">
+      <div style="width:100%;padding-right:15px;padding-left:15px;margin:auto;">
+        <ol style="display:flex;list-style:none;padding:0;margin:0;">
+          <li style="display:flex;align-items:center;color:rgba(52,71,103,0.5);font-size:0.875rem;">
+            <a href="javascript:;" style="color:#e91e63;text-decoration:none;"><b>Thêm sản phẩm mới</b></a>
+          </li>
+        </ol>
+      </div>
+    </nav>
+
+    <div style="width:100%;padding:1.5rem;">
+      <div class="card">
+        <div class="card-header">
+          <h4 style="margin:0;font-weight:600;margin-bottom:0.5rem;color:#344767;">Thông tin sản phẩm</h4>
+          <p style="margin:0;color:#6c757d;font-size:0.875rem;">Nhập các thông tin của sản phẩm</p>
+        </div>
+
+        <div class="card-body">
+          <div id="success-alert" class="alert alert-success" style="display:none;">
+            <strong>Thành công!</strong> Sản phẩm đã được thêm thành công.
+          </div>
+          <div id="error-alert" class="alert alert-danger" style="display:none;">
+            <strong>Lỗi!</strong> Có lỗi xảy ra khi thêm sản phẩm. Vui lòng thử lại.
+          </div>
+
+          <form id="addProductForm">
+            <div style="display:flex;flex-wrap:wrap;margin:0 -15px;">
+              <!-- Left column - Thông tin chính -->
+              <div style="flex:0 0 66.666667%;max-width:66.666667%;padding:0 15px;">
+                <div class="form-group">
+                  <label for="productName" class="form-label">Tên sản phẩm <span style="color:#dc3545;">*</span></label>
+                  <input type="text" class="form-control" id="productName" name="productName" placeholder="Nhập tên sản phẩm" required>
+                </div>
+                 <div class="form-group">
+                  <label for="productAuthor" class="form-label">Tác giả <span style="color:#dc3545;">*</span></label>
+                  <input type="text" class="form-control" id="productAuthor" name="productAuthor" placeholder="Nhập tên tác giả" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="productCategory" class="form-label">Danh mục <span style="color:#dc3545;">*</span></label>
+                  <select class="form-control" id="productCategory" name="productCategory" required>
+                    <option value="">Chọn danh mục</option>
+                    <option value="thieu-nhi">Thiếu Nhi</option>
+                    <option value="tam-ly-tinh-cam">Tâm Lý / Tình Cảm</option>
+                    <option value="ton-giao">Tôn Giáo</option>
+                    <option value="lich-su">Lịch Sử</option>
+                    <option value="van-hoc">Văn Học</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="productPrice" class="form-label">Giá sản phẩm <span style="color:#dc3545;">*</span></label>
+                  <input type="text" class="form-control" id="productPrice" name="productPrice" placeholder="0" min="0" step="1">
+                  <div class="form-text">Đơn vị: VNĐ</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="productDescription" class="form-label">Mô tả sản phẩm</label>
+                  <textarea class="form-control" id="productDescription" name="productDescription" rows="4" placeholder="Nhập mô tả chi tiết về sản phẩm"></textarea>
+                </div>
+              </div>
+
+              <!-- Right column - Hình ảnh -->
+              <div style="flex:0 0 33.333333%;max-width:33.333333%;padding:0 15px;">
+                <div class="form-group image-group">
+                  <label class="form-label">Hình ảnh sản phẩm</label>
+                  
+                  <!-- Container căn giữa cho ảnh -->
+                  <div class="image-container">
+                    <!-- Hiển thị ảnh preview -->
+                    <div class="image-preview" onclick="document.getElementById('productImage').click()">
+                      <div class="image-upload-text">
+                        <i class="material-icons" style="font-size:48px;color:#dee2e6;margin-bottom:0.5rem;">add_photo_alternate</i>
+                        <div>Chọn ảnh cho sản phẩm</div>
+                      </div>
+                      <img id="imagePreview" src="" alt="Preview" style="display:none;">
+                    </div>
+                    
+                    <!-- Input file ẩn -->
+                    <input type="file" class="form-control" id="productImage" name="productImage" accept="image/*" style="display:none;">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:center;gap:1rem;margin-top:2rem;padding-top:2rem;border-top:1px solid #dee2e6;">
+              <button type="button" class="btn btn-secondary" onclick="window.location.href='products.html'">
+                <i class="material-icons" style="font-size:1rem;margin-right:0.5rem;vertical-align:middle;">arrow_back</i>
+                Quay về
+              </button>
+              <button type="button" class="btn btn-gradient" style="padding:0.75rem 2rem;font-weight:600;" onclick="alert('Thêm thành công');window.location.href='products.html';">
+                <i class="material-icons" style="font-size:1rem;margin-right:0.5rem;vertical-align:middle;">add_circle</i>
+                Thêm sản phẩm
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('productImage').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const preview = document.getElementById('imagePreview');
+      const imagePreviewContainer = document.querySelector('.image-preview');
+      const uploadText = document.querySelector('.image-upload-text');
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+          preview.src = ev.target.result;
+          preview.style.display = 'block';
+          uploadText.style.display = 'none';
+          imagePreviewContainer.style.borderColor = '#28a745';
+          imagePreviewContainer.style.backgroundColor = '#f8fff9';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.style.display = 'none';
+        uploadText.style.display = 'block';
+        imagePreviewContainer.style.borderColor = '#dee2e6';
+        imagePreviewContainer.style.backgroundColor = '#f8f9fa';
+      }
+    });
+  </script>
+  <script>
+        // Hàm định dạng số
+        function formatNumber(value) {
+            return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        // Hàm xử lý sự kiện input
+        function handleInput(event) {
+            let input = event.target;
+            let value = input.value.replace(/[^0-9]/g, '');  // Loại bỏ các ký tự không phải là số
+            input.value = formatNumber(value);  // Áp dụng định dạng
+        }
+
+        // Gán sự kiện cho các input
+        window.onload = function() {
+            const minPriceInput = document.querySelector('input[name="productPrice"]');
+            
+            minPriceInput.addEventListener('input', handleInput);
+        };
+    </script>
+</body>
+</html>

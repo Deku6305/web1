@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" href="../img/ryicon.jpg">
+  <title>BookStore - Chi tiết phiếu nhập</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="assets/css/pure-style-optimized.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f2f5;
+      color: #344767;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: linear-gradient(195deg, #ec407a, #d81b60);
+      color: white;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      border: none;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-primary { 
+      background: linear-gradient(195deg, #ec407a, #d81b60); 
+    }
+    .btn-primary:hover { 
+      background: linear-gradient(195deg, #f06292, #e91e63); 
+    }
+
+    .btn-secondary { 
+      background: #6c757d; 
+    }
+    .btn-secondary:hover { 
+      background: #5a6268; 
+    }
+
+    .material-icons-round { 
+      font-size: 18px; 
+      vertical-align: middle; 
+    }
+
+    /* Info sections */
+    .info-section {
+      margin-bottom: 2rem;
+    }
+
+    .info-section h3 {
+      color: #344767;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .info-item {
+      margin-bottom: 1rem;
+    }
+
+    .info-label {
+      font-weight: 600;
+      color: #6c757d;
+      margin-bottom: 0.25rem;
+    }
+
+    .info-value {
+      font-size: 1.1rem;
+      color: #344767;
+    }
+
+    /* Table styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      margin-top: 1rem;
+    }
+
+    thead {
+      background: #f8f9fa;
+      color: #344767;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      font-size: 14px;
+      text-align: left;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    th {
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    tbody tr:hover {
+      background-color: #f3f4f8;
+      transition: 0.2s;
+    }
+
+    .product-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .product-image {
+      width: 50px;
+      height: 65px;
+      object-fit: cover;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .product-details {
+      flex: 1;
+    }
+
+    .product-name {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .product-author {
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    /* Summary section */
+    .summary-card {
+      background: #f8f9fa;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .summary-total {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #e91e63;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .card-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+      
+      .product-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- SIDEBAR -->
+<aside style="position: fixed; top: 0; left: 0; z-index: 1000; width: 250px; height: 100vh; background: linear-gradient(195deg, #42424a, #191919); color: white; transition: all 0.3s ease; box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 0.15);" id="sidenav-main">
+  <div style="padding: 1.5em 1rem;">
+    <a href="#" target="_blank" style="display: flex; align-items: center; font-weight: 600; color: white; text-decoration: none;">
+      <span style="margin-left: 0.25rem; font-weight: 700;">TRUNG TÂM ĐIỀU KHIỂN</span>
+    </a>
+  </div>
+  <hr style="width: 100%; border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1rem 0;">
+  <div style="width: 100%; overflow-y: auto; height: 75vh;">
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li><a href="index.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none;"><i class="material-icons" style="font-size:20px; margin-right:10px;">dashboard</i>Tổng quan</a></li>
+      <li><a href="user.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none;"><i class="material-icons" style="font-size:20px; margin-right:10px;">person</i>Quản lý khách hàng</a></li>
+      <li><a href="order.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none;"><i class="material-icons" style="font-size:20px; margin-right:10px;">weekend</i>Quản lý đơn hàng</a></li>
+      <li><a href="products.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none;"><i class="material-icons" style="font-size:20px; margin-right:10px;">table_view</i>Quản lý sản phẩm</a></li>
+      <li><a href="category.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none;"><i class="material-icons" style="font-size:20px; margin-right:10px;">category</i>Quản lý danh mục</a></li>
+      <li><a href="phieunhap.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none; background: linear-gradient(195deg,#ec407a,#d81b60); box-shadow: 0 4px 20px rgba(0,0,0,0.14),0 7px 10px -5px rgba(233,30,99,0.4);"><i class="material-icons" style="font-size:20px; margin-right:10px;">inventory_2</i>Quản lý nhập hàng</a></li>
+      <li><a href="giaban.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none;"><i class="material-icons" style="font-size:20px; margin-right:10px;">attach_money</i>Quản lý giá bán</a></li>
+      <li><a href="tonkho.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none;"><i class="material-icons" style="font-size:20px; margin-right:10px;">inventory</i>Quản lý tồn kho</a></li>
+
+    </ul>
+  </div>
+  <div style="position: absolute; width: 100%; bottom: 0; padding: 1rem;">
+    <a href="login.html" style="display: inline-block; background: linear-gradient(195deg, #ec407a, #d81b60); color: white; padding: 0.625rem 1.5rem; font-size: 0.875rem; border-radius: 0.25rem; text-decoration: none; width: 100%; text-align: center;">Đăng xuất</a>
+  </div>
+</aside>
+
+  <!-- MAIN -->
+  <main style="margin-left: 250px; min-height: 100vh; padding: 1.5rem;">
+    <nav style="margin-bottom: 1.5rem; background:white; padding:1rem 1.5rem; border-radius:0.75rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <span style="color:#e91e63; font-weight:600;">Chi tiết phiếu nhập hàng</span>
+    </nav>
+
+    <div class="card">
+      <div class="card-header">
+        <h3 style="margin: 0; font-size: 1.2rem;">Thông tin phiếu nhập #PN001</h3>
+      </div>
+      <div class="card-body">
+        <!-- Thông tin chung -->
+        <div class="info-section">
+          <h3>Thông tin chung</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-label">Mã phiếu nhập</div>
+              <div class="info-value">#PN001</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Ngày nhập</div>
+              <div class="info-value">01-08-2025</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Số lượng sản phẩm</div>
+              <div class="info-value">15</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Danh sách sản phẩm -->
+        <div class="info-section">
+          <h3>Danh sách sản phẩm nhập</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Sản phẩm</th>
+                <th class="text-right">Giá nhập</th>
+                <th class="text-center">Số lượng</th>
+                <th class="text-right">Thành tiền</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book8.webp" alt="Mưa đỏ" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Mưa đỏ</div>
+                      <div class="product-author">Tác giả: Chu Lai</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-right">250,000 VNĐ</td>
+                <td class="text-center">3</td>
+                <td class="text-right">750,000 VNĐ</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book2.webp" alt="Cây cam ngọt của tôi" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Cây cam ngọt của tôi</div>
+                      <div class="product-author">Tác giả: José Mauro de Vasconcelos</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-right">180,000 VNĐ</td>
+                <td class="text-center">2</td>
+                <td class="text-right">360,000 VNĐ</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book3.jpg" alt="Không gia đình" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Không gia đình</div>
+                      <div class="product-author">Tác giả: Hector Malot</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-right">220,000 VNĐ</td>
+                <td class="text-center">4</td>
+                <td class="text-right">880,000 VNĐ</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book4.webp" alt="Tuổi thơ dữ dội" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Tuổi thơ dữ dội</div>
+                      <div class="product-author">Tác giả: Phùng Quán</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-right">190,000 VNĐ</td>
+                <td class="text-center">3</td>
+                <td class="text-right">570,000 VNĐ</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book5.webp" alt="Đắc nhân tâm" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Đắc nhân tâm</div>
+                      <div class="product-author">Tác giả: Dale Carnegie</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-right">210,000 VNĐ</td>
+                <td class="text-center">3</td>
+                <td class="text-right">630,000 VNĐ</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Tổng kết -->
+          <div class="summary-card">
+            <div class="summary-row">
+              <span>Tổng số sản phẩm:</span>
+              <span>5</span>
+            </div>
+            <div class="summary-row">
+              <span>Tổng số lượng nhập:</span>
+              <span>15</span>
+            </div>
+            <div class="summary-row summary-total">
+              <span>Tổng giá trị phiếu nhập:</span>
+              <span>3,190,000 VNĐ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nút hành động -->
+        <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem;">
+          <a href="phieunhap.html" class="btn btn-secondary">
+            <i class="material-icons-round">arrow_back</i> Quay về
+          </a>
+          <button class="btn btn-primary">
+            <i class="material-icons-round">print</i> In phiếu nhập
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

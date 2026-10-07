@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" href="../img/ryicon.jpg">
+  <title>BookStore - Quản lý sản phẩm</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="assets/css/pure-style-optimized.css" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f2f5;
+      color: #344767;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ==== Table ==== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    thead {
+      background: linear-gradient(195deg, #ec407a, #d81b60);
+      color: white;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      font-size: 14px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      text-align: center; /* ✅ Căn giữa tiêu đề */
+    }
+
+    td {
+      vertical-align: middle;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    tbody tr:hover {
+      background-color: #f3f4f8;
+      transition: 0.2s;
+    }
+
+    /* ✅ Căn giữa cột "Tên" và "Thao tác" */
+    td:nth-child(2),
+    th:nth-child(2),
+    td:last-child,
+    th:last-child {
+      text-align: center;
+    }
+
+    /* ==== Actions ==== */
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: none;
+      color: white;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-edit { background-color: #1976d2; }
+    .btn-edit:hover { background-color: #2196f3; }
+
+    .btn-delete { background-color: #e53935; }
+    .btn-delete:hover { background-color: #ef5350; }
+
+    /* ==== Add Button ==== */
+    .btn-add {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(195deg, #ff9800, #f57c00);
+      color: white;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 3px 6px rgba(255, 152, 0, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .btn-add:hover {
+      background: linear-gradient(195deg, #ffa726, #fb8c00);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 10px rgba(255, 152, 0, 0.4);
+    }
+
+    /* ==== Search Section ==== */
+    .search-section {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+
+    .search-group {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search-label {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: #344767;
+    }
+
+    .search-input, .search-select {
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border 0.2s;
+    }
+
+    .search-input:focus, .search-select:focus {
+      outline: none;
+      border-color: #2196f3;
+      box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+    }
+
+    /* ==== Nút tìm kiếm đã được điều chỉnh ==== */
+    .btn-search {
+      background: linear-gradient(195deg, #4caf50, #388e3c);
+      color: white;
+      border: none;
+      padding: 8px 16px; /* Đã giảm padding để nút nhỏ hơn */
+      border-radius: 6px;
+      font-size: 13px; /* Đã giảm kích thước chữ */
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      height: 38px; /* Chiều cao cố định để đồng bộ với các input */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .btn-search:hover {
+      background: linear-gradient(195deg, #66bb6a, #43a047);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(76, 175, 80, 0.3);
+    }
+
+    /* ==== Pagination ==== */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1.5rem;
+      gap: 8px;
+    }
+
+    .pagination-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      background-color: white;
+      color: #344767;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .pagination-btn:hover {
+      background-color: #f5f5f5;
+    }
+
+    .pagination-btn.active {
+      background: linear-gradient(195deg, #ec407a, #d81b60);
+      color: white;
+      border-color: #d81b60;
+    }
+
+    .pagination-btn.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .pagination-btn.disabled:hover {
+      background-color: white;
+    }
+
+    .pagination-info {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- SIDEBAR -->
+  <aside style="position: fixed; top: 0; left: 0; z-index: 1000; width: 250px; height: 100vh; background: linear-gradient(195deg, #42424a, #191919); color: white; box-shadow: 0 0 2rem rgba(0, 0, 0, 0.15);">
+    <div style="padding: 1.5em 1rem;">
+      <a href="#" style="display: flex; align-items: center; font-weight: 700; color: white; text-decoration: none;">
+        <span>TRUNG TÂM ĐIỀU KHIỂN</span>
+      </a>
+    </div>
+    <hr style="border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;">
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li><a href="index.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">dashboard</i>Tổng quan</a></li>
+      <li><a href="user.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">person</i>Quản lý khách hàng</a></li>
+      <li><a href="order.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">weekend</i>Quản lý đơn hàng</a></li>
+      <li><a href="products.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;background:linear-gradient(195deg,#ec407a,#d81b60);box-shadow:0 4px 20px rgba(0,0,0,0.14),0 7px 10px -5px rgba(233,30,99,0.4);"><i class="material-icons" style="margin-right:10px;">table_view</i>Quản lý sản phẩm</a></li>
+      <li><a href="category.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">category</i>Quản lý danh mục</a></li>
+      <li><a href="phieunhap.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">inventory_2</i>Quản lý nhập hàng</a></li>
+      <li><a href="giaban.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">attach_money</i>Quản lý giá bán</a></li>
+      <li><a href="tonkho.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">inventory</i>Quản lý tồn kho</a></li>
+    </ul>
+    <div style="position:absolute;bottom:0;width:100%;padding:1rem;">
+      <a href="login.html" style="display:inline-block;background:linear-gradient(195deg,#ec407a,#d81b60);color:white;padding:0.625rem 1.5rem;border-radius:0.25rem;text-decoration:none;width:100%;text-align:center;">Đăng xuất</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main style="margin-left:250px;min-height:100vh;padding:1.5rem;">
+    <nav style="margin-bottom:1rem;padding:0.75rem 1.5rem;border-radius:0.75rem;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);background:white;">
+      <span style="color:#e91e63;font-size:1rem;font-weight:600;">Quản lý sản phẩm</span>
+    </nav>
+
+    <!-- Button Add Product -->
+    <div style="margin-bottom:1.2rem;text-align:right;">
+      <button class="btn-add" onclick="window.location.href='add-product.html'">
+        <i class="material-icons-round">add_box</i> Thêm sản phẩm
+      </button>
+    </div>
+
+    <!-- Search Section -->
+    <div class="search-section">
+      <div class="search-group">
+        <label class="search-label" for="product-name">Tìm theo tên</label>
+        <input type="text" id="product-name" class="search-input" placeholder="Nhập tên sản phẩm...">
+      </div>
+      
+      <div class="search-group">
+        <label class="search-label" for="product-category">Tìm theo danh mục</label>
+        <select id="product-category" class="search-select">
+          <option value="">Tất cả danh mục</option>
+          <option value="1">Thiếu nhi</option>
+          <option value="2">Tâm lý/tình cảm</option>
+          <option value="3">Tôn giáo</option>
+          <option value="4">Lịch sử</option>
+          <option value="5">Văn học</option>
+        </select>
+      </div>
+      
+      <button class="btn-search" id="search-btn">
+        <i class="material-icons-round">search</i> Tìm kiếm
+      </button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Tên</th>
+          <th>Hình ảnh</th>
+          <th>Giá tiền</th>
+          <th>Số lượng</th>
+          <th>Ngày tạo</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody id="product-table-body">
+        <tr>
+          <td>1</td>
+          <td>Mưa đỏ : Chu Lai</td>
+          <td><img src="../img/book8.webp" alt="" style="width:60px;height:60px;border-radius:6px;object-fit:cover;"></td>
+          <td>1,250,000đ</td>
+          <td>15</td>
+          <td>04/11/2023</td>
+          <td>
+            <div class="actions">
+              <button class="btn btn-edit"><i class="material-icons-round">edit</i>Sửa</button>
+              <button class="btn btn-delete"><i class="material-icons-round">delete</i>Xóa</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Cây cam ngọt của tôi</td>
+          <td><img src="../img/book2.webp" alt="" style="width:60px;height:60px;border-radius:6px;object-fit:cover;"></td>
+          <td>320,000đ</td>
+          <td>8</td>
+          <td>08/11/2023</td>
+          <td>
+            <div class="actions">
+              <button class="btn btn-edit"><i class="material-icons-round">edit</i>Sửa</button>
+              <button class="btn btn-delete"><i class="material-icons-round">delete</i>Xóa</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Không gia đình</td>
+          <td><img src="../img/book3.jpg" alt="" style="width:60px;height:60px;border-radius:6px;object-fit:cover;"></td>
+          <td>280,000đ</td>
+          <td>12</td>
+          <td>10/11/2023</td>
+          <td>
+            <div class="actions">
+              <button class="btn btn-edit"><i class="material-icons-round">edit</i>Sửa</button>
+              <button class="btn btn-delete"><i class="material-icons-round">delete</i>Xóa</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Tuổi thơ dữ dội</td>
+          <td><img src="../img/book4.webp" alt="" style="width:60px;height:60px;border-radius:6px;object-fit:cover;"></td>
+          <td>350,000đ</td>
+          <td>20</td>
+          <td>15/11/2023</td>
+          <td>
+            <div class="actions">
+              <button class="btn btn-edit"><i class="material-icons-round">edit</i>Sửa</button>
+              <button class="btn btn-delete"><i class="material-icons-round">delete</i>Xóa</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Đắc nhân tâm</td>
+          <td><img src="../img/book5.webp" alt="" style="width:60px;height:60px;border-radius:6px;object-fit:cover;"></td>
+          <td>420,000đ</td>
+          <td>10</td>
+          <td>20/11/2023</td>
+          <td>
+            <div class="actions">
+              <button class="btn btn-edit"><i class="material-icons-round">edit</i>Sửa</button>
+              <button class="btn btn-delete"><i class="material-icons-round">delete</i>Xóa</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <button class="pagination-btn" id="prev-btn" disabled>
+        <i class="material-icons-round">chevron_left</i>
+      </button>
+      <button class="pagination-btn active">1</button>
+      <button class="pagination-btn">2</button>
+      <button class="pagination-btn">3</button>
+      <button class="pagination-btn">4</button>
+      <button class="pagination-btn">5</button>
+      <button class="pagination-btn" id="next-btn">
+        <i class="material-icons-round">chevron_right</i>
+      </button>
+    </div>
+    <div class="pagination-info">
+      Hiển thị 1-5 của 25 sản phẩm
+    </div>
+  </main>
+
+  <script>
+    const editButtons = document.querySelectorAll('.btn-edit');
+    const deleteButtons = document.querySelectorAll('.btn-delete');
+    const searchBtn = document.getElementById('search-btn');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const paginationBtns = document.querySelectorAll('.pagination-btn:not(#prev-btn):not(#next-btn)');
+
+    // Edit and Delete buttons
+    editButtons.forEach(btn => btn.addEventListener('click', () => {
+      window.location.href = 'edit-product.html';
+    }));
+
+    deleteButtons.forEach(btn => btn.addEventListener('click', () => {
+      if (confirm(`Bạn có chắc chắn muốn xóa sản phẩm này`)) {
+        alert('Đã xóa sản phẩm thành công!');
+      }
+    }));
+
+    // Search functionality
+    searchBtn.addEventListener('click', () => {
+      const productName = document.getElementById('product-name').value;
+      const productCategory = document.getElementById('product-category').value;
+      
+      // In a real application, this would make an API call
+      
+      // Reset pagination to first page
+      paginationBtns.forEach((btn, index) => {
+        btn.classList.remove('active');
+        if (index === 0) btn.classList.add('active');
+      });
+      
+      prevBtn.disabled = true;
+      nextBtn.disabled = false;
+    });
+
+    // Pagination functionality
+    paginationBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Remove active class from all buttons
+        paginationBtns.forEach(b => b.classList.remove('active'));
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Enable/disable prev and next buttons based on current page
+        const currentPage = parseInt(this.textContent);
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === 5; // In a real app, this would be the last page
+      });
+    });
+
+    // Previous and Next buttons
+    prevBtn.addEventListener('click', function() {
+      if (this.disabled) return;
+      
+      const activeBtn = document.querySelector('.pagination-btn.active');
+      const currentPage = parseInt(activeBtn.textContent);
+      
+      if (currentPage > 1) {
+        paginationBtns[currentPage - 2].click();
+      }
+    });
+
+    nextBtn.addEventListener('click', function() {
+      if (this.disabled) return;
+      
+      const activeBtn = document.querySelector('.pagination-btn.active');
+      const currentPage = parseInt(activeBtn.textContent);
+      
+      if (currentPage < 5) { // In a real app, this would be the last page
+        paginationBtns[currentPage].click();
+      }
+    });
+  </script>
+</body>
+</html>

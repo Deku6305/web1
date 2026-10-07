@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" href="../img/ryicon.jpg">
+  <title>BookStore - Cập nhật khách hàng</title>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="assets/css/pure-style.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif; 
+      background-color: #f0f2f5; 
+      color: #344767; 
+      line-height: 1.6; 
+      overflow-x: hidden;
+    }
+
+    /* Card styles */
+    .card {
+      background-color: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    /* Form styles */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #344767;
+    }
+
+    .form-control {
+      display: block;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #495057;
+      background-color: #fff;
+      background-clip: padding-box;
+      border: 1px solid #ced4da;
+      border-radius: 0.375rem;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      box-sizing: border-box;
+    }
+
+    .form-control:focus {
+      color: #495057;
+      background-color: #fff;
+      border-color: #e91e63;
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(233, 30, 99, 0.25);
+    }
+
+    /* Password field */
+    .password-field { /* chứa label + khối input-with-icon */
+      position: relative;
+    }
+
+    /* BỌC riêng input + icon để căn giữa chính xác theo chiều cao input */
+    .input-with-icon {
+      position: relative; /* làm mốc cho nút tuyệt đối */
+    }
+
+    .input-with-icon .form-control {
+      padding-right: 3rem; /* chừa chỗ cho icon */
+    }
+
+    .input-with-icon .toggle-password {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%); /* căn giữa theo ô input */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      background: transparent;
+      border: none;
+      color: #7b8794;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .input-with-icon .toggle-password:hover {
+      background-color: rgba(233, 30, 99, 0.1);
+      color: #e91e63;
+    }
+
+    .input-with-icon .toggle-password .material-icons {
+      line-height: 1;
+      font-size: 1.2rem;
+    }
+
+    /* Button styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1.5;
+      text-align: center;
+      text-decoration: none;
+      vertical-align: middle;
+      cursor: pointer;
+      user-select: none;
+      border: 1px solid transparent;
+      border-radius: 0.375rem;
+      transition: all 0.15s ease-in-out;
+    }
+
+     .btn-secondary {
+      background: #6c757d;
+    }
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+
+    .btn-gradient {
+      color: #fff;
+      background: linear-gradient(195deg, #ec407a, #d81b60);
+      border-color: transparent;
+      box-shadow: 0 4px 6px rgba(233, 30, 99, 0.2);
+    }
+
+    .btn-gradient:hover {
+      background: linear-gradient(195deg, #e91e63, #ad1457);
+      box-shadow: 0 6px 10px rgba(233, 30, 99, 0.3);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <aside style="position: fixed; top: 0; left: 0; z-index: 1000; width: 250px; height: 100vh; background: linear-gradient(195deg, #42424a, #191919); color: white; box-shadow: 0 0 2rem rgba(0, 0, 0, 0.15);">
+    <div style="padding: 1.5em 1rem;">
+      <a href="#" style="display: flex; align-items: center; font-weight: 700; color: white; text-decoration: none;">
+        <span>TRUNG TÂM ĐIỀU KHIỂN</span>
+      </a>
+    </div>
+    <hr style="border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;">
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li><a href="index.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">dashboard</i>Tổng quan</a></li>
+      <li><a href="user.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;background:linear-gradient(195deg,#ec407a,#d81b60);box-shadow:0 4px 20px rgba(0,0,0,0.14),0 7px 10px -5px rgba(233,30,99,0.4);"><i class="material-icons" style="margin-right:10px;">person</i>Quản lý khách hàng</a></li>
+      <li><a href="order.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">weekend</i>Quản lý đơn hàng</a></li>
+      <li><a href="products.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">table_view</i>Quản lý sản phẩm</a></li>
+      <li><a href="category.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">category</i>Quản lý danh mục</a></li>
+      <li><a href="phieunhap.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">inventory_2</i>Quản lý nhập hàng</a></li>
+      <li><a href="giaban.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">attach_money</i>Quản lý giá bán</a></li>
+      <li><a href="tonkho.html" style="display:flex;align-items:center;padding:0.75rem 1rem;color:white;text-decoration:none;"><i class="material-icons" style="margin-right:10px;">inventory</i>Quản lý tồn kho</a></li>
+    </ul>
+    <div style="position:absolute;bottom:0;width:100%;padding:1rem;">
+      <a href="login.html" style="display:inline-block;background:linear-gradient(195deg,#ec407a,#d81b60);color:white;padding:0.625rem 1.5rem;border-radius:0.25rem;text-decoration:none;width:100%;text-align:center;">Đăng xuất</a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main style="margin-left: 250px; min-height: 100vh; padding: 1.5rem;">
+    <nav style="margin-bottom: 1.5rem; padding: 0.75rem 1.5rem; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); background-color: white;">
+      <div>
+        <b style="color:#e91e63;">Cập nhật khách hàng</b>
+      </div>
+    </nav>
+
+    <div style="padding-top: 1.5rem; padding-bottom: 1.5rem;">
+      <div class="card">
+        <div class="card-header">
+          <h4 style="margin: 0; font-weight: 600; margin-bottom: 0.5rem; color: #344767;">Thông tin khách hàng</h4>
+          <p style="margin: 0; color: #6c757d; font-size: 0.875rem;">Cập nhật các thông tin của khách hàng</p>
+        </div>
+        <div class="card-body">
+          <form id="editForm">
+            <div class="form-group">
+              <label for="fullname" class="form-label">Họ và tên <span style="color: #dc3545;">*</span></label>
+              <input type="text" class="form-control" id="fullname" name="fullname" value="Nguyễn Văn A" required>
+            </div>
+
+            <div class="form-group">
+              <label for="username" class="form-label">Tên tài khoản <span style="color: #dc3545;">*</span></label>
+              <input type="text" class="form-control" id="username" name="username" value="nguyenvana" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="form-label">Email <span style="color: #dc3545;">*</span></label>
+              <input type="email" class="form-control" id="email" name="email" value="nguyenvana@example.com" required>
+            </div>
+
+            <div class="form-group password-field">
+              <label for="password" class="form-label">Mật khẩu <span style="color: #dc3545;">*</span></label>
+
+              <!-- BỌC input + icon -->
+              <div class="input-with-icon">
+                <input type="password" class="form-control" id="password" name="password" value="123456" required>
+                <button type="button" class="toggle-password" onclick="togglePassword()" title="Hiển thị mật khẩu" aria-label="Hiển thị/ẩn mật khẩu">
+                  <i class="material-icons" id="eyeIcon">visibility_off</i>
+                </button>
+              </div>
+              <!-- hết bọc -->
+            </div>
+
+            <div class="form-group">
+              <label for="phone" class="form-label">Số điện thoại <span style="color: #dc3545;">*</span></label>
+              <input type="tel" class="form-control" id="phone" name="phone" value="0987654321" pattern="[0-9]{10,11}" required>
+            </div>
+
+            <div class="form-group">
+              <label for="address" class="form-label">Địa chỉ <span style="color: #dc3545;">*</span></label>
+              <textarea class="form-control" id="address" name="address" rows="3" required>123 Đường ABC, Quận 1, TP. HCM</textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="status" class="form-label">Trạng thái tài khoản <span style="color: #dc3545;">*</span></label>
+              <select class="form-control" id="status" name="status" required>
+                <option value="Hoạt động" selected>Hoạt động</option>
+                <option value="Khóa">Khóa</option>
+              </select>
+            </div>
+
+            <!-- Buttons -->
+            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #dee2e6;">
+              <button type="button" class="btn btn-secondary" onclick="window.location.href='user.html'">
+                <i class="material-icons" style="font-size: 1rem; vertical-align: middle;">arrow_back</i>
+                Quay về
+              </button>
+              <button type="submit" class="btn btn-gradient" style="padding: 0.75rem 2rem; font-weight: 600;">
+                <i class="material-icons" style="font-size: 1rem; vertical-align: middle;">save</i>
+                Lưu thay đổi
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Hiện/ẩn mật khẩu
+    function togglePassword() {
+      const pwdInput = document.getElementById("password");
+      const eyeIcon = document.getElementById("eyeIcon");
+      if (pwdInput.type === "password") {
+        pwdInput.type = "text";
+        eyeIcon.textContent = "visibility";
+      } else {
+        pwdInput.type = "password";
+        eyeIcon.textContent = "visibility_off";
+      }
+    }
+
+    // Xử lý khi nhấn submit form
+    document.getElementById("editForm").addEventListener("submit", function (e) {
+      e.preventDefault(); // Ngăn reload
+      alert("✅ Cập nhật khách hàng thành công!");
+      window.location.href = "user.html"; // Quay lại trang quản lý khách hàng
+    });
+  </script>
+</body>
+</html>

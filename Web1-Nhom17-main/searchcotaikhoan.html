@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="utf-8">
+        <title>Kết Quả Tìm Kiếm - BOOK STORE</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="eCommerce HTML Template Free Download" name="keywords">
+        <meta content="eCommerce HTML Template Free Download" name="description">
+
+        <!-- Favicon -->
+        <link href="img/tieude.jpg" rel="icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
+
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="lib/slick/slick.css" rel="stylesheet">
+        <link href="lib/slick/slick-theme.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/fix.css" rel="stylesheet">
+        <style>
+            .qv-overlay{
+  position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  display: none; align-items: center; justify-content: center; z-index: 2000;
+}
+.qv-card{
+  background: #fff; border-radius: 14px; max-width: 980px; width: calc(100% - 32px);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25); position: relative; padding: 28px;
+}
+.qv-close{
+  position: absolute; top: 12px; right: 12px; width: 40px; height: 40px;
+  border-radius: 50%; border: 2px solid #1e6bd6; color: #1e6bd6; background: #fff;
+  display: inline-flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer;
+}
+.qv-body{ display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; align-items: start; }
+
+.qv-img img{ max-width: 100%; height: auto; }
+.qv-title{ font-size: 28px; font-weight: 700; margin: 0 0 6px; }
+.qv-meta{ margin: 8px 0 14px; color: #1e6bd6; font-weight: 600; display: flex; gap: 8px; align-items: center; }
+.qv-price{ font-size: 28px; font-weight: 800; color: #ff6f61; margin: 0 0 14px; }
+.qv-desc{ color: #6b7280; line-height: 1.6; margin-bottom: 12px; }
+.qv-note{ color: #1e6bd6; margin: 8px 0 18px; display: flex; gap: 10px; align-items: flex-start; }
+.qv-add{
+  display: inline-flex; align-items: center; gap: 10px; border: none; cursor: pointer;
+  padding: 12px 20px; border-radius: 999px; background: #1e6bd6; color: #fff; font-weight: 700; font-size: 18px;
+}
+.qv-add i{ font-size: 18px; }
+
+/* Mobile */
+@media (max-width: 768px){
+  .qv-body{ grid-template-columns: 1fr; }
+}
+
+
+            /* Toast notification styles */
+            .toast-notification {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: #4CAF50;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                z-index: 1000;
+                display: none;
+                animation: slideIn 0.5s ease-in-out;
+            }
+
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
+            }
+
+            /* Style cho tiêu đề kết quả tìm kiếm */
+            .search-results-header {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            
+            .search-results-header h1 {
+                font-size: 24px;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 10px;
+            }
+            
+            .search-results-header p {
+                font-size: 16px;
+                color: #666;
+                margin-bottom: 0;
+            }
+
+            /* Thông tin lượt mua, lượt bán và đánh giá */
+            .product-stats {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: 10px 0;
+                font-size: 13px;
+                color: #666;
+            }
+            
+            .product-rating {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            
+            .rating-stars {
+                color: #ffc107;
+                display: flex;
+                gap: 2px;
+            }
+            
+            .rating-count {
+                color: #666;
+                font-weight: 500;
+            }
+            
+            .product-sales {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            
+            .sales-count {
+                color: #666;
+                font-weight: 500;
+            }
+            
+            .sales-icon {
+                color: #ff6f61;
+            }
+
+            /* Style cho danh mục sản phẩm */
+            /* Category as buttons (pill) */
+.category-filter{
+  background:#fff; border-radius:14px; padding:20px; margin-bottom:30px;
+  box-shadow:0 6px 20px rgba(0,0,0,.06);
+}
+.category-filter h3{
+  font-size:18px; font-weight:700; margin-bottom:16px;
+  padding-bottom:12px; border-bottom:1px solid #eee;
+}
+.category-filter ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; }
+.category-filter li{ margin:0; }
+.category-filter a.cat-btn{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  width:100%; padding:12px 16px; border-radius:999px;
+  border:1px solid #e9e9e9; background:#fff; color:#333; font-weight:600;
+  text-decoration:none;
+  transition:background-color .2s,border-color .2s,color .2s,box-shadow .2s,transform .1s;
+  box-shadow:0 1px 2px rgba(0,0,0,.04);
+}
+.category-filter a.cat-btn::before{
+  content:""; width:8px; height:8px; border-radius:50%; background:#ff6f61; opacity:.55; margin-right:8px;
+}
+.category-filter a.cat-btn::after{
+  content:"›"; font-size:16px; opacity:.35; transform:translateX(0); transition:transform .18s ease;
+}
+.category-filter a.cat-btn:hover{
+  transform:translateY(-1px); border-color:#ffd1c9; background:#fff7f6; color:#ff6f61;
+  box-shadow:0 6px 16px rgba(255,111,97,.15);
+}
+.category-filter a.cat-btn:hover::after{ transform:translateX(3px); opacity:.6; }
+.category-filter a.cat-btn.active{
+  background:#ff6f61; color:#fff; border-color:#ff6f61; box-shadow:0 8px 18px rgba(255,111,97,.35);
+}
+.category-filter a.cat-btn.active::before{ background:#fff; opacity:1; }
+.category-filter a.cat-btn.active::after{ opacity:.9; color:#fff; }
+@media (max-width:768px){ .category-filter a.cat-btn{ padding:12px 14px; } }
+
+            
+            /* Style cho các sản phẩm trong danh mục */
+            .category-product-item {
+                background: #fff;
+                border-radius: 10px;
+                padding: 15px;
+                margin-bottom: 30px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+                transition: transform 0.3s, box-shadow 0.3s;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+                /* Thêm padding dưới để chứa nút hành động */
+                padding-bottom: 60px;
+                cursor: pointer;
+            }
+            
+            .category-product-item:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+            
+            .category-product-image {
+                position: relative;
+                margin-bottom: 15px;
+                overflow: hidden;
+                border-radius: 8px;
+                height: 250px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .category-product-image img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+                transition: transform 0.5s;
+            }
+            
+            .category-product-item:hover .category-product-image img {
+                transform: scale(1.05);
+            }
+            
+            .category-product-title {
+                font-size: 16px;
+                font-weight: 600;
+                margin-bottom: 8px;
+                height: 40px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+            
+            .category-product-price {
+                color: #ff6f61;
+                font-weight: bold;
+                font-size: 18px;
+                margin-bottom: 5px;
+            }
+            
+            .category-freeship-badge {
+                background: #e8f5e9;
+                color: #4caf50;
+                font-size: 12px;
+                padding: 3px 10px;
+                border-radius: 15px;
+                display: inline-block;
+                margin-bottom: 10px;
+            }
+            
+            /* Nút hành động sản phẩm - LUÔN HIỆN */
+            .product-actions {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 15px;
+            }
+            
+            .action-btn {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                border: none;
+                transition: all 0.3s;
+                cursor: pointer;
+                text-decoration: none;
+            }
+            
+            .add-cart {
+                background: #ff6f61;
+            }
+            
+            .view-detail {
+                background: #4CAF50;
+            }
+            
+            .action-btn:hover {
+                transform: scale(1.1);
+            }
+            
+            /* Phân trang */
+            /* Phân trang (tĩnh, hình tròn) */
+.pagination{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  margin:30px 0;
+}
+.pagination .page-btn{
+  width:40px; height:40px;
+  border-radius:50%;
+  border:1px solid #ddd;
+  background:transparent;
+  color:#333;
+  font-weight:600;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background-color .2s,border-color .2s,color .2s,transform .1s;
+  outline:none;
+}
+.pagination .page-btn:hover{ transform:translateY(-1px); border-color:#ccc; }
+.pagination .page-btn.active{ background:#ff6f61; color:#fff; border-color:#ff6f61; }
+.pagination .page-btn.is-disabled{ opacity:.45; pointer-events:none; }
+
+/* (giữ media query phía dưới nếu cần) */
+
+            /* Ẩn tất cả các trang mặc định */
+            .product-page {
+                display: none;
+            }
+            
+            .product-page.active {
+                display: block;
+            }
+            
+            /* Responsive */
+            @media (max-width: 768px) {
+                .category-product-image {
+                    height: 200px;
+                }
+
+                .pagination a {
+                    padding: 6px 12px;
+                    margin: 0 2px;
+                    font-size: 14px;
+                }
+
+                .product-stats {
+                    flex-direction: column;
+                    gap: 5px;
+                }
+            }
+
+            /* Container tổng cho vùng search */
+            .search-container {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                width: 100%;
+            }
+
+            /* Thanh search bên trái */
+            .search {
+                position: relative;
+                flex: 1;
+                display: flex;
+                align-items: center;
+            }
+
+            .search input {
+                width: 100%;
+                padding-right: 30px; /* Chừa chỗ cho nút search sát rìa */
+            }
+
+            .search button {
+                position: absolute !important;
+                right: 0 !important;
+                top: 0 !important;
+                bottom: 0 !important;
+                z-index: 2;
+                background: transparent !important;
+                border: none !important;
+                padding: 0 18px !important;
+                color: #ff6f61 !important;
+                height: 100% !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                border-radius: 0 !important;
+                cursor: pointer;
+                margin: 0 !important;
+            }
+
+            .search button:hover {
+                background: #ff6f61 !important;
+                color: white !important;
+            }
+
+            .search button i {
+                font-size: 16px;
+                line-height: 1;
+            }
+
+            /* Nút phễu bên phải thanh search */
+            .filter-button-container {
+                flex-shrink: 0;
+            }
+
+            /* Nút phễu lọc */
+            .filter-btn {
+                width: 45px;
+                height: 45px;
+                border-radius: 8px;
+                background: white;
+                border: 2px solid #28a745;
+                color: #28a745;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .filter-btn:hover {
+                background: #28a745;
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            }
+
+            /* Modal tìm kiếm nâng cao */
+            .advanced-search-modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.5);
+                animation: fadeIn 0.3s ease;
+            }
+
+            @keyframes fadeIn {
+                from {opacity: 0;}
+                to {opacity: 1;}
+            }
+
+            .modal-content {
+                background-color: white;
+                margin: 3% auto;
+                padding: 0;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 500px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                animation: slideIn 0.3s ease;
+            }
+
+            @keyframes slideIn {
+                from {
+                    transform: translateY(-50px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .modal-header {
+                padding: 15px 20px;
+                border-bottom: 1px solid #eee;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .modal-header h3 {
+                margin: 0;
+                color: #333;
+            }
+
+            .close-modal {
+                background: none;
+                border: none;
+                font-size: 24px;
+                cursor: pointer;
+                color: #999;
+            }
+
+            .close-modal:hover {
+                color: #333;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: 600;
+                color: #333;
+            }
+
+            .form-group input,
+            .form-group select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 14px;
+            }
+
+            .price-range {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .price-range input {
+                width: calc(50% - 5px);
+            }
+
+            .form-actions {
+                display: flex;
+                gap: 10px;
+                justify-content: flex-end;
+            }
+
+            .btn-search {
+                background: #28a745;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: 600;
+            }
+
+            .btn-reset {
+                background: #6c757d;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Header -->
+        <div class="nav">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto">
+                            <a href="index2.html" class="nav-item nav-link active">Trang chủ</a>
+                            <a href="contact.html" class="nav-item nav-link">Liên hệ</a>
+                        </div>
+                        <div class="navbar-nav ml-auto">
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> <i class="fas fa-user"></i> &nbsp;Huynh Duc</a>
+                                <div class="dropdown-menu">
+                                      <a href="thongtintaikhoan.html" class="dropdown-item"><i class="fa fa-id-card me-2"></i>  &nbsp;Thông tin</a>
+                                    <a href="lichsumuahang.html" class="dropdown-item"> <i class="fa fa-history me-2"></i>&nbsp;Lịch sử mua hàng</a>
+
+                                    <a href="login.html" class="dropdown-item"> <i class="fa fa-sign-out-alt me-2"></i>&nbsp;Đăng xuất</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        
+        <div class="bottom-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="logo">
+                            <a href="index2.html">
+                                <img src="img/logo.png" alt="Logo">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="search-container">
+                            <div class="search">
+                                <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm">
+                                <button id="searchBtn"><i class="fa fa-search"></i></button>
+                            </div>
+                            <div class="filter-button-container">
+                                <button id="filterBtn" class="filter-btn" title="Tìm kiếm nâng cao">
+                                    <i class="fas fa-filter"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="user">
+                            <a href="cart.html" class="btn cart">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kết quả tìm kiếm -->
+        <div class="category-products">
+            <div class="container-fluid">
+                <div class="search-results-header">
+                    <h1>Kết quả tìm kiếm cho "Thiếu nhi"</h1>
+                </div>
+                <div class="row">
+                    <!-- Phần lọc danh mục -->
+                    
+                    
+                    <!-- Phần sản phẩm -->
+                    <div class="col-md-12">
+                        <!-- Trang 1 - Hiển thị tất cả 8 sản phẩm -->
+                        <div id="product-page1" class="product-page active">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="category-product-item">
+                                        <div class="category-product-image">
+                                            <img src="img/tn1.webp" alt="Hiểu về trái tim">
+                                        </div>
+                                        <div class="category-product-title">Cổ tích của ba</div>
+                                        <div class="category-product-price">99.000 đ</div>
+                                        <div class="category-freeship-badge">Freeship</div>
+                                        
+                                        <!-- Thêm thông tin lượt mua, lượt bán và đánh giá -->
+                                        <div class="product-stats">
+                                            <div class="product-rating">
+                                                <div class="rating-stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </div>
+                                                <span class="rating-count">4.5</span>
+                                            </div>
+                                            <div class="product-sales">
+                                                <i class="fas fa-shopping-cart sales-icon"></i>
+                                                <span class="sales-count">2.1k</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-actions">
+                                            <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng" onclick="alert('Thêm vào giỏ hàng thành công!')">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="category-product-item">
+                                        <div class="category-product-image">
+                                            <img src="img/tn2.webp" alt="Cây Cam Ngọt Của Tôi">
+                                        </div>
+                                        <div class="category-product-title">Chim sâu và bè bạn ở rừng</div>
+                                        <div class="category-product-price">220.000 đ</div>
+                                        <div class="category-freeship-badge">Freeship</div>
+                                        
+                                        <!-- Thêm thông tin lượt mua, lượt bán và đánh giá -->
+                                        <div class="product-stats">
+                                            <div class="product-rating">
+                                                <div class="rating-stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">5.0</span>
+                                            </div>
+                                            <div class="product-sales">
+                                                <i class="fas fa-shopping-cart sales-icon"></i>
+                                                <span class="sales-count">3.2k</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-actions">
+                                            <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng" onclick="alert('Thêm vào giỏ hàng thành công!')">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="category-product-item">
+                                        <div class="category-product-image">
+                                            <img src="img/tn3.webp" alt="Làm Bạn Với Bầu Trời">
+                                        </div>
+                                        <div class="category-product-title">Truyện tây du nơi xóm lá</div>
+                                        <div class="category-product-price">139.000 đ</div>
+                                        <div class="category-freeship-badge">Freeship</div>
+                                        
+                                        <!-- Thêm thông tin lượt mua, lượt bán và đánh giá -->
+                                        <div class="product-stats">
+                                            <div class="product-rating">
+                                                <div class="rating-stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">4.0</span>
+                                            </div>
+                                            <div class="product-sales">
+                                                <i class="fas fa-shopping-cart sales-icon"></i>
+                                                <span class="sales-count">1.5k</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-actions">
+                                            <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng" onclick="alert('thêm vào giỏ hàng thành công')">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Thêm 5 sản phẩm mới -->
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="category-product-item">
+                                        <div class="category-product-image">
+                                            <img src="img/tn4.jpg" alt="Đắc Nhân Tâm">
+                                        </div>
+                                        <div class="category-product-title">Bách khoa thiếu nhi</div>
+                                        <div class="category-product-price">120.000 đ</div>
+                                        <div class="category-freeship-badge">Freeship</div>
+                                        
+                                        <!-- Thêm thông tin lượt mua, lượt bán và đánh giá -->
+                                        <div class="product-stats">
+                                            <div class="product-rating">
+                                                <div class="rating-stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </div>
+                                                <span class="rating-count">4.8</span>
+                                            </div>
+                                            <div class="product-sales">
+                                                <i class="fas fa-shopping-cart sales-icon"></i>
+                                                <span class="sales-count">5.5k</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-actions">
+                                            <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng" onclick="alert('Thêm vào giỏ hàng thành công!')">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="category-product-item">
+                                        <div class="category-product-image">
+                                            <img src="img/tn5.webp" alt="Nhà Giả Kim">
+                                        </div>
+                                        <div class="category-product-title">Trời xanh ngập nắng</div>
+                                        <div class="category-product-price">85.000 đ</div>
+                                        <div class="category-freeship-badge">Freeship</div>
+                                        
+                                        <!-- Thêm thông tin lượt mua, lượt bán và đánh giá -->
+                                        <div class="product-stats">
+                                            <div class="product-rating">
+                                                <div class="rating-stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </div>
+                                                <span class="rating-count">4.7</span>
+                                            </div>
+                                            <div class="product-sales">
+                                                <i class="fas fa-shopping-cart sales-icon"></i>
+                                                <span class="sales-count">4.3k</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-actions">
+                                            <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng" onclick="alert('Thêm vào giỏ hàng thành công!')">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="category-product-item">
+                                        <div class="category-product-image">
+                                            <img src="img/tn6.webp" alt="Tôi Tài Giỏi Bạn Cũng Thế">
+                                        </div>
+                                        <div class="category-product-title">Cô bé giỏi khiêu vũ</div>
+                                        <div class="category-product-price">110.000 đ</div>
+                                        <div class="category-freeship-badge">Freeship</div>
+                                        
+                                        <!-- Thêm thông tin lượt mua, lượt bán và đánh giá -->
+                                        <div class="product-stats">
+                                            <div class="product-rating">
+                                                <div class="rating-stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">4.9</span>
+                                            </div>
+                                            <div class="product-sales">
+                                                <i class="fas fa-shopping-cart sales-icon"></i>
+                                                <span class="sales-count">3.8k</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-actions">
+                                            <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng" onclick="alert('Thêm vào giỏ hàng thành công!')">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Thêm 2 sản phẩm mới -->
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="category-product-item">
+                                        <div class="category-product-image">
+                                            <img src="img/book12.jpg" alt="Cuốn sách mới 7">
+                                        </div>
+                                        <div class="category-product-title">Bồ nông có hiếu</div>
+                                        <div class="category-product-price">95.000 đ</div>
+                                        <div class="category-freeship-badge">Freeship</div>
+                                        
+                                        <!-- Thêm thông tin lượt mua, lượt bán và đánh giá -->
+                                        <div class="product-stats">
+                                            <div class="product-rating">
+                                                <div class="rating-stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </div>
+                                                <span class="rating-count">4.6</span>
+                                            </div>
+                                            <div class="product-sales">
+                                                <i class="fas fa-shopping-cart sales-icon"></i>
+                                                <span class="sales-count">2.7k</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-actions">
+                                            <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng" onclick="alert('Thêm vào giỏ hàng thành công!')">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="category-product-item">
+                                        <div class="category-product-image">
+                                            <img src="img/book3.jpg" alt="Cuốn sách mới 8">
+                                        </div>
+                                        <div class="category-product-title">Làm bạn với bầu trời</div>
+                                        <div class="category-product-price">150.000 đ</div>
+                                        <div class="category-freeship-badge">Freeship</div>
+                                        
+                                        <!-- Thêm thông tin lượt mua, lượt bán và đánh giá -->
+                                        <div class="product-stats">
+                                            <div class="product-rating">
+                                                <div class="rating-stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">5.0</span>
+                                            </div>
+                                            <div class="product-sales">
+                                                <i class="fas fa-shopping-cart sales-icon"></i>
+                                                <span class="sales-count">4.2k</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-actions">
+                                            <a href="cart.html" class="action-btn add-cart" title="Thêm vào giỏ hàng" onclick="alert('Thêm vào giỏ hàng thành công!')">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="product-detail.html" class="action-btn view-detail" title="Xem chi tiết">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Phân trang - Chỉ hiển thị trang 1 -->
+                       <div class="pagination" role="navigation" aria-label="Phân trang (tĩnh)">
+  <button type="button" class="page-btn page-prev">«</button>
+  <button type="button" class="page-btn active">1</button>
+  <button type="button" class="page-btn">2</button>
+  <button type="button" class="page-btn">3</button>
+  <button type="button" class="page-btn page-next">»</button>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--kết thúc kết quả tìm kiếm--> 
+
+        <!-- Footer Start -->
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Liên hệ</h2>
+                            <div class="contact-info">
+                                <p><i class="fa fa-map-marker"></i>273 An Dương Vương Phường 3 Quận 5 TPHCM</p>
+                                <p><i class="fa fa-envelope"></i>info@example.com</p>
+                                <p><i class="fa fa-phone"></i>+012-345-67890</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Theo dõi chúng tôi</h2>
+                            <div class="contact-info">
+                                <div class="social">
+                                    <a href=""><i class="fab fa-twitter"></i></a>
+                                    <a href=""><i class="fab fa-facebook-f"></i></a>
+                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                    <a href=""><i class="fab fa-instagram"></i></a>
+                                    <a href=""><i class="fab fa-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Thông tin công ty</h2>
+                            <ul>
+                                <li><a href="#">Về chúng tôi</a></li>
+                                <li><a href="#">Chính sách bảo mật</a></li>
+                                <li><a href="#">Điều khoản & Điều kiện</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Thông tin mua hàng</h2>
+                            <ul>
+                                <li><a href="#">Chính sách thanh toán</a></li>
+                                <li><a href="#">Chính sách vận chuyển</a></li>
+                                <li><a href="#">Chính sách đổi trả</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row payment align-items-center">
+                    <div class="col-md-6">
+                        <div class="payment-method">
+                            <h2>Chúng tôi chấp nhận:</h2>
+                            <img src="img/payment-method.png" alt="Payment Method" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="payment-security">
+                            <h2>Được bảo mật bởi:</h2>
+                            <img src="img/godaddy.svg" alt="Payment Security" />
+                            <img src="img/norton.svg" alt="Payment Security" />
+                            <img src="img/ssl.svg" alt="Payment Security" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+
+        <!-- Back to Top -->
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/slick/slick.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+        
+        <script>
+            // Consolidated JavaScript for searchcotaikhoan.html (logged-in user version)
+            document.addEventListener("DOMContentLoaded", function() {
+                // Initialize pagination functionality
+                initializePagination();
+
+                // Initialize search functionality
+                initializeSearch();
+
+                // Initialize category selection
+                initializeCategorySelection();
+
+                // Initialize quick view functionality
+                initializeQuickView();
+
+                // Initialize advanced search modal
+                initializeAdvancedSearch();
+            });
+
+            // Pagination functionality
+            function initializePagination() {
+                const container = document.querySelector(".pagination");
+                if (!container) return;
+
+                const prev = container.querySelector(".page-prev");
+                const next = container.querySelector(".page-next");
+                const numberBtns = [...container.querySelectorAll(".page-btn")].filter(b =>
+                    !b.classList.contains("page-prev") && !b.classList.contains("page-next"));
+
+                function setActiveByIndex(idx) {
+                    numberBtns.forEach(b => b.classList.remove("active"));
+                    if (numberBtns[idx]) {
+                        numberBtns[idx].classList.add("active");
+                    }
+                    if (prev) prev.classList.toggle("is-disabled", idx === 0);
+                    if (next) next.classList.toggle("is-disabled", idx === numberBtns.length - 1);
+                }
+
+                // Add click listeners to number buttons
+                numberBtns.forEach((b, i) => {
+                    b.addEventListener("click", e => {
+                        e.preventDefault();
+                        setActiveByIndex(i);
+                    });
+                });
+
+                // Add click listeners to prev/next buttons
+                if (prev) {
+                    prev.addEventListener("click", e => {
+                        e.preventDefault();
+                        const cur = numberBtns.findIndex(b => b.classList.contains("active"));
+                        if (cur > 0) setActiveByIndex(cur - 1);
+                    });
+                }
+
+                if (next) {
+                    next.addEventListener("click", e => {
+                        e.preventDefault();
+                        const cur = numberBtns.findIndex(b => b.classList.contains("active"));
+                        if (cur < numberBtns.length - 1) setActiveByIndex(cur + 1);
+                    });
+                }
+
+                // Set initial active state
+                setActiveByIndex(0);
+            }
+
+            // Search functionality
+            function initializeSearch() {
+                const searchBtn = document.getElementById("searchBtn");
+                const searchInput = document.getElementById("searchInput");
+
+                if (searchBtn) {
+                    searchBtn.addEventListener("click", () => {
+                        window.location.href = "searchcotaikhoan.html";
+                    });
+                }
+
+                if (searchInput) {
+                    searchInput.addEventListener("keypress", (e) => {
+                        if (e.key === "Enter") {
+                            e.preventDefault();
+                            window.location.href = "searchcotaikhoan.html";
+                        }
+                    });
+                }
+            }
+
+            // Category selection functionality
+            function initializeCategorySelection() {
+                // Category selection is handled inline via onclick attributes
+                // This function can be used for additional logic if needed
+            }
+
+            // Quick view functionality
+            function initializeQuickView() {
+                const QV_FIXED_IMAGE = 'img/book8.webp';
+
+          function ensureQuickViewRoot(){
+            let root = document.querySelector('.qv-overlay');
+            if(root) return root;
+            root = document.createElement('div');
+            root.className = 'qv-overlay';
+            document.body.appendChild(root);
+            return root;
+          }
+
+          function openQuickViewFromCard(card){
+            const titleEl = card.querySelector('.category-product-title, .new-product-title');
+            const priceEl = card.querySelector('.category-product-price, .new-product-price');
+
+            const title = titleEl?.textContent?.trim() || 'Tên sản phẩm';
+            const price = priceEl?.textContent?.trim() || '';
+            const alt   = title;
+            const src   = QV_FIXED_IMAGE;
+
+            const root = ensureQuickViewRoot();
+            root.innerHTML = `
+  <div class="qv-card" role="dialog" aria-modal="true" aria-label="Xem nhanh sản phẩm">
+    <button class="qv-close" aria-label="Đóng">✖</button>
+    <div class="qv-body">
+      <div class="qv-img">
+        <img src="${src}" alt="${alt}">
+      </div>
+      <div class="qv-content" style="display:flex; flex-direction:column; height: 100%;">
+        <h2 class="qv-title">Mưa đỏ</h2>
+        <div class="qv-price">Giá: 180,000 VND</div>
+        <div class="qv-desc">Mô tả : "Mưa Đỏ" là một trong những tiểu thuyết chiến tranh đặc sắc nhất về 81 ngày đêm đỏ lửa tại Thành cổ Quảng Trị năm 1972. Không chỉ tái hiện sự khốc liệt của một trong những trận đánh ác liệt nhất lịch sử, tác phẩm còn mở ra một không gian nhân văn, nơi người đọc được chạm đến cả nỗi đau, sự hy sinh và khát vọng hòa bình.</div>
+        
+        <div class="qv-meta-container" style="margin-top: auto; display: flex; flex-direction: column; gap: 12px;">
+          <div class="qv-meta-item" style="display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-user" style="color: #1e6bd6; width: 20px;"></i>
+            <span style="font-weight: 500;">Tác giả: <em style="color: #333;">Chu Lai</em></span>
+          </div>
+          <div class="qv-meta-item" style="display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-book" style="color: #1e6bd6; width: 20px;"></i>
+            <span style="font-weight: 500;">Thể loại: <em style="color: #333;">Lịch sử</em></span>
+          </div>
+          <button class="qv-add" style="margin-top: 10px; width: 100%; padding: 12px; background: #1e6bd6; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <i class="fa fa-shopping-cart"></i>
+            <span>Thêm vào giỏ hàng</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
+                    root.style.display = 'flex';
+
+                    const close = () => {
+                        root.style.display = 'none';
+                        root.innerHTML = '';
+                    };
+
+                    root.addEventListener('click', (e) => {
+                        if (e.target === root) close();
+                    });
+
+                    const closeBtn = root.querySelector('.qv-close');
+                    if (closeBtn) {
+                        closeBtn.addEventListener('click', close);
+                    }
+
+                    const onEsc = (e) => {
+                        if (e.key === 'Escape') {
+                            close();
+                            document.removeEventListener('keydown', onEsc);
+                        }
+                    };
+                    document.addEventListener('keydown', onEsc);
+
+                    // Thêm sự kiện cho nút phóng to và nút đóng ảnh phóng to
+                    const zoomBtn = root.querySelector('.qv-zoom-btn');
+                    const zoomModal = root.querySelector('.image-zoom-modal');
+                    const zoomClose = root.querySelector('.zoom-close');
+
+                    if (zoomBtn && zoomModal) {
+                        zoomBtn.addEventListener('click', () => {
+                            zoomModal.style.display = 'flex';
+                        });
+                    }
+
+                    if (zoomClose) {
+                        zoomClose.addEventListener('click', () => {
+                            zoomModal.style.display = 'none';
+                        });
+                    }
+
+                    // Đóng ảnh phóng to khi click bên ngoài ảnh
+                    if (zoomModal) {
+                        zoomModal.addEventListener('click', (e) => {
+                            if (e.target === zoomModal) {
+                                zoomModal.style.display = 'none';
+                            }
+                        });
+                    }
+
+                    // Thêm hiệu ứng hover cho nút phóng to
+                    if (zoomBtn) {
+                        zoomBtn.addEventListener('mouseenter', () => {
+                            zoomBtn.style.backgroundColor = '#e9ecef';
+                            zoomBtn.style.borderColor = '#adb5bd';
+                        });
+
+                        zoomBtn.addEventListener('mouseleave', () => {
+                            zoomBtn.style.backgroundColor = '#f8f9fa';
+                            zoomBtn.style.borderColor = '#ddd';
+                        });
+                    }
+
+                    const addBtn = root.querySelector('.qv-add');
+                    if (addBtn) {
+                        addBtn.addEventListener('click', () => {
+                            alert('Thêm vào giỏ hàng thành công!');
+                            window.location.href = 'cart.html';
+                        });
+                    }
+                }
+
+                // Sự kiện click cho toàn bộ sản phẩm (trừ nút giỏ hàng và mắt xem)
+                document.addEventListener('click', function(e) {
+                    // Tìm phần tử sản phẩm gần nhất
+                    const productItem = e.target.closest('.category-product-item');
+                    if (!productItem) return;
+                    
+                    // Kiểm tra xem click có phải vào nút giỏ hàng hoặc mắt xem không
+                    const isAddCartBtn = e.target.closest('.add-cart');
+                    const isViewDetailBtn = e.target.closest('.view-detail');
+                    
+                    // Nếu click vào nút giỏ hàng hoặc mắt xem, không làm gì cả
+                    if (isAddCartBtn || isViewDetailBtn) return;
+                    
+                    // Ngược lại, mở modal chi tiết sản phẩm
+                    e.preventDefault();
+                    openQuickViewFromCard(productItem);
+                });
+
+                // Sự kiện click riêng cho nút mắt xem (để tránh xung đột và đảm bảo nút mắt xem vẫn hoạt động)
+                document.addEventListener('click', function(e) {
+                    const viewBtn = e.target.closest('.view-detail');
+                    if (!viewBtn) return;
+                    e.preventDefault();
+                    const card = viewBtn.closest('.category-product-item');
+                    if (!card) return;
+                    openQuickViewFromCard(card);
+                });
+
+                // Ensure quick view root exists
+                ensureQuickViewRoot();
+            }
+
+            // Advanced search modal functionality
+            function initializeAdvancedSearch() {
+                const filterBtn = document.getElementById('filterBtn');
+                const modal = document.getElementById('advancedSearchModal');
+                const closeModal = document.querySelector('.close-modal');
+                const form = document.getElementById('advancedSearchForm');
+                const resetBtn = document.querySelector('.btn-reset');
+
+                if (filterBtn && modal) {
+                    filterBtn.addEventListener('click', function() {
+                        modal.style.display = 'block';
+                        document.body.style.overflow = 'hidden';
+                    });
+                }
+
+                function closeModalHandler() {
+                    if (modal) {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+
+                if (closeModal) {
+                    closeModal.addEventListener('click', closeModalHandler);
+                }
+
+                // Close modal when clicking outside
+                if (modal) {
+                    modal.addEventListener('click', function(event) {
+                        if (event.target === modal) {
+                            closeModalHandler();
+                        }
+                    });
+                }
+
+                // Close modal on ESC key
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && modal && modal.style.display === 'block') {
+                        closeModalHandler();
+                    }
+                });
+
+                // Handle form submission
+                if (form) {
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        const formData = new FormData(form);
+                        const searchParams = new URLSearchParams();
+
+                        for (let [key, value] of formData.entries()) {
+                            if (value.trim() !== '') {
+                                searchParams.append(key, value);
+                            }
+                        }
+
+                        closeModalHandler();
+                        window.location.href = 'searchcotaikhoan.html?' + searchParams.toString();
+                    });
+                }
+
+                // Reset form
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', function() {
+                        if (form) form.reset();
+                    });
+                }
+            }
+        </script>
+
+<!-- Form tìm kiếm nâng cao -->
+<div id="advancedSearchModal" class="advanced-search-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Tìm kiếm nâng cao</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="advancedSearchForm">
+                <div class="form-group">
+                    <label>Từ khóa:</label>
+                    <input type="text" name="keyword" placeholder="Nhập từ khóa tìm kiếm...">
+                </div>
+
+                <div class="form-group">
+                    <label>Danh mục:</label>
+                    <select name="category">
+                        <option value="">Tất cả</option>
+                        <option value="thieunhi">Thiếu nhi</option>
+                        <option value="tamly">Tâm lý/tình cảm</option>
+                        <option value="tongiao">Tôn giáo</option>
+                        <option value="lichsu">Lịch sử</option>
+                        <option value="vanhoc">Văn học</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Khoảng giá:</label>
+                    <div class="price-range">
+                        <input type="text" name="minPrice" placeholder="Từ">
+                        <span>-</span>
+                        <input type="text" name="maxPrice" placeholder="Đến">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Sắp xếp theo:</label>
+                    <select name="sort">
+                        <option value="">Mặc định</option>
+                        <option value="price_asc">Giá tăng dần</option>
+                        <option value="price_desc">Giá giảm dần</option>
+                        <option value="name_asc">Tên A-Z</option>
+                        <option value="name_desc">Tên Z-A</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-search">Tìm kiếm</button>
+                    <button type="button" class="btn-reset">Đặt lại</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+        // Hàm định dạng số
+        function formatNumber(value) {
+            return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        // Hàm xử lý sự kiện input
+        function handleInput(event) {
+            let input = event.target;
+            let value = input.value.replace(/[^0-9]/g, '');  // Loại bỏ các ký tự không phải là số
+            input.value = formatNumber(value);  // Áp dụng định dạng
+        }
+
+        // Gán sự kiện cho các input
+        window.onload = function() {
+            const minPriceInput = document.querySelector('input[name="minPrice"]');
+            const maxPriceInput = document.querySelector('input[name="maxPrice"]');
+            
+            minPriceInput.addEventListener('input', handleInput);
+            maxPriceInput.addEventListener('input', handleInput);
+        };
+    </script>
+        
+    </body>
+</html>

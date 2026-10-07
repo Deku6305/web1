@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <title>Chi tiết đơn hàng - BOOK STORE</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="eCommerce HTML Template Free Download" name="keywords">
+    <meta content="eCommerce HTML Template Free Download" name="description">
+
+    <!-- Favicon -->
+    <link href="img/tieude.jpg" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="lib/slick/slick.css" rel="stylesheet">
+    <link href="lib/slick/slick-theme.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/fix.css" rel="stylesheet">
+    <style>
+        /* Container tổng cho vùng search */
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        /* Thanh search bên trái */
+        .search {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .search input {
+            width: 100%;
+            padding-right: 30px; /* Chừa chỗ cho nút search sát rìa */
+        }
+
+        .search button {
+            position: absolute !important;
+            right: 0 !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            z-index: 2;
+            background: transparent !important;
+            border: none !important;
+            padding: 0 18px !important;
+            color: #ff6f61 !important;
+            height: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border-radius: 0 !important;
+            cursor: pointer;
+            margin: 0 !important;
+        }
+
+        .search button:hover {
+            background: #ff6f61 !important;
+            color: white !important;
+        }
+
+        .search button i {
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        /* Nút phễu bên phải thanh search */
+        .filter-button-container {
+            flex-shrink: 0;
+        }
+
+        /* Nút phễu lọc */
+        .filter-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            background: white;
+            border: 2px solid #28a745;
+            color: #28a745;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .filter-btn:hover {
+            background: #28a745;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Modal tìm kiếm nâng cao */
+        .advanced-search-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        .modal-content {
+                background-color: white;
+            margin: 3% auto;
+            padding: 0;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .price-range {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .price-range input {
+            width: calc(50% - 5px);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn-search {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-reset {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* Căn giữa cho phần tổng kết đơn hàng */
+        .table tfoot tr td {
+            text-align: center !important;
+        }
+        
+        /* Căn giữa tiêu đề card */
+        .card-header.text-center h4 {
+            margin: 0;
+            width: 100%;
+        }
+        
+        /* Căn giữa toàn bộ nội dung bảng */
+        .table {
+            text-align: center;
+        }
+
+        .table thead th,
+        .table tbody td,
+        .table tfoot td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        /* Đảm bảo hình ảnh trong bảng cũng được căn giữa */
+        .table td img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Căn giữa tiêu đề các cột */
+        .table th {
+            text-align: center;
+        }
+
+        /* Đảm bảo các ô trong tfoot căn giữa hoàn toàn */
+        .table tfoot tr td {
+            text-align: center !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Start -->
+    
+    
+    <div class="nav">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                  <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto">
+                            <a href="index2.html" class="nav-item nav-link active">Trang chủ</a>
+                            <a href="contact.html" class="nav-item nav-link">Liên hệ</a>
+                        </div>
+                        <div class="navbar-nav ml-auto">
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> <i class="fas fa-user"></i> &nbsp;Huynh Duc</a>
+                                <div class="dropdown-menu">
+                                    <a href="thongtintaikhoan.html" class="dropdown-item"><i class="fa fa-id-card me-2"></i>  &nbsp;Thông tin</a>
+                                    <a href="lichsumuahang.html" class="dropdown-item"> <i class="fa fa-history me-2"></i>&nbsp;Lịch sử mua hàng</a>
+
+                                    <a href="login.html" class="dropdown-item"> <i class="fa fa-sign-out-alt me-2"></i>&nbsp;Đăng xuất</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    <div class="bottom-bar">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <div class="logo">
+                        <a href="index2.html">
+                            <img src="img/logo.png" alt="Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="search-container">
+                        <div class="search">
+                            <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm">
+                            <button id="searchBtn"><i class="fa fa-search"></i></button>
+                        </div>
+                        <div class="filter-button-container">
+                            <button id="filterBtn" class="filter-btn" title="Tìm kiếm nâng cao">
+                                <i class="fas fa-filter"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="user">
+                        <a href="cart.html" class="btn cart">
+                            <i class="fa fa-shopping-cart"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+    <!-- Breadcrumb Start -->
+    <div class="breadcrumb-wrap">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index2.html">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="cart.html">Giỏ hàng</a></li>
+                <li class="breadcrumb-item active">Xác nhận đơn hàng</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Order Detail Start -->
+    <div class="container-fluid pt-4 pb-4">
+    <div class="row">
+            <!-- Sidebar Start -->
+            <!-- Sidebar End -->
+
+            <!-- Order Detail Content Start -->
+            <div class="col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h4>Xác nhận đơn hàng</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5>Thông tin đơn hàng</h5>
+                                <p><strong>Mã đơn hàng:</strong> DH001</p>
+                                <p><strong>Ngày đặt:</strong> 05/08/2025 08:30</p>
+                                <p><strong>Trạng thái:</strong>
+                                    <span class="text-info">Đang xử lý</span>
+                                </p>
+                                <p><strong>Phương thức thanh toán:</strong> COD</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Thông tin khách hàng</h5>
+                                <p><strong>Họ tên:</strong> Huỳnh Hữu Đức</p>
+                                <p><strong>Email:</strong> huuduc123@gmail.com</p>
+                                <p><strong>Số điện thoại:</strong> 0123456789</p>
+                                <p><strong>Địa chỉ: </strong>273 Đường An Dương Vương,Phường Chợ Quán,TP.HCM
+</p>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Sản phẩm</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Đơn giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Hiểu về trái tim</td>
+                                        <td>
+                                            <img src="img/book1.webp" alt="Sample Figure Product" style="max-width: 50px;">
+                                        </td>
+                                        <td>70.000đ</td>
+                                        <td>2</td>
+                                        <td>140.000đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sự im lặng của bầy cừu</td>
+                                        <td>
+                                            <img src="img/book4.webp" alt="Another Figure Product" style="max-width: 50px;">
+                                        </td>
+                                        <td>150.000đ</td>
+                                        <td>1</td>
+                                        <td>150.000đ</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" class="text-center"><strong>Tiền hàng:</strong></td>
+                                        <td colspan="2" class="text-center"><strong>290.000đ</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="text-center"><strong>Phí vận chuyển:</strong></td>
+                                        <td colspan="2" class="text-center"><strong>Freeship</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="text-center"><strong>Tổng cộng:</strong></td>
+                                        <td colspan="2" class="text-center"><strong>290.000đ</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div class="text-right mt-4 d-flex justify-content-end">
+  <a href="index2.html"
+     onclick="alert('Đơn hàng đã được đặt thành công!')"
+     class="btn btn-secondary">Xác nhận</a>
+
+  <a href="index2.html"
+     class="btn btn-outline-danger ml-2">Quay về</a>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Order Detail End -->
+
+    <!-- Form tìm kiếm nâng cao -->
+    <div id="advancedSearchModal" class="advanced-search-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Tìm kiếm nâng cao</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="advancedSearchForm">
+                    <div class="form-group">
+                        <label>Từ khóa:</label>
+                        <input type="text" name="keyword" placeholder="Nhập từ khóa tìm kiếm...">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Danh mục:</label>
+                        <select name="category">
+                            <option value="">Tất cả</option>
+                            <option value="thieunhi">Thiếu nhi</option>
+                            <option value="tamly">Tâm lý/tình cảm</option>
+                            <option value="tongiao">Tôn giáo</option>
+                            <option value="lichsu">Lịch sử</option>
+                            <option value="vanhoc">Văn học</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Khoảng giá:</label>
+                        <div class="price-range">
+                            <input type="text" name="minPrice" placeholder="Từ">
+                            <span>-</span>
+                            <input type="text" name="maxPrice" placeholder="Đến">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sắp xếp theo:</label>
+                        <select name="sort">
+                            <option value="">Mặc định</option>
+                            <option value="price_asc">Giá tăng dần</option>
+                            <option value="price_desc">Giá giảm dần</option>
+                            <option value="name_asc">Tên A-Z</option>
+                            <option value="name_desc">Tên Z-A</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-search">Tìm kiếm</button>
+                        <button type="button" class="btn-reset">Đặt lại</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+     <div class="footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-3 col-md-6">
+          <div class="footer-widget">
+            <h2>Liên hệ</h2>
+            <div class="contact-info">
+              <p><i class="fa fa-map-marker"></i>273 An Dương Vương Phường 3 Quận 5 TPHCM</p>
+              <p><i class="fa fa-envelope"></i>info@example.com</p>
+              <p><i class="fa fa-phone"></i>+012-345-67890</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="footer-widget">
+            <h2>Theo dõi chúng tôi</h2>
+            <div class="contact-info">
+              <div class="social">
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="footer-widget">
+            <h2>Thông tin công ty</h2>
+            <ul>
+              <li><a href="#">Về chúng tôi</a></li>
+              <li><a href="#">Chính sách bảo mật</a></li>
+              <li><a href="#">Điều khoản & Điều kiện</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="footer-widget">
+            <h2>Thông tin mua hàng</h2>
+            <ul>
+              <li><a href="#">Chính sách thanh toán</a></li>
+              <li><a href="#">Chính sách vận chuyển</a></li>
+              <li><a href="#">Chính sách đổi trả</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row payment align-items-center">
+        <div class="col-md-6">
+          <div class="payment-method">
+            <h2>Chúng tôi chấp nhận:</h2>
+            <img src="img/payment-method.png" alt="Payment Method" />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="payment-security">
+            <h2>Được bảo mật bởi:</h2>
+            <img src="img/godaddy.svg" alt="Payment Security" />
+            <img src="img/norton.svg" alt="Payment Security" />
+            <img src="img/ssl.svg" alt="Payment Security" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Back to Top -->
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/slick/slick.min.js"></script>
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+    <script>
+        function dangxuat() {
+            if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
+                window.location.href = 'logout.php';
+            }
+        }
+
+        function activateTab(tabId) {
+            localStorage.setItem('activeTab', tabId);
+        }
+        // JavaScript cho nút phễu lọc và form tìm kiếm nâng cao
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtn = document.getElementById('filterBtn');
+            const modal = document.getElementById('advancedSearchModal');
+            const closeModal = document.querySelector('.close-modal');
+            const form = document.getElementById('advancedSearchForm');
+            const resetBtn = document.querySelector('.btn-reset');
+
+            // Hiển thị modal khi click nút phễu
+            filterBtn.addEventListener('click', function() {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Ngăn cuộn trang
+            });
+
+            // Đóng modal
+            function closeModalHandler() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            closeModal.addEventListener('click', closeModalHandler);
+
+            // Đóng modal khi click bên ngoài
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeModalHandler();
+                }
+            });
+
+            // Đóng modal khi nhấn ESC
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && modal.style.display === 'block') {
+                    closeModalHandler();
+                }
+            });
+
+            // Xử lý form submit
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Thu thập dữ liệu form
+                const formData = new FormData(form);
+                const searchParams = new URLSearchParams();
+
+                for (let [key, value] of formData.entries()) {
+                    if (value.trim() !== '') {
+                        searchParams.append(key, value);
+                    }
+                }
+
+                // Đóng modal và chuyển hướng
+                closeModalHandler();
+                window.location.href = 'searchcotaikhoan.html?' + searchParams.toString();
+            });
+
+            // Reset form
+            resetBtn.addEventListener('click', function() {
+                form.reset();
+            });
+        });
+
+        // Search functionality
+        const searchBtn = document.getElementById("searchBtn");
+        const searchInput = document.getElementById("searchInput");
+
+        // Khi click nút tìm kiếm
+        searchBtn.addEventListener("click", () => {
+          window.location.href = "searchcotaikhoan.html"; // 👉 trang bạn muốn chuyển tới
+        });
+
+        // Khi nhấn Enter trong ô tìm kiếm
+        searchInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            window.location.href = "searchcotaikhoan.html";
+          }
+        });
+    </script>
+    <script>
+        // Hàm định dạng số
+        function formatNumber(value) {
+            return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        // Hàm xử lý sự kiện input
+        function handleInput(event) {
+            let input = event.target;
+            let value = input.value.replace(/[^0-9]/g, '');  // Loại bỏ các ký tự không phải là số
+            input.value = formatNumber(value);  // Áp dụng định dạng
+        }
+
+        // Gán sự kiện cho các input
+        window.onload = function() {
+            const minPriceInput = document.querySelector('input[name="minPrice"]');
+            const maxPriceInput = document.querySelector('input[name="maxPrice"]');
+            
+            minPriceInput.addEventListener('input', handleInput);
+            maxPriceInput.addEventListener('input', handleInput);
+        };
+    </script>
+        
+</body>
+</html>

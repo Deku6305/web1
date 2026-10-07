@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" href="../img/ryicon.jpg">
+  <title>BookStore - Quản lý tồn kho</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="assets/css/pure-style-optimized.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f2f5;
+      color: #344767;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: linear-gradient(195deg, #ec407a, #d81b60);
+      color: white;
+      padding: 1rem 1.5rem;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #e9ecef;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab {
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .tab.active {
+      border-bottom-color: #e91e63;
+      color: #e91e63;
+      font-weight: 600;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Form styles */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #344767;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d2d6da;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+
+    .form-control:focus {
+      border-color: #e91e63;
+      box-shadow: 0 0 0 2px rgba(233, 30, 99, 0.2);
+      outline: none;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -0.5rem;
+    }
+
+    .form-col {
+      flex: 1;
+      padding: 0 0.5rem;
+      min-width: 200px;
+    }
+
+    /* Button styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      border: none;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-primary { 
+      background: linear-gradient(195deg, #ec407a, #d81b60); 
+    }
+    .btn-primary:hover { 
+      background: linear-gradient(195deg, #f06292, #e91e63); 
+    }
+
+    .btn-secondary { 
+      background: #6c757d; 
+    }
+    .btn-secondary:hover { 
+      background: #5a6268; 
+    }
+
+    .btn-warning { 
+      background: #ff9800; 
+    }
+    .btn-warning:hover { 
+      background: #f57c00; 
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+
+    .material-icons-round { 
+      font-size: 18px; 
+      vertical-align: middle; 
+    }
+
+    /* Table styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    thead {
+      background: #f8f9fa;
+      color: #344767;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      font-size: 14px;
+      text-align: left;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    th {
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    tbody tr:hover {
+      background-color: #f3f4f8;
+      transition: 0.2s;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    /* Search form */
+    .search-form {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-end;
+    }
+
+    .search-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    /* Status badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 50px;
+      padding: 5px 12px;
+      min-width: 110px;
+    }
+
+    .status-normal { background-color: rgba(76,175,80,0.1); color:#2e7d32; border:1px solid #81c784; }
+    .status-warning { background-color: rgba(255,193,7,0.1); color:#f57c00; border:1px solid #ffd54f; }
+    .status-danger { background-color: rgba(244,67,54,0.1); color:#c62828; border:1px solid #ef9a9a; }
+
+    /* Product info */
+    .product-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .product-image {
+      width: 50px;
+      height: 65px;
+      object-fit: cover;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .product-details {
+      flex: 1;
+    }
+
+    .product-name {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .product-author {
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+
+    /* Alert section */
+    .alert-section {
+      background: #fff3e0;
+      border: 1px solid #ffb74d;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .alert-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .alert-title {
+      font-weight: 600;
+      color: #e65100;
+    }
+
+    /* Summary cards */
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .summary-card {
+      background: white;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .summary-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .summary-label {
+      color: #6c757d;
+      font-size: 0.875rem;
+    }
+
+    .summary-warning .summary-value {
+      color: #f57c00;
+    }
+
+    .summary-danger .summary-value {
+      color: #c62828;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .form-col {
+        flex: 100%;
+        margin-bottom: 1rem;
+      }
+      
+      .tabs {
+        flex-direction: column;
+      }
+      
+      .search-row {
+        flex-direction: column;
+      }
+      
+      .search-actions {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+      }
+      
+      .summary-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- SIDEBAR -->
+<aside style="position: fixed; top: 0; left: 0; z-index: 1000; width: 250px; height: 100vh; background: linear-gradient(195deg, #42424a, #191919); color: white; transition: all 0.3s ease; box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 0.15);" id="sidenav-main">
+  <div style="padding: 1.5em 1rem;">
+    <a href="#" target="_blank" style="display: flex; align-items: center; font-weight: 600; color: white; text-decoration: none;">
+      <span style="margin-left: 0.25rem; font-weight: 700;">TRUNG TÂM ĐIỀU KHIỂN</span>
+    </a>
+  </div>
+  <hr style="width: 100%; border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1rem 0;">
+  <div style="width: 100%; overflow-y: auto; height: 75vh;">
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li><a href="index.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none;"><i class="material-icons" style="font-size:20px; margin-right:10px;">dashboard</i>Tổng quan</a></li>
+      <li><a href="user.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none;"><i class="material-icons" style="font-size:20px; margin-right:10px;">person</i>Quản lý khách hàng</a></li>
+      <li><a href="order.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none;"><i class="material-icons" style="font-size:20px; margin-right:10px;">weekend</i>Quản lý đơn hàng</a></li>
+      <li><a href="products.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none;"><i class="material-icons" style="font-size:20px; margin-right:10px;">table_view</i>Quản lý sản phẩm</a></li>
+      <li><a href="category.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none;"><i class="material-icons" style="font-size:20px; margin-right:10px;">category</i>Quản lý danh mục</a></li>
+      <li><a href="phieunhap.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none;"><i class="material-icons" style="font-size:20px; margin-right:10px;">inventory_2</i>Quản lý nhập hàng</a></li>
+      <li><a href="giaban.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none;"><i class="material-icons" style="font-size:20px; margin-right:10px;">attach_money</i>Quản lý giá bán</a></li>
+      <li><a href="tonkho.html" style="display: flex; align-items: center; padding: 0.75rem 1rem; color: white; text-decoration: none; background: linear-gradient(195deg,#ec407a,#d81b60); box-shadow: 0 4px 20px rgba(0,0,0,0.14),0 7px 10px -5px rgba(233,30,99,0.4);"><i class="material-icons" style="font-size:20px; margin-right:10px;">inventory</i>Quản lý tồn kho</a></li>
+    </ul>
+  </div>
+  <div style="position: absolute; width: 100%; bottom: 0; padding: 1rem;">
+    <a href="login.html" style="display: inline-block; background: linear-gradient(195deg, #ec407a, #d81b60); color: white; padding: 0.625rem 1.5rem; font-size: 0.875rem; border-radius: 0.25rem; text-decoration: none; width: 100%; text-align: center;">Đăng xuất</a>
+  </div>
+</aside>
+
+  <!-- MAIN -->
+  <main style="margin-left: 250px; min-height: 100vh; padding: 1.5rem;">
+    <nav style="margin-bottom: 1.5rem; background:white; padding:1rem 1.5rem; border-radius:0.75rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <span style="color:#e91e63; font-weight:600;">Quản lý tồn kho</span>
+    </nav>
+
+    <div class="card">
+      <div class="card-header">
+        <h3 style="margin: 0; font-size: 1.2rem;">Quản lý số lượng tồn kho sản phẩm</h3>
+      </div>
+      <div class="card-body">
+        <!-- Tabs -->
+        <div class="tabs">
+          <div class="tab active" data-tab="inventory-search">Tra cứu tồn kho</div>
+          <div class="tab" data-tab="stock-alert">Cảnh báo tồn kho</div>
+          <div class="tab" data-tab="inventory-report">Báo cáo nhập - xuất - tồn</div>
+        </div>
+
+        <!-- Tab 1: Tra cứu tồn kho -->
+        <div class="tab-content active" id="inventory-search">
+          <div class="search-form">
+            <div class="form-row">
+              <div class="form-col">
+                <div class="form-group">
+                  <label class="form-label" for="product-search">Tìm kiếm sản phẩm</label>
+                  <input type="text" id="product-search" class="form-control" placeholder="Nhập tên sản phẩm...">
+                </div>
+              </div>
+              <div class="form-col">
+                <div class="form-group">
+                  <label class="form-label" for="category-search">Danh mục</label>
+                  <select id="category-search" class="form-control">
+                    <option value="">Tất cả danh mục</option>
+                    <option value="1">Thiếu Nhi</option>
+                    <option value="2">Tâm Lý / Tình Cảm</option>
+                    <option value="3">Tôn Giáo</option>
+                    <option value="4">Lịch Sử</option>
+                    <option value="5">Văn Học</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-col">
+                <div class="form-group">
+                  <label class="form-label" for="date-search">Thời điểm</label>
+                  <input type="date" id="date-search" class="form-control" value="2025-08-01">
+                </div>
+              </div>
+            </div>
+            <div class="search-actions">
+              <button class="btn btn-primary">
+                <i class="material-icons-round">search</i> Tìm kiếm
+              </button>
+              <button class="btn btn-secondary" id="reset-search">
+                <i class="material-icons-round">refresh</i> Đặt lại
+              </button>
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Sản phẩm</th>
+                <th>Danh mục</th>
+                <th class="text-center">Số lượng tồn</th>
+                <th class="text-center">Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book8.webp" alt="Mưa đỏ" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Mưa đỏ</div>
+                      <div class="product-author">Tác giả: Chu Lai</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Văn Học</td>
+                <td class="text-center">15</td>
+                <td class="text-center">
+                  <span class="status-badge status-normal">
+                    <i class="material-icons-round">check_circle</i>Bình thường
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book2.webp" alt="Cây cam ngọt của tôi" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Cây cam ngọt của tôi</div>
+                      <div class="product-author">Tác giả: José Mauro de Vasconcelos</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Thiếu Nhi</td>
+                <td class="text-center">8</td>
+                <td class="text-center">
+                  <span class="status-badge status-warning">
+                    <i class="material-icons-round">warning</i>Sắp hết hàng
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book3.jpg" alt="Không gia đình" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Không gia đình</div>
+                      <div class="product-author">Tác giả: Hector Malot</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Văn Học</td>
+                <td class="text-center">5</td>
+                <td class="text-center">
+                  <span class="status-badge status-warning">
+                    <i class="material-icons-round">warning</i>Sắp hết hàng
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book4.webp" alt="Tuổi thơ dữ dội" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Tuổi thơ dữ dội</div>
+                      <div class="product-author">Tác giả: Phùng Quán</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Thiếu Nhi</td>
+                <td class="text-center">20</td>
+                <td class="text-center">
+                  <span class="status-badge status-normal">
+                    <i class="material-icons-round">check_circle</i>Bình thường
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book5.webp" alt="Đắc nhân tâm" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Đắc nhân tâm</div>
+                      <div class="product-author">Tác giả: Dale Carnegie</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Tâm Lý / Tình Cảm</td>
+                <td class="text-center">0</td>
+                <td class="text-center">
+                  <span class="status-badge status-danger">
+                    <i class="material-icons-round">error</i>Hết hàng
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tab 2: Cảnh báo tồn kho -->
+        <div class="tab-content" id="stock-alert">
+          <div class="alert-section">
+            <div class="alert-header">
+              <i class="material-icons-round" style="color: #f57c00;">warning</i>
+              <div class="alert-title">CẢNH BÁO: Có 3 sản phẩm sắp hết hàng và 1 sản phẩm đã hết hàng</div>
+            </div>
+            <p>Vui lòng kiểm tra và nhập thêm hàng cho các sản phẩm dưới đây để đảm bảo không gián đoạn kinh doanh.</p>
+          </div>
+
+          <div class="summary-cards">
+            <div class="summary-card">
+              <div class="summary-value">120</div>
+              <div class="summary-label">Tổng số sản phẩm</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-value">116</div>
+              <div class="summary-label">Sản phẩm tồn kho</div>
+            </div>
+            <div class="summary-card summary-warning">
+              <div class="summary-value">3</div>
+              <div class="summary-label">Sắp hết hàng</div>
+            </div>
+            <div class="summary-card summary-danger">
+              <div class="summary-value">1</div>
+              <div class="summary-label">Đã hết hàng</div>
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Sản phẩm</th>
+                <th>Danh mục</th>
+                <th class="text-center">Số lượng tồn</th>
+                <th class="text-center">Mức tồn tối thiểu</th>
+                <th class="text-center">Trạng thái</th>
+                <th class="text-center">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book2.webp" alt="Cây cam ngọt của tôi" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Cây cam ngọt của tôi</div>
+                      <div class="product-author">Tác giả: José Mauro de Vasconcelos</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Thiếu Nhi</td>
+                <td class="text-center">8</td>
+                <td class="text-center">10</td>
+                <td class="text-center">
+                  <span class="status-badge status-warning">
+                    <i class="material-icons-round">warning</i>Sắp hết hàng
+                  </span>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-warning btn-sm">
+                    <i class="material-icons-round">inventory_2</i> Nhập hàng
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book3.jpg" alt="Không gia đình" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Không gia đình</div>
+                      <div class="product-author">Tác giả: Hector Malot</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Văn Học</td>
+                <td class="text-center">5</td>
+                <td class="text-center">10</td>
+                <td class="text-center">
+                  <span class="status-badge status-warning">
+                    <i class="material-icons-round">warning</i>Sắp hết hàng
+                  </span>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-warning btn-sm">
+                    <i class="material-icons-round">inventory_2</i> Nhập hàng
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book7.jpg" alt="Nhà giả kim" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Nhà giả kim</div>
+                      <div class="product-author">Tác giả: Paulo Coelho</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Văn Học</td>
+                <td class="text-center">7</td>
+                <td class="text-center">10</td>
+                <td class="text-center">
+                  <span class="status-badge status-warning">
+                    <i class="material-icons-round">warning</i>Sắp hết hàng
+                  </span>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-warning btn-sm">
+                    <i class="material-icons-round">inventory_2</i> Nhập hàng
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book5.webp" alt="Đắc nhân tâm" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Đắc nhân tâm</div>
+                      <div class="product-author">Tác giả: Dale Carnegie</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Tâm Lý / Tình Cảm</td>
+                <td class="text-center">2</td>
+                <td class="text-center">10</td>
+                <td class="text-center">
+                  <span class="status-badge status-danger">
+                    <i class="material-icons-round">error</i>Hết hàng
+                  </span>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-warning btn-sm">
+                    <i class="material-icons-round">inventory_2</i> Nhập hàng
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tab 3: Báo cáo nhập - xuất - tồn -->
+        <div class="tab-content" id="inventory-report">
+          <div class="search-form">
+            <div class="form-row">
+              <div class="form-col">
+                <div class="form-group">
+                  <label class="form-label" for="report-product">Sản phẩm</label>
+                  <select id="report-product" class="form-control">
+                    <option value="">Tất cả sản phẩm</option>
+                    <option value="1">Mưa đỏ</option>
+                    <option value="2">Cây cam ngọt của tôi</option>
+                    <option value="3">Không gia đình</option>
+                    <option value="4">Tuổi thơ dữ dội</option>
+                    <option value="5">Đắc nhân tâm</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-col">
+                <div class="form-group">
+                  <label class="form-label" for="report-category">Danh mục</label>
+                  <select id="report-category" class="form-control">
+                    <option value="">Tất cả danh mục</option>
+                    <option value="1">Thiếu Nhi</option>
+                    <option value="2">Tâm Lý / Tình Cảm</option>
+                    <option value="3">Tôn Giáo</option>
+                    <option value="4">Lịch Sử</option>
+                    <option value="5">Văn Học</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-col">
+                <div class="form-group">
+                  <label class="form-label" for="from-date">Từ ngày</label>
+                  <input type="date" id="from-date" class="form-control" value="2025-07-01">
+                </div>
+              </div>
+              <div class="form-col">
+                <div class="form-group">
+                  <label class="form-label" for="to-date">Đến ngày</label>
+                  <input type="date" id="to-date" class="form-control" value="2025-08-01">
+                </div>
+              </div>
+            </div>
+            <div class="search-actions">
+              <button class="btn btn-primary">
+                <i class="material-icons-round">search</i> Tìm kiếm
+              </button>
+              <button class="btn btn-secondary" id="reset-report">
+                <i class="material-icons-round">refresh</i> Đặt lại
+              </button>
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Sản phẩm</th>
+                <th>Danh mục</th>
+                <th class="text-center">Tồn đầu kỳ</th>
+                <th class="text-center">Nhập trong kỳ</th>
+                <th class="text-center">Xuất trong kỳ</th>
+                <th class="text-center">Tồn cuối kỳ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book8.webp" alt="Mưa đỏ" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Mưa đỏ</div>
+                      <div class="product-author">Tác giả: Chu Lai</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Văn Học</td>
+                <td class="text-center">10</td>
+                <td class="text-center">8</td>
+                <td class="text-center">3</td>
+                <td class="text-center">15</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book2.webp" alt="Cây cam ngọt của tôi" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Cây cam ngọt của tôi</div>
+                      <div class="product-author">Tác giả: José Mauro de Vasconcelos</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Thiếu Nhi</td>
+                <td class="text-center">12</td>
+                <td class="text-center">5</td>
+                <td class="text-center">9</td>
+                <td class="text-center">8</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book3.jpg" alt="Không gia đình" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Không gia đình</div>
+                      <div class="product-author">Tác giả: Hector Malot</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Văn Học</td>
+                <td class="text-center">8</td>
+                <td class="text-center">4</td>
+                <td class="text-center">7</td>
+                <td class="text-center">5</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book4.webp" alt="Tuổi thơ dữ dội" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Tuổi thơ dữ dội</div>
+                      <div class="product-author">Tác giả: Phùng Quán</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Thiếu Nhi</td>
+                <td class="text-center">15</td>
+                <td class="text-center">10</td>
+                <td class="text-center">5</td>
+                <td class="text-center">20</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>
+                  <div class="product-info">
+                    <img src="../img/book5.webp" alt="Đắc nhân tâm" class="product-image">
+                    <div class="product-details">
+                      <div class="product-name">Đắc nhân tâm</div>
+                      <div class="product-author">Tác giả: Dale Carnegie</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Tâm Lý / Tình Cảm</td>
+                <td class="text-center">5</td>
+                <td class="text-center">0</td>
+                <td class="text-center">3</td>
+                <td class="text-center">2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Tab functionality
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        // Remove active class from all tabs and contents
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        
+        // Add active class to clicked tab and corresponding content
+        this.classList.add('active');
+        const tabId = this.getAttribute('data-tab');
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+
+    // Reset buttons
+    document.getElementById('reset-search').addEventListener('click', function() {
+      document.getElementById('product-search').value = '';
+      document.getElementById('category-search').value = '';
+      document.getElementById('date-search').value = '';
+    });
+
+    document.getElementById('reset-report').addEventListener('click', function() {
+      document.getElementById('report-product').value = '';
+      document.getElementById('report-category').value = '';
+      document.getElementById('from-date').value = '';
+      document.getElementById('to-date').value = '';
+    });
+
+    // Import buttons for stock alert
+    document.querySelectorAll('.btn-warning.btn-sm').forEach(button => {
+      button.addEventListener('click', function() {
+        const row = this.closest('tr');
+        const productName = row.querySelector('.product-name').textContent;
+         window.location.href = 'themphieunhap.html';
+        // In a real application, you would redirect to the import page
+      });
+    });
+
+    // Set today's date as default for date inputs
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date-search').value = today;
+    document.getElementById('to-date').value = today;
+    
+    // Set from date to one month ago
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+    document.getElementById('from-date').value = oneMonthAgo.toISOString().split('T')[0];
+  </script>
+</body>
+</html>
