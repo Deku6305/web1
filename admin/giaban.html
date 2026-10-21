@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý giá bán | Lumière Admin (Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="admin" data-logged-in>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="ad-side">
+    <a href="index.html" class="ad-brand">
+      <span class="logo-mark">◇</span>
+      <span><strong>LUMIÈRE</strong><small>TRUNG TÂM ĐIỀU KHIỂN</small></span>
+    </a>
+    <nav class="ad-nav" aria-label="Menu quản trị">
+      <a href="index.html"><span class="ad-ico">▦</span>Tổng quan</a>
+      <a href="user.html"><span class="ad-ico">☺</span>Quản lý khách hàng</a>
+      <a href="order.html"><span class="ad-ico">☰</span>Quản lý đơn hàng</a>
+      <a href="products.html"><span class="ad-ico">◇</span>Quản lý sản phẩm</a>
+      <a href="category.html"><span class="ad-ico">▤</span>Quản lý danh mục</a>
+      <a href="phieunhap.html"><span class="ad-ico">⇩</span>Quản lý nhập hàng</a>
+      <a href="giaban.html" class="is-active"><span class="ad-ico">₫</span>Quản lý giá bán</a>
+      <a href="tonkho.html"><span class="ad-ico">▣</span>Quản lý tồn kho</a>
+    </nav>
+    <a href="login.html" class="ad-logout" data-confirm="Bạn có chắc chắn muốn đăng xuất?" data-redirect="login.html">Đăng xuất</a>
+    <a href="../index.html" class="ad-site-link">← Xem trang khách hàng</a>
+  </aside>
+
+  <!-- ================= NỘI DUNG ================= -->
+  <main class="ad-main">
+    <div class="ad-topbar">
+      <ol class="ad-crumb"><li><a href="index.html">Trang quản trị</a></li><li aria-current="page">Quản lý giá bán</li></ol>
+      <div class="ad-user"><span class="account-avatar">AD</span> Admin</div>
+    </div>
+
+    <div class="ad-head">
+      <div><h1 class="ad-title">Quản lý tỷ lệ lợi nhuận và giá bán</h1><p class="ad-sub">Giá bán = Giá vốn × (1 + Tỷ lệ lợi nhuận).</p></div>
+      
+    </div>
+
+    <div class="tab-bar" data-tabs>
+      <button type="button" class="tab-btn is-active" data-tab="category-profit">Lợi nhuận theo danh mục</button>
+      <button type="button" class="tab-btn" data-tab="product-profit">Lợi nhuận theo sản phẩm</button>
+      <button type="button" class="tab-btn" data-tab="price-search">Tra cứu giá bán</button>
+    </div>
+
+    <section class="tab-panel is-active" id="category-profit">
+      <div class="ad-card">
+        <form class="ad-filter js-filter">
+          <div class="form-group"><label for="g-cat">Tìm kiếm danh mục</label><input type="text" id="g-cat" placeholder="Tên danh mục"></div>
+          <div class="form-group"><label for="g-range">Khoảng tỷ lệ lợi nhuận</label>
+            <select id="g-range"><option value="">Tất cả</option><option>0% – 20%</option><option>20% – 40%</option><option>40% – 60%</option><option>Trên 60%</option></select></div>
+          <div class="ad-filter-actions"><button type="submit" class="ad-btn">Tìm kiếm</button><button type="reset" class="ad-btn is-ghost">Đặt lại</button></div>
+        </form>
+      </div>
+      <div class="ad-card">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>STT</th><th>Tên danh mục</th><th class="text-center">Tỷ lệ lợi nhuận</th><th class="text-center">Thao tác</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td class="cell-name" data-name="danh mục Nhẫn cưới">Nhẫn cưới</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>2</td><td class="cell-name" data-name="danh mục Nhẫn cầu hôn">Nhẫn cầu hôn</td>
+              <td class="text-center"><input type="number" class="cell-input" value="30" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>3</td><td class="cell-name" data-name="danh mục Dây chuyền">Dây chuyền</td>
+              <td class="text-center"><input type="number" class="cell-input" value="20" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>4</td><td class="cell-name" data-name="danh mục Bông tai">Bông tai</td>
+              <td class="text-center"><input type="number" class="cell-input" value="35" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>5</td><td class="cell-name" data-name="danh mục Trang sức bạc tặng bé">Trang sức bạc tặng bé</td>
+              <td class="text-center"><input type="number" class="cell-input" value="40" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="product-profit">
+      <div class="ad-card">
+        <form class="ad-filter js-filter">
+          <div class="form-group"><label for="g-prod">Tìm kiếm sản phẩm</label><input type="text" id="g-prod" placeholder="Tên hoặc mã sản phẩm"></div>
+          <div class="form-group"><label for="g-pcat">Danh mục</label><select id="g-pcat"><option value="">Tất cả danh mục</option><option value="1">Nhẫn cưới</option><option value="2">Nhẫn cầu hôn</option><option value="3">Dây chuyền</option><option value="4">Bông tai</option><option value="5">Trang sức bạc tặng bé</option></select></div>
+          <div class="ad-filter-actions"><button type="submit" class="ad-btn">Tìm kiếm</button><button type="reset" class="ad-btn is-ghost">Đặt lại</button></div>
+        </form>
+      </div>
+      <div class="ad-card">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>STT</th><th>Sản phẩm</th><th>Danh mục</th><th class="text-center">Tỷ lệ lợi nhuận</th><th class="text-center">Thao tác</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td data-name="NC-AUR-001"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1549048799-bf3b582ee17b?w=600&h=600&fit=crop&auto=format&q=80" alt="AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown" loading="lazy"></span><div><p class="cell-name">AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown</p><p class="cell-sub">Mã: NC-AUR-001</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>2</td><td data-name="NC-AUR-002"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1766963026693-e73b058176dd?w=600&h=600&fit=crop&auto=format&q=80" alt="AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown" loading="lazy"></span><div><p class="cell-name">AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown</p><p class="cell-sub">Mã: NC-AUR-002</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>3</td><td data-name="NC-ETR-003"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1656751681056-a4ebfe7c546e?w=600&h=600&fit=crop&auto=format&q=80" alt="ETERNA – Nhẫn cưới Vàng 14K đá CZ" loading="lazy"></span><div><p class="cell-name">ETERNA – Nhẫn cưới Vàng 14K đá CZ</p><p class="cell-sub">Mã: NC-ETR-003</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>4</td><td data-name="NC-ETR-004"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1554047310-ab6170fc7b10?w=600&h=600&fit=crop&auto=format&q=80" alt="ETERNA – Nhẫn cưới Vàng 14K đá CZ" loading="lazy"></span><div><p class="cell-name">ETERNA – Nhẫn cưới Vàng 14K đá CZ</p><p class="cell-sub">Mã: NC-ETR-004</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>5</td><td data-name="NC-AUR-005"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1565034582189-195bb0084dcf?w=600&h=600&fit=crop&auto=format&q=80" alt="AURORA – Vàng 14K Kim cương Lab-grown" loading="lazy"></span><div><p class="cell-name">AURORA – Vàng 14K Kim cương Lab-grown</p><p class="cell-sub">Mã: NC-AUR-005</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>6</td><td data-name="NC-ETR-006"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1628926379972-9843ad139a8c?w=600&h=600&fit=crop&auto=format&q=80" alt="ETERNA – Nhẫn cưới Vàng 14K" loading="lazy"></span><div><p class="cell-name">ETERNA – Nhẫn cưới Vàng 14K</p><p class="cell-sub">Mã: NC-ETR-006</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>7</td><td data-name="NC-HAL-007"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1584115838497-f317f7455abe?w=600&h=600&fit=crop&auto=format&q=80" alt="HALO – Nhẫn cưới Vàng 18K đá Moissanite" loading="lazy"></span><div><p class="cell-name">HALO – Nhẫn cưới Vàng 18K đá Moissanite</p><p class="cell-sub">Mã: NC-HAL-007</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>8</td><td data-name="NC-HAL-008"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1553915632-175f60dd8e36?w=600&h=600&fit=crop&auto=format&q=80" alt="HALO – Nhẫn cưới Vàng 14K đá Moissanite" loading="lazy"></span><div><p class="cell-name">HALO – Nhẫn cưới Vàng 14K đá Moissanite</p><p class="cell-sub">Mã: NC-HAL-008</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>9</td><td data-name="NC-HAL-009"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1567523977592-7959bc5df51e?w=600&h=600&fit=crop&auto=format&q=80" alt="HALO – Nhẫn cưới Vàng 18K đá Moissanite" loading="lazy"></span><div><p class="cell-name">HALO – Nhẫn cưới Vàng 18K đá Moissanite</p><p class="cell-sub">Mã: NC-HAL-009</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>10</td><td data-name="NCH-ARI-001"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1499899833954-5ecd9439d17f?w=600&h=600&fit=crop&auto=format&q=80" alt="ARIA – Nhẫn cầu hôn Vàng 14K đá CZ" loading="lazy"></span><div><p class="cell-name">ARIA – Nhẫn cầu hôn Vàng 14K đá CZ</p><p class="cell-sub">Mã: NCH-ARI-001</p></div></div></td><td>Nhẫn cầu hôn</td>
+              <td class="text-center"><input type="number" class="cell-input" value="30" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>11</td><td data-name="NCH-TMV-002"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1589674668791-4889d2bba4c6?w=600&h=600&fit=crop&auto=format&q=80" alt="TIMELESS VOW – Nhẫn cầu hôn Vàng 18K Kim cương Lab-grown" loading="lazy"></span><div><p class="cell-name">TIMELESS VOW – Nhẫn cầu hôn Vàng 18K Kim cương Lab-grown</p><p class="cell-sub">Mã: NCH-TMV-002</p></div></div></td><td>Nhẫn cầu hôn</td>
+              <td class="text-center"><input type="number" class="cell-input" value="30" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>12</td><td data-name="DC-ORC-001"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1602752250055-5ebb552fc3ae?w=600&h=600&fit=crop&auto=format&q=80" alt="THE ORCHID – Mặt dây chuyền Vàng 24K Ngọc bích" loading="lazy"></span><div><p class="cell-name">THE ORCHID – Mặt dây chuyền Vàng 24K Ngọc bích</p><p class="cell-sub">Mã: DC-ORC-001</p></div></div></td><td>Dây chuyền</td>
+              <td class="text-center"><input type="number" class="cell-input" value="20" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>13</td><td data-name="DC-BLM-007"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1708222169717-8251cfdfa608?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Dây chuyền bạc 925 mạ vàng" loading="lazy"></span><div><p class="cell-name">BLOOM – Dây chuyền bạc 925 mạ vàng</p><p class="cell-sub">Mã: DC-BLM-007</p></div></div></td><td>Trang sức bạc tặng bé</td>
+              <td class="text-center"><input type="number" class="cell-input" value="40" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>14</td><td data-name="BT-BLM-007"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1713004539634-a6694a83f3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Bông tai bạc 925 mạ vàng" loading="lazy"></span><div><p class="cell-name">BLOOM – Bông tai bạc 925 mạ vàng</p><p class="cell-sub">Mã: BT-BLM-007</p></div></div></td><td>Bông tai</td>
+              <td class="text-center"><input type="number" class="cell-input" value="35" min="0" max="300"> %</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="price-search">
+      <div class="ad-card">
+        <form class="ad-filter js-filter">
+          <div class="form-group"><label for="g-sprod">Tìm kiếm sản phẩm</label><input type="text" id="g-sprod" placeholder="Tên hoặc mã sản phẩm"></div>
+          <div class="form-group"><label for="g-scat">Danh mục</label><select id="g-scat"><option value="">Tất cả danh mục</option><option value="1">Nhẫn cưới</option><option value="2">Nhẫn cầu hôn</option><option value="3">Dây chuyền</option><option value="4">Bông tai</option><option value="5">Trang sức bạc tặng bé</option></select></div>
+          <div class="form-group"><label for="g-sprice">Khoảng giá bán</label>
+            <select id="g-sprice"><option value="">Tất cả</option><option>Dưới 1.000.000 VNĐ</option><option>1 – 10 triệu</option><option>10 – 20 triệu</option><option>Trên 20 triệu</option></select></div>
+          <div class="ad-filter-actions"><button type="submit" class="ad-btn">Tìm kiếm</button><button type="reset" class="ad-btn is-ghost">Đặt lại</button></div>
+        </form>
+      </div>
+      <div class="ad-card">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>STT</th><th>Sản phẩm</th><th>Danh mục</th><th class="text-right">Giá vốn</th><th class="text-center">Tỷ lệ lợi nhuận</th><th class="text-right">Giá bán</th><th class="text-center">Thao tác</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td data-name="NC-AUR-001"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1549048799-bf3b582ee17b?w=600&h=600&fit=crop&auto=format&q=80" alt="AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown" loading="lazy"></span><div><p class="cell-name">AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown</p><p class="cell-sub">Mã: NC-AUR-001</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-right" data-cost="7880000">7.880.000 VNĐ</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-right price-text js-sell-price">9.850.000 VNĐ</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>2</td><td data-name="NC-AUR-002"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1766963026693-e73b058176dd?w=600&h=600&fit=crop&auto=format&q=80" alt="AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown" loading="lazy"></span><div><p class="cell-name">AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown</p><p class="cell-sub">Mã: NC-AUR-002</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-right" data-cost="8092000">8.092.000 VNĐ</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-right price-text js-sell-price">10.115.000 VNĐ</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>3</td><td data-name="NC-ETR-003"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1656751681056-a4ebfe7c546e?w=600&h=600&fit=crop&auto=format&q=80" alt="ETERNA – Nhẫn cưới Vàng 14K đá CZ" loading="lazy"></span><div><p class="cell-name">ETERNA – Nhẫn cưới Vàng 14K đá CZ</p><p class="cell-sub">Mã: NC-ETR-003</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-right" data-cost="13530000">13.530.000 VNĐ</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-right price-text js-sell-price">16.912.500 VNĐ</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>4</td><td data-name="NC-ETR-004"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1554047310-ab6170fc7b10?w=600&h=600&fit=crop&auto=format&q=80" alt="ETERNA – Nhẫn cưới Vàng 14K đá CZ" loading="lazy"></span><div><p class="cell-name">ETERNA – Nhẫn cưới Vàng 14K đá CZ</p><p class="cell-sub">Mã: NC-ETR-004</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-right" data-cost="16196000">16.196.000 VNĐ</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-right price-text js-sell-price">20.245.000 VNĐ</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>5</td><td data-name="NC-AUR-005"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1565034582189-195bb0084dcf?w=600&h=600&fit=crop&auto=format&q=80" alt="AURORA – Vàng 14K Kim cương Lab-grown" loading="lazy"></span><div><p class="cell-name">AURORA – Vàng 14K Kim cương Lab-grown</p><p class="cell-sub">Mã: NC-AUR-005</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-right" data-cost="18228000">18.228.000 VNĐ</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-right price-text js-sell-price">22.785.000 VNĐ</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>6</td><td data-name="NC-ETR-006"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1628926379972-9843ad139a8c?w=600&h=600&fit=crop&auto=format&q=80" alt="ETERNA – Nhẫn cưới Vàng 14K" loading="lazy"></span><div><p class="cell-name">ETERNA – Nhẫn cưới Vàng 14K</p><p class="cell-sub">Mã: NC-ETR-006</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-right" data-cost="22598000">22.598.000 VNĐ</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-right price-text js-sell-price">28.247.500 VNĐ</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>7</td><td data-name="NC-HAL-007"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1584115838497-f317f7455abe?w=600&h=600&fit=crop&auto=format&q=80" alt="HALO – Nhẫn cưới Vàng 18K đá Moissanite" loading="lazy"></span><div><p class="cell-name">HALO – Nhẫn cưới Vàng 18K đá Moissanite</p><p class="cell-sub">Mã: NC-HAL-007</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-right" data-cost="24998000">24.998.000 VNĐ</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-right price-text js-sell-price">31.247.500 VNĐ</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>8</td><td data-name="NC-HAL-008"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1553915632-175f60dd8e36?w=600&h=600&fit=crop&auto=format&q=80" alt="HALO – Nhẫn cưới Vàng 14K đá Moissanite" loading="lazy"></span><div><p class="cell-name">HALO – Nhẫn cưới Vàng 14K đá Moissanite</p><p class="cell-sub">Mã: NC-HAL-008</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-right" data-cost="23442000">23.442.000 VNĐ</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-right price-text js-sell-price">29.302.500 VNĐ</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>9</td><td data-name="NC-HAL-009"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1567523977592-7959bc5df51e?w=600&h=600&fit=crop&auto=format&q=80" alt="HALO – Nhẫn cưới Vàng 18K đá Moissanite" loading="lazy"></span><div><p class="cell-name">HALO – Nhẫn cưới Vàng 18K đá Moissanite</p><p class="cell-sub">Mã: NC-HAL-009</p></div></div></td><td>Nhẫn cưới</td>
+              <td class="text-right" data-cost="25175000">25.175.000 VNĐ</td>
+              <td class="text-center"><input type="number" class="cell-input" value="25" min="0" max="300"> %</td>
+              <td class="text-right price-text js-sell-price">31.468.750 VNĐ</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>10</td><td data-name="NCH-ARI-001"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1499899833954-5ecd9439d17f?w=600&h=600&fit=crop&auto=format&q=80" alt="ARIA – Nhẫn cầu hôn Vàng 14K đá CZ" loading="lazy"></span><div><p class="cell-name">ARIA – Nhẫn cầu hôn Vàng 14K đá CZ</p><p class="cell-sub">Mã: NCH-ARI-001</p></div></div></td><td>Nhẫn cầu hôn</td>
+              <td class="text-right" data-cost="4834000">4.834.000 VNĐ</td>
+              <td class="text-center"><input type="number" class="cell-input" value="30" min="0" max="300"> %</td>
+              <td class="text-right price-text js-sell-price">6.284.200 VNĐ</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>11</td><td data-name="NCH-TMV-002"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1589674668791-4889d2bba4c6?w=600&h=600&fit=crop&auto=format&q=80" alt="TIMELESS VOW – Nhẫn cầu hôn Vàng 18K Kim cương Lab-grown" loading="lazy"></span><div><p class="cell-name">TIMELESS VOW – Nhẫn cầu hôn Vàng 18K Kim cương Lab-grown</p><p class="cell-sub">Mã: NCH-TMV-002</p></div></div></td><td>Nhẫn cầu hôn</td>
+              <td class="text-right" data-cost="14277000">14.277.000 VNĐ</td>
+              <td class="text-center"><input type="number" class="cell-input" value="30" min="0" max="300"> %</td>
+              <td class="text-right price-text js-sell-price">18.560.100 VNĐ</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>12</td><td data-name="DC-ORC-001"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1602752250055-5ebb552fc3ae?w=600&h=600&fit=crop&auto=format&q=80" alt="THE ORCHID – Mặt dây chuyền Vàng 24K Ngọc bích" loading="lazy"></span><div><p class="cell-name">THE ORCHID – Mặt dây chuyền Vàng 24K Ngọc bích</p><p class="cell-sub">Mã: DC-ORC-001</p></div></div></td><td>Dây chuyền</td>
+              <td class="text-right" data-cost="5015000">5.015.000 VNĐ</td>
+              <td class="text-center"><input type="number" class="cell-input" value="20" min="0" max="300"> %</td>
+              <td class="text-right price-text js-sell-price">6.018.000 VNĐ</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>13</td><td data-name="DC-BLM-007"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1708222169717-8251cfdfa608?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Dây chuyền bạc 925 mạ vàng" loading="lazy"></span><div><p class="cell-name">BLOOM – Dây chuyền bạc 925 mạ vàng</p><p class="cell-sub">Mã: DC-BLM-007</p></div></div></td><td>Trang sức bạc tặng bé</td>
+              <td class="text-right" data-cost="386000">386.000 VNĐ</td>
+              <td class="text-center"><input type="number" class="cell-input" value="40" min="0" max="300"> %</td>
+              <td class="text-right price-text js-sell-price">540.400 VNĐ</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+            <tr><td>14</td><td data-name="BT-BLM-007"><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1713004539634-a6694a83f3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Bông tai bạc 925 mạ vàng" loading="lazy"></span><div><p class="cell-name">BLOOM – Bông tai bạc 925 mạ vàng</p><p class="cell-sub">Mã: BT-BLM-007</p></div></div></td><td>Bông tai</td>
+              <td class="text-right" data-cost="299000">299.000 VNĐ</td>
+              <td class="text-center"><input type="number" class="cell-input" value="35" min="0" max="300"> %</td>
+              <td class="text-right price-text js-sell-price">403.650 VNĐ</td>
+              <td class="text-center"><button type="button" class="ad-btn is-sm is-success js-save-profit">Lưu</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/main.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>

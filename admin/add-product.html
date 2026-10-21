@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thêm sản phẩm | Lumière Admin (Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="admin" data-logged-in>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="ad-side">
+    <a href="index.html" class="ad-brand">
+      <span class="logo-mark">◇</span>
+      <span><strong>LUMIÈRE</strong><small>TRUNG TÂM ĐIỀU KHIỂN</small></span>
+    </a>
+    <nav class="ad-nav" aria-label="Menu quản trị">
+      <a href="index.html"><span class="ad-ico">▦</span>Tổng quan</a>
+      <a href="user.html"><span class="ad-ico">☺</span>Quản lý khách hàng</a>
+      <a href="order.html"><span class="ad-ico">☰</span>Quản lý đơn hàng</a>
+      <a href="products.html" class="is-active"><span class="ad-ico">◇</span>Quản lý sản phẩm</a>
+      <a href="category.html"><span class="ad-ico">▤</span>Quản lý danh mục</a>
+      <a href="phieunhap.html"><span class="ad-ico">⇩</span>Quản lý nhập hàng</a>
+      <a href="giaban.html"><span class="ad-ico">₫</span>Quản lý giá bán</a>
+      <a href="tonkho.html"><span class="ad-ico">▣</span>Quản lý tồn kho</a>
+    </nav>
+    <a href="login.html" class="ad-logout" data-confirm="Bạn có chắc chắn muốn đăng xuất?" data-redirect="login.html">Đăng xuất</a>
+    <a href="../index.html" class="ad-site-link">← Xem trang khách hàng</a>
+  </aside>
+
+  <!-- ================= NỘI DUNG ================= -->
+  <main class="ad-main">
+    <div class="ad-topbar">
+      <ol class="ad-crumb"><li><a href="index.html">Trang quản trị</a></li><li><a href="products.html">Quản lý sản phẩm</a></li><li aria-current="page">Thêm sản phẩm</li></ol>
+      <div class="ad-user"><span class="account-avatar">AD</span> Admin</div>
+    </div>
+
+    <div class="ad-head">
+      <div><h1 class="ad-title">Thêm sản phẩm</h1><p class="ad-sub">Nhập thông tin sản phẩm trang sức mới.</p></div>
+      
+    </div>
+
+    <section class="ad-card">
+      <h2 class="ad-card-title">Thông tin sản phẩm</h2>
+      <form class="ad-form" novalidate data-demo data-success="Thêm sản phẩm thành công!" data-redirect="products.html">
+        <div class="form-grid">
+          <div class="form-group"><label for="pf-name">Tên sản phẩm <span class="req">*</span></label><input type="text" id="pf-name" value="" placeholder="VD: Nhẫn cưới Vàng 14K đá CZ" required></div>
+          <div class="form-group"><label for="pf-code">Mã sản phẩm <span class="req">*</span></label><input type="text" id="pf-code" value="" placeholder="VD: NC-ETR-010" required></div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group"><label for="pf-brand">Bộ sưu tập</label><select id="pf-brand"><option>AURORA</option><option>ETERNA</option><option>HALO</option><option>ARIA</option><option>TIMELESS VOW</option><option>THE ORCHID</option><option>BLOOM</option></select></div>
+          <div class="form-group"><label for="pf-cat">Danh mục <span class="req">*</span></label><select id="pf-cat" required><option value="">-- Chọn danh mục --</option><option value="1">Nhẫn cưới</option><option value="2">Nhẫn cầu hôn</option><option value="3">Dây chuyền</option><option value="4">Bông tai</option><option value="5">Trang sức bạc tặng bé</option></select></div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group"><label for="pf-mat">Chất liệu</label><select id="pf-mat"><option>Vàng 14K</option><option>Vàng 18K</option><option>Vàng 24K</option><option>Bạc 925</option></select></div>
+          <div class="form-group"><label for="pf-stone">Loại đá</label><select id="pf-stone"><option>Không đá</option><option>Kim cương Lab-grown</option><option>Moissanite</option><option>Đá CZ</option><option>Ngọc bích</option></select></div>
+        </div>
+        <div class="form-group"><label for="pf-price">Giá bán (VNĐ) <span class="req">*</span></label><input type="text" id="pf-price" class="js-price" value="" placeholder="VD: 9.850.000" required></div>
+        <div class="form-group"><label for="pf-desc">Mô tả sản phẩm</label><textarea id="pf-desc" placeholder="Mô tả chất liệu, kiểu dáng, ưu đãi..."></textarea></div>
+        <div class="form-group"><label for="pf-image">Hình ảnh sản phẩm</label>
+          <div class="img-preview"><span class="cell-thumb"><span class="charm-art c3">◇</span></span><input type="file" id="pf-image" class="js-image-input" accept="image/*"></div></div>
+        <div class="form-actions">
+          <a href="products.html" class="ad-btn is-ghost">Hủy</a>
+          <button type="submit" class="ad-btn">Thêm sản phẩm</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="../js/main.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>

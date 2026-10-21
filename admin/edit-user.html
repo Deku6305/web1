@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sửa khách hàng | Lumière Admin (Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="admin" data-logged-in>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="ad-side">
+    <a href="index.html" class="ad-brand">
+      <span class="logo-mark">◇</span>
+      <span><strong>LUMIÈRE</strong><small>TRUNG TÂM ĐIỀU KHIỂN</small></span>
+    </a>
+    <nav class="ad-nav" aria-label="Menu quản trị">
+      <a href="index.html"><span class="ad-ico">▦</span>Tổng quan</a>
+      <a href="user.html" class="is-active"><span class="ad-ico">☺</span>Quản lý khách hàng</a>
+      <a href="order.html"><span class="ad-ico">☰</span>Quản lý đơn hàng</a>
+      <a href="products.html"><span class="ad-ico">◇</span>Quản lý sản phẩm</a>
+      <a href="category.html"><span class="ad-ico">▤</span>Quản lý danh mục</a>
+      <a href="phieunhap.html"><span class="ad-ico">⇩</span>Quản lý nhập hàng</a>
+      <a href="giaban.html"><span class="ad-ico">₫</span>Quản lý giá bán</a>
+      <a href="tonkho.html"><span class="ad-ico">▣</span>Quản lý tồn kho</a>
+    </nav>
+    <a href="login.html" class="ad-logout" data-confirm="Bạn có chắc chắn muốn đăng xuất?" data-redirect="login.html">Đăng xuất</a>
+    <a href="../index.html" class="ad-site-link">← Xem trang khách hàng</a>
+  </aside>
+
+  <!-- ================= NỘI DUNG ================= -->
+  <main class="ad-main">
+    <div class="ad-topbar">
+      <ol class="ad-crumb"><li><a href="index.html">Trang quản trị</a></li><li><a href="user.html">Quản lý khách hàng</a></li><li aria-current="page">Sửa thông tin</li></ol>
+      <div class="ad-user"><span class="account-avatar">AD</span> Admin</div>
+    </div>
+
+    <div class="ad-head">
+      <div><h1 class="ad-title">Sửa thông tin khách hàng</h1><p class="ad-sub">Cập nhật thông tin tài khoản Nguyễn Văn A.</p></div>
+      
+    </div>
+
+    <section class="ad-card">
+      <form class="ad-form" novalidate data-demo data-success="✅ Cập nhật khách hàng thành công!" data-redirect="user.html">
+        <div class="form-grid">
+          <div class="form-group"><label for="u-name">Họ và tên <span class="req">*</span></label><input type="text" id="u-name" value="Nguyễn Văn A" required></div>
+          <div class="form-group"><label for="u-acc">Tên tài khoản</label><input type="text" id="u-acc" value="0901234567" readonly></div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group"><label for="u-email">Email <span class="req">*</span></label><input type="email" id="u-email" value="nguyenvana@example.com" required></div>
+          <div class="form-group"><label for="u-pass">Mật khẩu</label>
+            <div class="pass-wrap"><input type="password" id="u-pass" value="lumiere123"><button type="button" class="ad-btn is-ghost js-toggle-pass" data-target="u-pass">Hiện</button></div></div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group"><label for="u-phone">Số điện thoại <span class="req">*</span></label><input type="tel" id="u-phone" value="0901 234 567" required></div>
+          <div class="form-group"><label for="u-status">Trạng thái tài khoản</label>
+            <select id="u-status"><option value="active" selected>Hoạt động</option><option value="locked">Đã khóa</option></select></div>
+        </div>
+        <div class="form-group"><label for="u-address">Địa chỉ</label><input type="text" id="u-address" value="273 An Dương Vương, Phường Chợ Quán, TP. Hồ Chí Minh"></div>
+        <div class="form-actions">
+          <a href="user.html" class="ad-btn is-ghost">Hủy</a>
+          <button type="submit" class="ad-btn">Lưu thay đổi</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="../js/main.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>

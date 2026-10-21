@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thêm danh mục | Lumière Admin (Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="admin" data-logged-in>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="ad-side">
+    <a href="index.html" class="ad-brand">
+      <span class="logo-mark">◇</span>
+      <span><strong>LUMIÈRE</strong><small>TRUNG TÂM ĐIỀU KHIỂN</small></span>
+    </a>
+    <nav class="ad-nav" aria-label="Menu quản trị">
+      <a href="index.html"><span class="ad-ico">▦</span>Tổng quan</a>
+      <a href="user.html"><span class="ad-ico">☺</span>Quản lý khách hàng</a>
+      <a href="order.html"><span class="ad-ico">☰</span>Quản lý đơn hàng</a>
+      <a href="products.html"><span class="ad-ico">◇</span>Quản lý sản phẩm</a>
+      <a href="category.html" class="is-active"><span class="ad-ico">▤</span>Quản lý danh mục</a>
+      <a href="phieunhap.html"><span class="ad-ico">⇩</span>Quản lý nhập hàng</a>
+      <a href="giaban.html"><span class="ad-ico">₫</span>Quản lý giá bán</a>
+      <a href="tonkho.html"><span class="ad-ico">▣</span>Quản lý tồn kho</a>
+    </nav>
+    <a href="login.html" class="ad-logout" data-confirm="Bạn có chắc chắn muốn đăng xuất?" data-redirect="login.html">Đăng xuất</a>
+    <a href="../index.html" class="ad-site-link">← Xem trang khách hàng</a>
+  </aside>
+
+  <!-- ================= NỘI DUNG ================= -->
+  <main class="ad-main">
+    <div class="ad-topbar">
+      <ol class="ad-crumb"><li><a href="index.html">Trang quản trị</a></li><li><a href="category.html">Quản lý danh mục</a></li><li aria-current="page">Thêm danh mục</li></ol>
+      <div class="ad-user"><span class="account-avatar">AD</span> Admin</div>
+    </div>
+
+    <div class="ad-head">
+      <div><h1 class="ad-title">Thêm danh mục</h1><p class="ad-sub">Tạo nhóm sản phẩm mới.</p></div>
+      
+    </div>
+
+    <section class="ad-card">
+      <h2 class="ad-card-title">Thông tin danh mục</h2>
+      <form class="ad-form" novalidate data-demo data-success="Thêm danh mục thành công!" data-redirect="category.html">
+        <div class="form-group"><label for="cf-name">Tên danh mục <span class="req">*</span></label><input type="text" id="cf-name" value="" placeholder="VD: Lắc tay" required></div>
+        <div class="form-group"><label for="cf-desc">Mô tả danh mục</label><textarea id="cf-desc" placeholder="Mô tả ngắn về danh mục"></textarea></div>
+        <div class="form-group"><label for="cf-show">Trạng thái</label><select id="cf-show"><option selected>Hiển thị</option><option>Ẩn</option></select></div>
+        <div class="form-actions">
+          <a href="category.html" class="ad-btn is-ghost">Hủy</a>
+          <button type="submit" class="ad-btn">Thêm danh mục</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="../js/main.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>

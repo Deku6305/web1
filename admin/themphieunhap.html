@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tạo phiếu nhập | Lumière Admin (Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="admin" data-logged-in>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="ad-side">
+    <a href="index.html" class="ad-brand">
+      <span class="logo-mark">◇</span>
+      <span><strong>LUMIÈRE</strong><small>TRUNG TÂM ĐIỀU KHIỂN</small></span>
+    </a>
+    <nav class="ad-nav" aria-label="Menu quản trị">
+      <a href="index.html"><span class="ad-ico">▦</span>Tổng quan</a>
+      <a href="user.html"><span class="ad-ico">☺</span>Quản lý khách hàng</a>
+      <a href="order.html"><span class="ad-ico">☰</span>Quản lý đơn hàng</a>
+      <a href="products.html"><span class="ad-ico">◇</span>Quản lý sản phẩm</a>
+      <a href="category.html"><span class="ad-ico">▤</span>Quản lý danh mục</a>
+      <a href="phieunhap.html" class="is-active"><span class="ad-ico">⇩</span>Quản lý nhập hàng</a>
+      <a href="giaban.html"><span class="ad-ico">₫</span>Quản lý giá bán</a>
+      <a href="tonkho.html"><span class="ad-ico">▣</span>Quản lý tồn kho</a>
+    </nav>
+    <a href="login.html" class="ad-logout" data-confirm="Bạn có chắc chắn muốn đăng xuất?" data-redirect="login.html">Đăng xuất</a>
+    <a href="../index.html" class="ad-site-link">← Xem trang khách hàng</a>
+  </aside>
+
+  <!-- ================= NỘI DUNG ================= -->
+  <main class="ad-main">
+    <div class="ad-topbar">
+      <ol class="ad-crumb"><li><a href="index.html">Trang quản trị</a></li><li><a href="phieunhap.html">Quản lý nhập hàng</a></li><li aria-current="page">Tạo phiếu nhập</li></ol>
+      <div class="ad-user"><span class="account-avatar">AD</span> Admin</div>
+    </div>
+
+    <div class="ad-head">
+      <div><h1 class="ad-title">Tạo phiếu nhập</h1><p class="ad-sub">Nhập hàng từ nhà cung cấp vào kho.</p></div>
+      
+    </div>
+
+    <form class="ad-card" id="importForm" novalidate>
+      <h2 class="ad-card-title">Thông tin phiếu nhập</h2>
+      <div class="ad-filter" style="margin-bottom:22px;">
+        <div class="form-group"><label for="import-date">Ngày nhập <span class="req">*</span></label><input type="date" id="import-date" value="2026-10-21"></div>
+        <div class="form-group"><label for="import-code">Mã phiếu nhập</label><input type="text" id="import-code" value="PN006" readonly></div>
+        <div class="form-group"><label for="import-supplier">Nhà cung cấp</label>
+          <select id="import-supplier"><option>Xưởng chế tác Lumière</option><option>Công ty Bạc Bloom</option><option>Ngọc Orchid Co.</option></select></div>
+      </div>
+
+      <div class="panel-head">
+        <h3 class="ad-card-title" style="margin:0;">Danh sách sản phẩm nhập</h3>
+        <button type="button" class="ad-btn is-ghost" id="btn-add-row">+ Thêm sản phẩm</button>
+      </div>
+      <div class="import-head"><span>Sản phẩm</span><span>Giá nhập (VNĐ)</span><span>Số lượng</span><span>Thành tiền</span><span></span></div>
+      <div class="import-rows" id="import-rows"></div>
+      <template id="import-row-template">
+        <div class="import-row">
+          <select class="product-select" aria-label="Sản phẩm"><option value="">-- Chọn sản phẩm --</option><option value="NC-AUR-001" data-cost="7880000">NC-AUR-001 – AURORA Nhẫn cưới Vàng 14K Kim cương Lab-grown</option><option value="NC-AUR-002" data-cost="8092000">NC-AUR-002 – AURORA Nhẫn cưới Vàng 14K Kim cương Lab-grown</option><option value="NC-ETR-003" data-cost="13530000">NC-ETR-003 – ETERNA Nhẫn cưới Vàng 14K đá CZ</option><option value="NC-ETR-004" data-cost="16196000">NC-ETR-004 – ETERNA Nhẫn cưới Vàng 14K đá CZ</option><option value="NC-AUR-005" data-cost="18228000">NC-AUR-005 – AURORA Vàng 14K Kim cương Lab-grown</option><option value="NC-ETR-006" data-cost="22598000">NC-ETR-006 – ETERNA Nhẫn cưới Vàng 14K</option><option value="NC-HAL-007" data-cost="24998000">NC-HAL-007 – HALO Nhẫn cưới Vàng 18K đá Moissanite</option><option value="NC-HAL-008" data-cost="23442000">NC-HAL-008 – HALO Nhẫn cưới Vàng 14K đá Moissanite</option><option value="NC-HAL-009" data-cost="25175000">NC-HAL-009 – HALO Nhẫn cưới Vàng 18K đá Moissanite</option><option value="NCH-ARI-001" data-cost="4834000">NCH-ARI-001 – ARIA Nhẫn cầu hôn Vàng 14K đá CZ</option><option value="NCH-TMV-002" data-cost="14277000">NCH-TMV-002 – TIMELESS VOW Nhẫn cầu hôn Vàng 18K Kim cương Lab-grown</option><option value="DC-ORC-001" data-cost="5015000">DC-ORC-001 – THE ORCHID Mặt dây chuyền Vàng 24K Ngọc bích</option><option value="DC-BLM-007" data-cost="386000">DC-BLM-007 – BLOOM Dây chuyền bạc 925 mạ vàng</option><option value="BT-BLM-007" data-cost="299000">BT-BLM-007 – BLOOM Bông tai bạc 925 mạ vàng</option></select>
+          <input type="text" class="price-input js-price" placeholder="Giá nhập" aria-label="Giá nhập">
+          <input type="number" class="qty-input" value="1" min="1" aria-label="Số lượng">
+          <span class="row-total">0 VNĐ</span>
+          <button type="button" class="row-remove" aria-label="Xóa dòng">&times;</button>
+        </div>
+      </template>
+
+      <div class="import-summary">
+        <div><p>Số dòng sản phẩm</p><strong id="total-products">0</strong></div>
+        <div><p>Tổng số lượng</p><strong id="total-quantity">0</strong></div>
+        <div class="is-total"><p>Tổng giá trị</p><strong id="total-value">0 VNĐ</strong></div>
+      </div>
+      <div class="form-actions" style="margin-top:22px;">
+        <a href="phieunhap.html" class="ad-btn is-ghost" data-confirm="Hủy tạo phiếu nhập?" data-redirect="phieunhap.html">Hủy</a>
+        <button type="submit" class="ad-btn">Lưu phiếu nhập</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="../js/main.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>

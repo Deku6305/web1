@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi tiết đơn hàng | Lumière Admin (Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="admin" data-logged-in>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="ad-side">
+    <a href="index.html" class="ad-brand">
+      <span class="logo-mark">◇</span>
+      <span><strong>LUMIÈRE</strong><small>TRUNG TÂM ĐIỀU KHIỂN</small></span>
+    </a>
+    <nav class="ad-nav" aria-label="Menu quản trị">
+      <a href="index.html"><span class="ad-ico">▦</span>Tổng quan</a>
+      <a href="user.html"><span class="ad-ico">☺</span>Quản lý khách hàng</a>
+      <a href="order.html" class="is-active"><span class="ad-ico">☰</span>Quản lý đơn hàng</a>
+      <a href="products.html"><span class="ad-ico">◇</span>Quản lý sản phẩm</a>
+      <a href="category.html"><span class="ad-ico">▤</span>Quản lý danh mục</a>
+      <a href="phieunhap.html"><span class="ad-ico">⇩</span>Quản lý nhập hàng</a>
+      <a href="giaban.html"><span class="ad-ico">₫</span>Quản lý giá bán</a>
+      <a href="tonkho.html"><span class="ad-ico">▣</span>Quản lý tồn kho</a>
+    </nav>
+    <a href="login.html" class="ad-logout" data-confirm="Bạn có chắc chắn muốn đăng xuất?" data-redirect="login.html">Đăng xuất</a>
+    <a href="../index.html" class="ad-site-link">← Xem trang khách hàng</a>
+  </aside>
+
+  <!-- ================= NỘI DUNG ================= -->
+  <main class="ad-main">
+    <div class="ad-topbar">
+      <ol class="ad-crumb"><li><a href="index.html">Trang quản trị</a></li><li><a href="order.html">Quản lý đơn hàng</a></li><li aria-current="page">Đơn #DH1025</li></ol>
+      <div class="ad-user"><span class="account-avatar">AD</span> Admin</div>
+    </div>
+
+    <div class="ad-head">
+      <div><h1 class="ad-title">Thông tin đơn hàng #DH1025</h1><p class="ad-sub">Đặt ngày 21/10/2026 · Thanh toán qua Ví MoMo</p></div>
+      <a href="order.html" class="ad-btn is-ghost">← Danh sách đơn</a>
+    </div>
+
+    <div class="chart-grid">
+      <section class="ad-card">
+        <h2 class="ad-card-title">Thông tin khách hàng</h2>
+        <dl class="info-grid">
+          <div><dt>Họ và tên</dt><dd>Nguyễn Văn A</dd></div>
+          <div><dt>Số điện thoại</dt><dd>0901 234 567</dd></div>
+          <div><dt>Email</dt><dd>nguyenvana@example.com</dd></div>
+          <div><dt>Hạng thành viên</dt><dd>Thành viên Vàng</dd></div>
+          <div style="grid-column:1/-1;"><dt>Địa chỉ giao hàng</dt><dd>273 An Dương Vương, Phường Chợ Quán, TP. Hồ Chí Minh</dd></div>
+        </dl>
+      </section>
+      <section class="ad-card">
+        <h2 class="ad-card-title">Cập nhật trạng thái</h2>
+        <p style="margin-bottom:12px;">Trạng thái hiện tại: <span class="status status-pending">Đang chờ xử lý</span></p>
+        <div class="form-group">
+          <label for="statusSelect">Chọn trạng thái mới</label>
+          <select id="statusSelect"><option value="">-- Chọn trạng thái --</option><option value="pending">Đang chờ xử lý</option><option value="processing">Đang xử lý</option><option value="shipping">Đang vận chuyển</option><option value="delivered">Đã giao</option><option value="completed">Hoàn tất</option><option value="cancelled">Đã hủy</option></select>
+        </div>
+        <button type="button" class="ad-btn" id="btn-update-status" style="margin-top:14px;">Cập nhật trạng thái</button>
+      </section>
+    </div>
+
+    <section class="ad-card">
+      <h2 class="ad-card-title">Danh sách sản phẩm</h2>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>STT</th><th>Mã sản phẩm</th><th>Sản phẩm</th><th class="text-center">Số lượng</th><th class="text-right">Đơn giá</th><th class="text-right">Thành tiền</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>DC-BLM-007</td><td><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1708222169717-8251cfdfa608?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Dây chuyền bạc 925 mạ vàng" loading="lazy"></span><div><p class="cell-name">BLOOM – Dây chuyền bạc 925 mạ vàng</p><p class="cell-sub">Trang sức bạc tặng bé</p></div></div></td><td class="text-center">1</td>
+              <td class="text-right">541.080 VNĐ</td><td class="text-right price-text">541.080 VNĐ</td></tr>
+            <tr><td>2</td><td>BT-BLM-007</td><td><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1713004539634-a6694a83f3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Bông tai bạc 925 mạ vàng" loading="lazy"></span><div><p class="cell-name">BLOOM – Bông tai bạc 925 mạ vàng</p><p class="cell-sub">Bông tai</p></div></div></td><td class="text-center">1</td>
+              <td class="text-right">403.380 VNĐ</td><td class="text-right price-text">403.380 VNĐ</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <dl class="order-total-box">
+        <div><dt>Tạm tính</dt><dd>1.049.400 VNĐ</dd></div>
+        <div><dt>Giảm giá</dt><dd class="is-discount">-104.940 VNĐ</dd></div>
+        <div><dt>Phí vận chuyển</dt><dd>Miễn phí</dd></div>
+        <div class="is-total"><dt>Tổng cộng</dt><dd>944.460 VNĐ</dd></div>
+      </dl>
+    </section>
+  </main>
+
+  <script src="../js/main.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>

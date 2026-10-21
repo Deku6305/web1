@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh toán | Lumière Jewelry (Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-logged-in>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+
+    <!-- Hàng trên: định vị + tìm kiếm | logo | tiện ích -->
+    <div class="header-top container">
+      <div class="header-left">
+        <a href="stores.html" class="icon-btn" aria-label="Hệ thống cửa hàng">
+          <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+        </a>
+        <form class="search-box" role="search" action="searchcotaikhoan.html">
+          <svg class="search-icon" viewBox="0 0 24 24"><path d="M10 2a8 8 0 1 0 4.9 14.3l5.4 5.4 1.4-1.4-5.4-5.4A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/></svg>
+          <input type="search" name="keyword" placeholder="Tìm kiếm" aria-label="Tìm kiếm">
+          <a href="image-search.html" class="search-camera" aria-label="Tìm bằng hình ảnh">
+            <svg viewBox="0 0 24 24"><path d="M9 3 7.2 5H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3H9zm3 5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></svg>
+          </a>
+        </form>
+        <button type="button" class="search-filter" data-open-modal="advancedSearchModal" title="Tìm kiếm nâng cao" aria-label="Tìm kiếm nâng cao">
+          <svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8.5V19l-4 2v-8.5L3 4z"/></svg>
+        </button>
+      </div>
+
+      <a href="index2.html" class="logo">
+        <span class="logo-mark">◇</span>
+        <span class="logo-text">
+          <strong>LUMIÈRE</strong>
+          <small>TALES OF LOVE</small>
+        </span>
+      </a>
+
+      <div class="header-right">
+        <a href="wishlist.html" class="icon-btn" aria-label="Yêu thích">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.4 2.3 4 6.3 4c2.3 0 3.8 1.3 4.7 2.6h2C13.9 5.3 15.4 4 17.7 4c4 0 5.9 4.4 4.3 7.7C19.5 16.4 12 21 12 21z"/></svg>
+          <span class="badge">4</span>
+        </a>
+        <a href="cart.html" class="icon-btn" aria-label="Giỏ hàng">
+          <svg viewBox="0 0 24 24"><path d="M7 7V6a5 5 0 0 1 10 0v1h3l-1 14H5L4 7h3zm2 0h6V6a3 3 0 0 0-6 0v1z"/></svg>
+          <span class="badge">2</span>
+        </a>
+        <div class="account-menu">
+          <a href="thongtintaikhoan.html" class="icon-btn" aria-label="Tài khoản">
+            <svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-5 0-9 2.5-9 6v2h18v-2c0-3.5-4-6-9-6z"/></svg>
+          </a>
+          <span class="account-name">Nguyễn Văn A ▾</span>
+          <ul class="dropdown">
+            <li><a href="thongtintaikhoan.html">Thông tin tài khoản</a></li>
+            <li><a href="lichsumuahang.html">Lịch sử mua hàng</a></li>
+            <li><a href="wishlist.html">Sản phẩm yêu thích</a></li>
+            <li><a href="login.html" data-confirm="Bạn có chắc chắn muốn đăng xuất?" data-redirect="login.html">Đăng xuất</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hàng dưới: menu chính -->
+    <nav class="main-nav container" aria-label="Menu chính">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="index2.html">Trang chủ</a></li>
+        <li class="nav-item"><a href="about.html">Về chúng tôi</a></li>
+        <li class="nav-item"><a href="collection.html">Quà tặng 20.10</a></li>
+        <li class="nav-item has-dropdown">
+          <a href="all-products.html">Bộ sưu tập</a>
+          <ul class="dropdown">
+            <li><a href="all-products.html">Aurora</a></li>
+            <li><a href="all-products.html">Eterna</a></li>
+            <li><a href="all-products.html">Halo</a></li>
+            <li><a href="collection.html">Bloom</a></li>
+            <li><a href="proposal.html">Timeless Vow</a></li>
+          </ul>
+        </li>
+        <li class="nav-item has-dropdown">
+          <a href="all-products.html">Sản phẩm</a>
+          <ul class="dropdown">
+            <li><a href="index2.html#catalog">Nhẫn cưới</a></li>
+            <li><a href="proposal.html">Nhẫn cầu hôn</a></li>
+            <li><a href="all-products.html">Dây chuyền</a></li>
+            <li><a href="all-products.html">Bông tai</a></li>
+            <li><a href="collection.html">Trang sức bạc tặng bé</a></li>
+          </ul>
+        </li>
+        <li class="nav-item has-dropdown">
+          <a href="blog.html">Tin tức</a>
+          <ul class="dropdown">
+            <li><a href="blog.html">Cẩm nang</a></li>
+            <li><a href="blog.html">Sự kiện</a></li>
+          </ul>
+        </li>
+        <li class="nav-item has-dropdown">
+          <a href="policies.html">Dịch vụ</a>
+          <ul class="dropdown">
+            <li><a href="policies.html#warranty">Bảo hành</a></li>
+            <li><a href="policies.html#care">Làm sạch &amp; khắc tên</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a href="contact.html">Liên hệ</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN: THANH TOÁN ================= -->
+  <main class="page-wrap container">
+    <div class="steps" aria-label="Các bước đặt hàng">
+      <span class="step is-done"><span class="step-num">✓</span> Giỏ hàng</span>
+      <span class="step-line"></span>
+      <span class="step is-current"><span class="step-num">2</span> Thông tin &amp; thanh toán</span>
+      <span class="step-line"></span>
+      <span class="step"><span class="step-num">3</span> Xác nhận đơn hàng</span>
+    </div>
+
+    <form id="checkoutForm" class="checkout-layout" novalidate>
+      <div>
+        <section class="panel" aria-label="Sản phẩm đã đặt">
+          <div class="panel-head">
+            <h2 class="panel-title">Danh sách sản phẩm đã đặt</h2>
+            <a href="cart.html" class="link-primary">← Sửa giỏ hàng</a>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Sản phẩm</th><th class="text-right">Đơn giá</th><th class="text-center">Số lượng</th><th class="text-right">Thành tiền</th></tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1708222169717-8251cfdfa608?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Dây chuyền bạc 925 mạ vàng" loading="lazy"></span><div><p class="cell-name">BLOOM – Dây chuyền bạc 925 mạ vàng</p><p class="cell-sub">Mã: DC-BLM-007</p></div></div></td>
+                <td class="text-right">541.080 VNĐ</td>
+                <td class="text-center">1</td>
+                <td class="text-right price-text">541.080 VNĐ</td>
+              </tr>
+              <tr>
+                <td><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1713004539634-a6694a83f3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Bông tai bạc 925 mạ vàng" loading="lazy"></span><div><p class="cell-name">BLOOM – Bông tai bạc 925 mạ vàng</p><p class="cell-sub">Mã: BT-BLM-007</p></div></div></td>
+                <td class="text-right">403.380 VNĐ</td>
+                <td class="text-center">1</td>
+                <td class="text-right price-text">403.380 VNĐ</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel" aria-label="Thông tin giao hàng">
+          <h2 class="panel-title">Thông tin giao hàng</h2>
+          <div class="form-stack">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="ck-name">Họ và tên <span class="req">*</span></label>
+                <input type="text" id="ck-name" name="fullname" value="Nguyễn Văn A" required>
+              </div>
+              <div class="form-group">
+                <label for="ck-phone">Số điện thoại <span class="req">*</span></label>
+                <input type="tel" id="ck-phone" name="phone" value="0901 234 567" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="address-select">Địa chỉ giao hàng <span class="req">*</span></label>
+              <div class="address-row">
+                <select id="address-select" name="address" required>
+                  <option value="">-- Chọn địa chỉ giao hàng --</option>
+                  <option value="1">273 An Dương Vương, Phường Chợ Quán, TP. Hồ Chí Minh</option>
+                  <option value="2">456 Lê Văn Việt, Phường Tăng Nhơn Phú, TP. Hồ Chí Minh</option>
+                  <option value="3">Nhận tại cửa hàng – Lumière Plaza, Tầng 1</option>
+                </select>
+                <button type="button" class="btn-outline" data-open-modal="addressModal">+ Thêm địa chỉ mới</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="ck-note">Ghi chú cho đơn hàng</label>
+              <textarea id="ck-note" name="note" placeholder="Ví dụ: khắc tên lên nhẫn, gói quà, giao giờ hành chính..."></textarea>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <aside class="cart-summary" aria-label="Thông tin đơn hàng">
+        <h2 class="summary-heading">Thông tin đơn hàng</h2>
+        <dl class="summary-rows">
+          <div><dt>Tạm tính</dt><dd>1.049.400 VNĐ</dd></div>
+          <div><dt>Giảm giá</dt><dd class="is-discount">-104.940 VNĐ</dd></div>
+          <div><dt>Phí vận chuyển</dt><dd>Miễn phí</dd></div>
+          <div class="summary-total"><dt>Tổng cộng</dt><dd>944.460 VNĐ</dd></div>
+        </dl>
+
+        <h2 class="summary-heading" style="margin-top:20px;">Phương thức thanh toán</h2>
+        <div class="pay-options">
+          <label class="pay-option"><input type="radio" name="payment_method" value="momo">
+            <span class="pay-logo momo">MoMo</span><span><span class="pay-name">Ví MoMo</span><br><span class="pay-desc">Quét mã QR để thanh toán</span></span></label>
+          <label class="pay-option"><input type="radio" name="payment_method" value="zalo">
+            <span class="pay-logo zalo">Zalo</span><span><span class="pay-name">ZaloPay</span><br><span class="pay-desc">Quét mã QR để thanh toán</span></span></label>
+          <label class="pay-option"><input type="radio" name="payment_method" value="cod">
+            <span class="pay-logo cod">COD</span><span><span class="pay-name">Thanh toán khi nhận hàng</span><br><span class="pay-desc">Kiểm tra hàng trước khi trả tiền</span></span></label>
+        </div>
+        <div class="qr-box" id="qr-box">
+          <div class="qr-code" aria-label="Mã QR minh họa"><span></span></div>
+          <p class="qr-note">Quét mã bằng ứng dụng <strong id="qr-app">MoMo</strong> để thanh toán <strong>944.460 VNĐ</strong></p>
+        </div>
+
+        <div class="error-box" id="error-box" role="alert"></div>
+        <button type="submit" class="modal-buy" style="border:0;cursor:pointer;max-width:none;">ĐẶT HÀNG</button>
+        <p class="summary-note">Bằng việc đặt hàng, bạn đồng ý với <a href="policies.html" class="link-primary">chính sách của Lumière</a></p>
+      </aside>
+    </form>
+  </main>
+
+  <!-- Modal thêm địa chỉ mới -->
+  <div class="adv-modal" id="addressModal" role="dialog" aria-modal="true" aria-labelledby="address-title">
+    <div class="adv-dialog">
+      <div class="adv-head"><h3 id="address-title">Thêm địa chỉ mới</h3>
+        <button type="button" class="adv-close" aria-label="Đóng">&times;</button></div>
+      <form class="adv-form" novalidate data-demo data-success="Thêm địa chỉ thành công!" data-redirect="checkout.html">
+        <div class="form-grid">
+          <div class="form-group"><label for="ad-name">Họ tên người nhận <span class="req">*</span></label><input type="text" id="ad-name" required></div>
+          <div class="form-group"><label for="ad-phone">Số điện thoại <span class="req">*</span></label><input type="tel" id="ad-phone" required></div>
+        </div>
+        <div class="form-group"><label for="ad-city">Tỉnh / Thành phố <span class="req">*</span></label>
+          <select id="ad-city" required><option value="">-- Chọn --</option><option>TP. Hồ Chí Minh</option><option>Hà Nội</option><option>Đà Nẵng</option></select></div>
+        <div class="form-group"><label for="ad-ward">Phường / Xã <span class="req">*</span></label><input type="text" id="ad-ward" required></div>
+        <div class="form-group"><label for="ad-street">Số nhà, tên đường <span class="req">*</span></label><input type="text" id="ad-street" required></div>
+        <label class="checkbox"><input type="checkbox"> <span>Đặt làm địa chỉ mặc định</span></label>
+        <div class="adv-actions"><button type="button" class="btn-outline adv-close">Hủy</button>
+          <button type="submit" class="btn-primary">Lưu địa chỉ</button></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+
+    <!-- Hotline -->
+    <div class="footer-hotline container">
+      <div class="hotline-box">
+        <p class="hotline-title">GỌI MUA HÀNG <span>(8:00 - 21:00)</span></p>
+        <p class="hotline-number">1900 xxx xxx</p>
+        <p class="hotline-note">Tất cả các ngày trong tuần</p>
+      </div>
+      <div class="hotline-box">
+        <p class="hotline-title">GÓP Ý, KHIẾU NẠI <span>(8:00 - 21:00)</span></p>
+        <p class="hotline-number">1900 xxx xxx</p>
+        <p class="hotline-note">Tất cả các ngày trong tuần</p>
+      </div>
+    </div>
+
+    <!-- Cột link -->
+    <div class="footer-links container">
+      <div class="footer-col">
+        <h4><a href="stores.html">Hệ thống cửa hàng</a></h4>
+        <ul>
+          <li><a href="stores.html">TP. Hồ Chí Minh</a></li>
+          <li><a href="stores.html">Hà Nội</a></li>
+          <li><a href="stores.html">Đà Nẵng</a></li>
+          <li><a href="contact.html">Liên hệ với chúng tôi</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4><a href="policies.html">Chính sách</a></h4>
+        <ul>
+          <li><a href="policies.html#warranty">Chính sách bảo hành</a></li>
+          <li><a href="policies.html#swap">Chính sách đổi trả</a></li>
+          <li><a href="policies.html#ship">Chính sách vận chuyển</a></li>
+          <li><a href="policies.html#privacy">Chính sách bảo mật</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Các nền tảng khác</h4>
+        <ul class="social-list">
+          <li><a href="https://www.facebook.com" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="https://www.instagram.com" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.tiktok.com" target="_blank" rel="noopener">TikTok</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Thông tin công ty -->
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="company-name">CÔNG TY TNHH LUMIÈRE JEWELRY (DEMO)</p>
+        <p>Địa chỉ: 123 Đường Mẫu, Quận Mẫu, TP. Hồ Chí Minh</p>
+        <p>Điện thoại: 1900 xxx xxx – Email: hello@example.com</p>
+        <a href="admin/login.html" class="admin-link">Trang quản trị</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Nút nổi góc phải -->
+  <a href="contact.html" class="floating-btn" aria-label="Liên hệ">◇</a>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Hiện mã QR theo phương thức thanh toán
+    document.querySelectorAll('input[name="payment_method"]').forEach(function (radio) {
+      radio.addEventListener("change", function () {
+        var box = document.getElementById("qr-box");
+        box.classList.toggle("is-show", this.value !== "cod");
+        document.getElementById("qr-app").textContent = this.value === "momo" ? "MoMo" : "ZaloPay";
+      });
+    });
+
+    // Kiểm tra form rồi chuyển sang trang xác nhận (không xử lý đơn thật)
+    document.getElementById("checkoutForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var err = document.getElementById("error-box");
+      function showError(msg) { err.textContent = msg; err.classList.add("is-show"); setTimeout(function () { err.classList.remove("is-show"); }, 5000); }
+      var name = this.fullname.value.trim(), phone = this.phone.value.trim(), address = this.address.value;
+      if (!name || !phone || !address) return showError("Vui lòng nhập đầy đủ thông tin giao hàng!");
+      if (!this.querySelector('input[name="payment_method"]:checked')) return showError("Vui lòng chọn phương thức thanh toán!");
+      if (confirm("Bạn có chắc chắn muốn đặt hàng không?")) window.location.href = "chitietdonhang.html";
+    });
+  </script>
+</body>
+</html>

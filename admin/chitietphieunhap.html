@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi tiết phiếu nhập | Lumière Admin (Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="admin" data-logged-in>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="ad-side">
+    <a href="index.html" class="ad-brand">
+      <span class="logo-mark">◇</span>
+      <span><strong>LUMIÈRE</strong><small>TRUNG TÂM ĐIỀU KHIỂN</small></span>
+    </a>
+    <nav class="ad-nav" aria-label="Menu quản trị">
+      <a href="index.html"><span class="ad-ico">▦</span>Tổng quan</a>
+      <a href="user.html"><span class="ad-ico">☺</span>Quản lý khách hàng</a>
+      <a href="order.html"><span class="ad-ico">☰</span>Quản lý đơn hàng</a>
+      <a href="products.html"><span class="ad-ico">◇</span>Quản lý sản phẩm</a>
+      <a href="category.html"><span class="ad-ico">▤</span>Quản lý danh mục</a>
+      <a href="phieunhap.html" class="is-active"><span class="ad-ico">⇩</span>Quản lý nhập hàng</a>
+      <a href="giaban.html"><span class="ad-ico">₫</span>Quản lý giá bán</a>
+      <a href="tonkho.html"><span class="ad-ico">▣</span>Quản lý tồn kho</a>
+    </nav>
+    <a href="login.html" class="ad-logout" data-confirm="Bạn có chắc chắn muốn đăng xuất?" data-redirect="login.html">Đăng xuất</a>
+    <a href="../index.html" class="ad-site-link">← Xem trang khách hàng</a>
+  </aside>
+
+  <!-- ================= NỘI DUNG ================= -->
+  <main class="ad-main">
+    <div class="ad-topbar">
+      <ol class="ad-crumb"><li><a href="index.html">Trang quản trị</a></li><li><a href="phieunhap.html">Quản lý nhập hàng</a></li><li aria-current="page">Phiếu PN001</li></ol>
+      <div class="ad-user"><span class="account-avatar">AD</span> Admin</div>
+    </div>
+
+    <div class="ad-head">
+      <div><h1 class="ad-title">Thông tin phiếu nhập #PN001</h1><p class="ad-sub">Phiếu đã được nhập kho.</p></div>
+      <a href="phieunhap.html" class="ad-btn is-ghost">← Danh sách phiếu</a>
+    </div>
+
+    <section class="ad-card">
+      <h2 class="ad-card-title">Thông tin chung</h2>
+      <dl class="info-grid">
+        <div><dt>Mã phiếu</dt><dd>PN001</dd></div>
+        <div><dt>Ngày nhập</dt><dd>05/08/2026</dd></div>
+        <div><dt>Nhà cung cấp</dt><dd>Xưởng chế tác Lumière</dd></div>
+        <div><dt>Người lập phiếu</dt><dd>Admin</dd></div>
+        <div><dt>Tổng số lượng</dt><dd>32</dd></div>
+        <div><dt>Trạng thái</dt><dd><span class="status status-completed">Đã nhập kho</span></dd></div>
+      </dl>
+    </section>
+
+    <section class="ad-card">
+      <h2 class="ad-card-title">Danh sách sản phẩm nhập</h2>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>STT</th><th>Sản phẩm</th><th class="text-right">Giá nhập</th><th class="text-center">Số lượng</th><th class="text-right">Thành tiền</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1656751681056-a4ebfe7c546e?w=600&h=600&fit=crop&auto=format&q=80" alt="ETERNA – Nhẫn cưới Vàng 14K đá CZ" loading="lazy"></span><div><p class="cell-name">ETERNA – Nhẫn cưới Vàng 14K đá CZ</p><p class="cell-sub">Mã: NC-ETR-003</p></div></div></td><td class="text-right">13.530.000 VNĐ</td><td class="text-center">10</td>
+              <td class="text-right price-text">135.300.000 VNĐ</td></tr>
+            <tr><td>2</td><td><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1554047310-ab6170fc7b10?w=600&h=600&fit=crop&auto=format&q=80" alt="ETERNA – Nhẫn cưới Vàng 14K đá CZ" loading="lazy"></span><div><p class="cell-name">ETERNA – Nhẫn cưới Vàng 14K đá CZ</p><p class="cell-sub">Mã: NC-ETR-004</p></div></div></td><td class="text-right">16.196.000 VNĐ</td><td class="text-center">10</td>
+              <td class="text-right price-text">161.960.000 VNĐ</td></tr>
+            <tr><td>3</td><td><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1499899833954-5ecd9439d17f?w=600&h=600&fit=crop&auto=format&q=80" alt="ARIA – Nhẫn cầu hôn Vàng 14K đá CZ" loading="lazy"></span><div><p class="cell-name">ARIA – Nhẫn cầu hôn Vàng 14K đá CZ</p><p class="cell-sub">Mã: NCH-ARI-001</p></div></div></td><td class="text-right">4.834.000 VNĐ</td><td class="text-center">12</td>
+              <td class="text-right price-text">58.008.000 VNĐ</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <dl class="order-total-box"><div class="is-total"><dt>Tổng giá trị</dt><dd>355.268.000 VNĐ</dd></div></dl>
+    </section>
+  </main>
+
+  <script src="../js/main.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý danh mục | Lumière Admin (Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="admin" data-logged-in>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="ad-side">
+    <a href="index.html" class="ad-brand">
+      <span class="logo-mark">◇</span>
+      <span><strong>LUMIÈRE</strong><small>TRUNG TÂM ĐIỀU KHIỂN</small></span>
+    </a>
+    <nav class="ad-nav" aria-label="Menu quản trị">
+      <a href="index.html"><span class="ad-ico">▦</span>Tổng quan</a>
+      <a href="user.html"><span class="ad-ico">☺</span>Quản lý khách hàng</a>
+      <a href="order.html"><span class="ad-ico">☰</span>Quản lý đơn hàng</a>
+      <a href="products.html"><span class="ad-ico">◇</span>Quản lý sản phẩm</a>
+      <a href="category.html" class="is-active"><span class="ad-ico">▤</span>Quản lý danh mục</a>
+      <a href="phieunhap.html"><span class="ad-ico">⇩</span>Quản lý nhập hàng</a>
+      <a href="giaban.html"><span class="ad-ico">₫</span>Quản lý giá bán</a>
+      <a href="tonkho.html"><span class="ad-ico">▣</span>Quản lý tồn kho</a>
+    </nav>
+    <a href="login.html" class="ad-logout" data-confirm="Bạn có chắc chắn muốn đăng xuất?" data-redirect="login.html">Đăng xuất</a>
+    <a href="../index.html" class="ad-site-link">← Xem trang khách hàng</a>
+  </aside>
+
+  <!-- ================= NỘI DUNG ================= -->
+  <main class="ad-main">
+    <div class="ad-topbar">
+      <ol class="ad-crumb"><li><a href="index.html">Trang quản trị</a></li><li aria-current="page">Quản lý danh mục</li></ol>
+      <div class="ad-user"><span class="account-avatar">AD</span> Admin</div>
+    </div>
+
+    <div class="ad-head">
+      <div><h1 class="ad-title">Quản lý danh mục</h1><p class="ad-sub">Phân loại sản phẩm hiển thị trên website.</p></div>
+      <a href="add-category.html" class="ad-btn">+ Thêm danh mục</a>
+    </div>
+
+    <section class="ad-card">
+      <form class="ad-filter js-filter">
+        <div class="form-group"><label for="c-name">Tìm theo tên danh mục</label><input type="text" id="c-name" placeholder="Nhập tên danh mục"></div>
+        <div class="form-group"><label for="c-desc">Tìm theo mô tả</label><input type="text" id="c-desc" placeholder="Nhập mô tả"></div>
+        <div class="ad-filter-actions"><button type="submit" class="ad-btn">Tìm kiếm</button><button type="reset" class="ad-btn is-ghost">Đặt lại</button></div>
+      </form>
+    </section>
+
+    <section class="ad-card">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>STT</th><th>Tên danh mục</th><th>Mô tả</th><th class="text-center">Số sản phẩm</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td class="cell-name">Nhẫn cưới</td><td>Nhẫn cưới vàng 14K, 18K đính kim cương Lab-grown, Moissanite, CZ – các BST Aurora, Eterna, Halo.</td><td class="text-center">9</td>
+              <td><span class="status status-active">Hiển thị</span></td>
+              <td><div class="ad-actions"><a href="edit-category.html" class="ad-btn is-sm is-info">Sửa</a>
+                <a href="category.html" class="ad-btn is-sm is-danger" data-confirm="Bạn có chắc chắn muốn xóa danh mục &quot;Nhẫn cưới&quot;?" data-success="Đã xóa danh mục thành công!" data-redirect="category.html">Xóa</a></div></td></tr>
+            <tr><td>2</td><td class="cell-name">Nhẫn cầu hôn</td><td>Nhẫn cầu hôn solitaire một viên chủ – BST Aria, Timeless Vow.</td><td class="text-center">2</td>
+              <td><span class="status status-active">Hiển thị</span></td>
+              <td><div class="ad-actions"><a href="edit-category.html" class="ad-btn is-sm is-info">Sửa</a>
+                <a href="category.html" class="ad-btn is-sm is-danger" data-confirm="Bạn có chắc chắn muốn xóa danh mục &quot;Nhẫn cầu hôn&quot;?" data-success="Đã xóa danh mục thành công!" data-redirect="category.html">Xóa</a></div></td></tr>
+            <tr><td>3</td><td class="cell-name">Dây chuyền</td><td>Dây chuyền và mặt dây chuyền vàng, ngọc bích, đá quý.</td><td class="text-center">1</td>
+              <td><span class="status status-active">Hiển thị</span></td>
+              <td><div class="ad-actions"><a href="edit-category.html" class="ad-btn is-sm is-info">Sửa</a>
+                <a href="category.html" class="ad-btn is-sm is-danger" data-confirm="Bạn có chắc chắn muốn xóa danh mục &quot;Dây chuyền&quot;?" data-success="Đã xóa danh mục thành công!" data-redirect="category.html">Xóa</a></div></td></tr>
+            <tr><td>4</td><td class="cell-name">Bông tai</td><td>Bông tai vàng, bạc nhiều kiểu dáng: nụ, tròn, dáng dài.</td><td class="text-center">1</td>
+              <td><span class="status status-active">Hiển thị</span></td>
+              <td><div class="ad-actions"><a href="edit-category.html" class="ad-btn is-sm is-info">Sửa</a>
+                <a href="category.html" class="ad-btn is-sm is-danger" data-confirm="Bạn có chắc chắn muốn xóa danh mục &quot;Bông tai&quot;?" data-success="Đã xóa danh mục thành công!" data-redirect="category.html">Xóa</a></div></td></tr>
+            <tr><td>5</td><td class="cell-name">Trang sức bạc tặng bé</td><td>Trang sức bạc 925 mạ vàng an toàn cho bé – BST Bloom.</td><td class="text-center">1</td>
+              <td><span class="status status-active">Hiển thị</span></td>
+              <td><div class="ad-actions"><a href="edit-category.html" class="ad-btn is-sm is-info">Sửa</a>
+                <a href="category.html" class="ad-btn is-sm is-danger" data-confirm="Bạn có chắc chắn muốn xóa danh mục &quot;Trang sức bạc tặng bé&quot;?" data-success="Đã xóa danh mục thành công!" data-redirect="category.html">Xóa</a></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/main.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>

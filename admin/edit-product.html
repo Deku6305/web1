@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sửa sản phẩm | Lumière Admin (Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="admin" data-logged-in>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="ad-side">
+    <a href="index.html" class="ad-brand">
+      <span class="logo-mark">◇</span>
+      <span><strong>LUMIÈRE</strong><small>TRUNG TÂM ĐIỀU KHIỂN</small></span>
+    </a>
+    <nav class="ad-nav" aria-label="Menu quản trị">
+      <a href="index.html"><span class="ad-ico">▦</span>Tổng quan</a>
+      <a href="user.html"><span class="ad-ico">☺</span>Quản lý khách hàng</a>
+      <a href="order.html"><span class="ad-ico">☰</span>Quản lý đơn hàng</a>
+      <a href="products.html" class="is-active"><span class="ad-ico">◇</span>Quản lý sản phẩm</a>
+      <a href="category.html"><span class="ad-ico">▤</span>Quản lý danh mục</a>
+      <a href="phieunhap.html"><span class="ad-ico">⇩</span>Quản lý nhập hàng</a>
+      <a href="giaban.html"><span class="ad-ico">₫</span>Quản lý giá bán</a>
+      <a href="tonkho.html"><span class="ad-ico">▣</span>Quản lý tồn kho</a>
+    </nav>
+    <a href="login.html" class="ad-logout" data-confirm="Bạn có chắc chắn muốn đăng xuất?" data-redirect="login.html">Đăng xuất</a>
+    <a href="../index.html" class="ad-site-link">← Xem trang khách hàng</a>
+  </aside>
+
+  <!-- ================= NỘI DUNG ================= -->
+  <main class="ad-main">
+    <div class="ad-topbar">
+      <ol class="ad-crumb"><li><a href="index.html">Trang quản trị</a></li><li><a href="products.html">Quản lý sản phẩm</a></li><li aria-current="page">Sửa sản phẩm</li></ol>
+      <div class="ad-user"><span class="account-avatar">AD</span> Admin</div>
+    </div>
+
+    <div class="ad-head">
+      <div><h1 class="ad-title">Sửa sản phẩm</h1><p class="ad-sub">Cập nhật thông tin sản phẩm NC-AUR-001.</p></div>
+      
+    </div>
+
+    <section class="ad-card">
+      <h2 class="ad-card-title">Thông tin sản phẩm</h2>
+      <form class="ad-form" novalidate data-demo data-success="Cập nhật sản phẩm thành công!" data-redirect="products.html">
+        <div class="form-grid">
+          <div class="form-group"><label for="pf-name">Tên sản phẩm <span class="req">*</span></label><input type="text" id="pf-name" value="Nhẫn cưới Vàng 14K Kim cương Lab-grown" placeholder="VD: Nhẫn cưới Vàng 14K đá CZ" required></div>
+          <div class="form-group"><label for="pf-code">Mã sản phẩm <span class="req">*</span></label><input type="text" id="pf-code" value="NC-AUR-001" placeholder="VD: NC-ETR-010" required></div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group"><label for="pf-brand">Bộ sưu tập</label><select id="pf-brand"><option selected>AURORA</option><option>ETERNA</option><option>HALO</option><option>ARIA</option><option>TIMELESS VOW</option><option>THE ORCHID</option><option>BLOOM</option></select></div>
+          <div class="form-group"><label for="pf-cat">Danh mục <span class="req">*</span></label><select id="pf-cat" required><option value="">-- Chọn danh mục --</option><option value="1" selected>Nhẫn cưới</option><option value="2">Nhẫn cầu hôn</option><option value="3">Dây chuyền</option><option value="4">Bông tai</option><option value="5">Trang sức bạc tặng bé</option></select></div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group"><label for="pf-mat">Chất liệu</label><select id="pf-mat"><option selected>Vàng 14K</option><option>Vàng 18K</option><option>Vàng 24K</option><option>Bạc 925</option></select></div>
+          <div class="form-group"><label for="pf-stone">Loại đá</label><select id="pf-stone"><option>Không đá</option><option selected>Kim cương Lab-grown</option><option>Moissanite</option><option>Đá CZ</option><option>Ngọc bích</option></select></div>
+        </div>
+        <div class="form-group"><label for="pf-price">Giá bán (VNĐ) <span class="req">*</span></label><input type="text" id="pf-price" class="js-price" value="9.850.000" placeholder="VD: 9.850.000" required></div>
+        <div class="form-group"><label for="pf-desc">Mô tả sản phẩm</label><textarea id="pf-desc" placeholder="Mô tả chất liệu, kiểu dáng, ưu đãi...">Nhẫn cưới vàng 14K đính kim cương Lab-grown, thiết kế vân trơn tinh tế. Miễn phí khắc tên, bảo hành trọn đời.</textarea></div>
+        <div class="form-group"><label for="pf-image">Hình ảnh sản phẩm</label>
+          <div class="img-preview"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1549048799-bf3b582ee17b?w=600&h=600&fit=crop&auto=format&q=80" alt="AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown" loading="lazy"></span><input type="file" id="pf-image" class="js-image-input" accept="image/*"></div></div>
+        <div class="form-actions">
+          <a href="products.html" class="ad-btn is-ghost">Hủy</a>
+          <button type="submit" class="ad-btn">Lưu thay đổi</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="../js/main.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>

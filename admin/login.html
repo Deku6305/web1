@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập quản trị | Lumière Admin (Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="admin">
+  <main class="ad-login-page">
+    <div class="ad-login-card">
+      <a href="../index.html" class="logo">
+        <span class="logo-mark">◇</span>
+        <span class="logo-text"><strong>LUMIÈRE</strong><small>TALES OF LOVE</small></span>
+      </a>
+      <h1>Đăng nhập trang quản trị</h1>
+      <form class="form-stack" novalidate data-demo data-success="Đăng nhập thành công! Chào mừng Admin." data-redirect="index.html">
+        <div class="form-group">
+          <label for="username">Tên đăng nhập</label>
+          <input type="text" id="username" placeholder="Nhập tên đăng nhập" required autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="password">Mật khẩu</label>
+          <input type="password" id="password" placeholder="Nhập mật khẩu" required autocomplete="off">
+        </div>
+        <button type="submit" class="btn-primary">Đăng nhập</button>
+        <p class="demo-note">Bản demo giao diện – nhập bất kỳ để vào trang quản trị.</p>
+      </form>
+    </div>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

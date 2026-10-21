@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý khách hàng | Lumière Admin (Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="admin" data-logged-in>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="ad-side">
+    <a href="index.html" class="ad-brand">
+      <span class="logo-mark">◇</span>
+      <span><strong>LUMIÈRE</strong><small>TRUNG TÂM ĐIỀU KHIỂN</small></span>
+    </a>
+    <nav class="ad-nav" aria-label="Menu quản trị">
+      <a href="index.html"><span class="ad-ico">▦</span>Tổng quan</a>
+      <a href="user.html" class="is-active"><span class="ad-ico">☺</span>Quản lý khách hàng</a>
+      <a href="order.html"><span class="ad-ico">☰</span>Quản lý đơn hàng</a>
+      <a href="products.html"><span class="ad-ico">◇</span>Quản lý sản phẩm</a>
+      <a href="category.html"><span class="ad-ico">▤</span>Quản lý danh mục</a>
+      <a href="phieunhap.html"><span class="ad-ico">⇩</span>Quản lý nhập hàng</a>
+      <a href="giaban.html"><span class="ad-ico">₫</span>Quản lý giá bán</a>
+      <a href="tonkho.html"><span class="ad-ico">▣</span>Quản lý tồn kho</a>
+    </nav>
+    <a href="login.html" class="ad-logout" data-confirm="Bạn có chắc chắn muốn đăng xuất?" data-redirect="login.html">Đăng xuất</a>
+    <a href="../index.html" class="ad-site-link">← Xem trang khách hàng</a>
+  </aside>
+
+  <!-- ================= NỘI DUNG ================= -->
+  <main class="ad-main">
+    <div class="ad-topbar">
+      <ol class="ad-crumb"><li><a href="index.html">Trang quản trị</a></li><li aria-current="page">Quản lý khách hàng</li></ol>
+      <div class="ad-user"><span class="account-avatar">AD</span> Admin</div>
+    </div>
+
+    <div class="ad-head">
+      <div><h1 class="ad-title">Quản lý khách hàng</h1><p class="ad-sub">Danh sách tài khoản khách hàng đã đăng ký.</p></div>
+      
+    </div>
+
+    <section class="ad-card">
+      <form class="ad-filter js-filter">
+        <div class="form-group"><label for="f-name">Tìm theo họ tên</label><input type="text" id="f-name" placeholder="Nhập họ tên"></div>
+        <div class="form-group"><label for="f-acc">Tìm theo tài khoản</label><input type="text" id="f-acc" placeholder="Số điện thoại"></div>
+        <div class="form-group"><label for="f-status">Trạng thái</label>
+          <select id="f-status"><option value="">Tất cả trạng thái</option><option value="active">Hoạt động</option><option value="locked">Đã khóa</option></select></div>
+        <div class="ad-filter-actions"><button type="submit" class="ad-btn">Tìm kiếm</button><button type="reset" class="ad-btn is-ghost">Đặt lại</button></div>
+      </form>
+    </section>
+
+    <section class="ad-card">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>STT</th><th>Họ tên</th><th>Tài khoản</th><th>Email</th><th>Địa chỉ</th><th class="text-center">Tổng đơn</th><th>Ngày tạo</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td class="cell-name">Nguyễn Văn A</td><td>0901234567</td><td>nguyenvana@example.com</td><td>273 An Dương Vương, TP. HCM</td><td class="text-center">4</td><td>05/01/2026</td>
+              <td><span class="status status-active">Hoạt động</span></td>
+              <td><div class="ad-actions"><a href="edit-user.html" class="ad-btn is-sm is-info">Sửa</a><a href="user.html" class="ad-btn is-sm is-danger" data-confirm="Bạn có chắc chắn muốn khóa tài khoản này?" data-success="Đã khóa tài khoản thành công!" data-redirect="user.html">Khóa</a></div></td></tr>
+            <tr><td>2</td><td class="cell-name">Trần Thị Bích</td><td>0912888321</td><td>bichtran@example.com</td><td>12 Hoa Hồng, Hà Nội</td><td class="text-center">6</td><td>18/01/2026</td>
+              <td><span class="status status-active">Hoạt động</span></td>
+              <td><div class="ad-actions"><a href="edit-user.html" class="ad-btn is-sm is-info">Sửa</a><a href="user.html" class="ad-btn is-sm is-danger" data-confirm="Bạn có chắc chắn muốn khóa tài khoản này?" data-success="Đã khóa tài khoản thành công!" data-redirect="user.html">Khóa</a></div></td></tr>
+            <tr><td>3</td><td class="cell-name">Lê Hoàng Nam</td><td>0938456789</td><td>namle@example.com</td><td>88 Ngọc Lan, Đà Nẵng</td><td class="text-center">3</td><td>02/03/2026</td>
+              <td><span class="status status-active">Hoạt động</span></td>
+              <td><div class="ad-actions"><a href="edit-user.html" class="ad-btn is-sm is-info">Sửa</a><a href="user.html" class="ad-btn is-sm is-danger" data-confirm="Bạn có chắc chắn muốn khóa tài khoản này?" data-success="Đã khóa tài khoản thành công!" data-redirect="user.html">Khóa</a></div></td></tr>
+            <tr><td>4</td><td class="cell-name">Phạm Minh Thư</td><td>0977112233</td><td>thupham@example.com</td><td>25 Bạch Kim, TP. HCM</td><td class="text-center">5</td><td>14/04/2026</td>
+              <td><span class="status status-active">Hoạt động</span></td>
+              <td><div class="ad-actions"><a href="edit-user.html" class="ad-btn is-sm is-info">Sửa</a><a href="user.html" class="ad-btn is-sm is-danger" data-confirm="Bạn có chắc chắn muốn khóa tài khoản này?" data-success="Đã khóa tài khoản thành công!" data-redirect="user.html">Khóa</a></div></td></tr>
+            <tr><td>5</td><td class="cell-name">Võ Quốc Huy</td><td>0868765432</td><td>huyvo@example.com</td><td>7 Ánh Dương, Cần Thơ</td><td class="text-center">2</td><td>30/06/2026</td>
+              <td><span class="status status-active">Hoạt động</span></td>
+              <td><div class="ad-actions"><a href="edit-user.html" class="ad-btn is-sm is-info">Sửa</a><a href="user.html" class="ad-btn is-sm is-danger" data-confirm="Bạn có chắc chắn muốn khóa tài khoản này?" data-success="Đã khóa tài khoản thành công!" data-redirect="user.html">Khóa</a></div></td></tr>
+            <tr><td>6</td><td class="cell-name">Đặng Thu Hà</td><td>0909555777</td><td>hadang@example.com</td><td>56 Thạch Anh, TP. HCM</td><td class="text-center">0</td><td>09/09/2026</td>
+              <td><span class="status status-locked">Đã khóa</span></td>
+              <td><div class="ad-actions"><a href="edit-user.html" class="ad-btn is-sm is-info">Sửa</a><a href="user.html" class="ad-btn is-sm is-success" data-confirm="Mở khóa tài khoản này?" data-success="Đã mở khóa tài khoản thành công!" data-redirect="user.html">Mở khóa</a></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/main.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>
