@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lịch sử đặt hàng | Lumière Admin (Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="admin" data-logged-in>
+ 
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="ad-side">
+    <a href="index.html" class="ad-brand">
+      <span class="logo-mark">◇</span>
+      <span><strong>LUMIÈRE</strong><small>TRUNG TÂM ĐIỀU KHIỂN</small></span>
+    </a>
+    <nav class="ad-nav" aria-label="Menu quản trị">
+      <a href="index.html"><span class="ad-ico">▦</span>Tổng quan</a>
+      <a href="user.html" class="is-active"><span class="ad-ico">☺</span>Quản lý khách hàng</a>
+      <a href="order.html"><span class="ad-ico">☰</span>Quản lý đơn hàng</a>
+      <a href="products.html"><span class="ad-ico">◇</span>Quản lý sản phẩm</a>
+      <a href="category.html"><span class="ad-ico">▤</span>Quản lý danh mục</a>
+      <a href="phieunhap.html"><span class="ad-ico">⇩</span>Quản lý nhập hàng</a>
+      <a href="giaban.html"><span class="ad-ico">₫</span>Quản lý giá bán</a>
+      <a href="tonkho.html"><span class="ad-ico">▣</span>Quản lý tồn kho</a>
+    </nav>
+    <a href="login.html" class="ad-logout" data-confirm="Bạn có chắc chắn muốn đăng xuất?" data-redirect="login.html">Đăng xuất</a>
+    <a href="../index.html" class="ad-site-link">← Xem trang khách hàng</a>
+  </aside>
+ 
+  <!-- ================= NỘI DUNG ================= -->
+  <main class="ad-main">
+    <div class="ad-topbar">
+      <ol class="ad-crumb"><li><a href="index.html">Trang quản trị</a></li><li><a href="user.html">Quản lý khách hàng</a></li><li aria-current="page">Lịch sử đặt hàng</li></ol>
+      <div class="ad-user"><span class="account-avatar">AD</span> Admin</div>
+    </div>
+ 
+    <div class="ad-head">
+      <div><h1 class="ad-title">Lịch sử đặt hàng</h1><p class="ad-sub">Các đơn hàng của khách hàng Nguyễn Văn A.</p></div>
+      <a href="user.html" class="ad-btn is-ghost">← Danh sách khách hàng</a>
+    </div>
+ 
+    <section class="ad-card">
+      <h2 class="ad-card-title">Thông tin khách hàng</h2>
+      <dl class="info-grid">
+        <div><dt>Họ và tên</dt><dd>Nguyễn Văn A</dd></div>
+        <div><dt>Tài khoản</dt><dd>0901234567</dd></div>
+        <div><dt>Email</dt><dd>nguyenvana@example.com</dd></div>
+        <div><dt>Số điện thoại</dt><dd>0901 234 567</dd></div>
+        <div><dt>Hạng thành viên</dt><dd>Thành viên Vàng</dd></div>
+        <div><dt>Trạng thái</dt><dd><span class="status status-active">Hoạt động</span></dd></div>
+      </dl>
+    </section>
+ 
+    <div class="stat-grid">
+      <div class="stat-card"><span class="stat-ico i2">☰</span><p class="stat-label">Tổng đơn hàng</p><p class="stat-value">4</p></div>
+      <div class="stat-card"><span class="stat-ico i4">₫</span><p class="stat-label">Tổng chi tiêu</p><p class="stat-value">40.008.460 VNĐ</p></div>
+      <div class="stat-card"><span class="stat-ico i1">✓</span><p class="stat-label">Đơn hoàn tất</p><p class="stat-value">1</p></div>
+    </div>
+ 
+    <section class="ad-card">
+      <form class="ad-filter js-filter">
+        <div class="form-group"><label for="uo-from">Từ ngày</label><input type="date" id="uo-from" name="from"></div>
+        <div class="form-group"><label for="uo-to">Đến ngày</label><input type="date" id="uo-to" name="to"></div>
+        <div class="form-group"><label for="uo-status">Tình trạng đơn hàng</label>
+          <select id="uo-status"><option value="">Tất cả trạng thái</option><option value="pending">Đang chờ xử lý</option><option value="processing">Đang xử lý</option><option value="shipping">Đang vận chuyển</option><option value="delivered">Đã giao</option><option value="completed">Hoàn tất</option><option value="cancelled">Đã hủy</option></select></div>
+        <div class="ad-filter-actions"><button type="submit" class="ad-btn">Tìm kiếm</button><button type="reset" class="ad-btn is-ghost">Đặt lại</button></div>
+      </form>
+    </section>
+ 
+    <section class="ad-card">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>STT</th><th>Mã đơn</th><th>Ngày đặt</th><th>Địa chỉ giao hàng</th><th class="text-right">Tổng tiền</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><strong>#DH1025</strong></td><td>21/10/2026</td><td>273 An Dương Vương, TP. HCM</td>
+              <td class="text-right price-text">944.460 VNĐ</td><td><span class="status status-pending">Đang chờ xử lý</span></td>
+              <td><a href="order-detail.html" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>
+            <tr><td>2</td><td><strong>#DH1018</strong></td><td>12/10/2026</td><td>273 An Dương Vương, TP. HCM</td>
+              <td class="text-right price-text">9.850.000 VNĐ</td><td><span class="status status-shipping">Đang vận chuyển</span></td>
+              <td><a href="order-detail.html" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>
+            <tr><td>3</td><td><strong>#DH0987</strong></td><td>28/09/2026</td><td>273 An Dương Vương, TP. HCM</td>
+              <td class="text-right price-text">12.302.000 VNĐ</td><td><span class="status status-completed">Hoàn tất</span></td>
+              <td><a href="order-detail.html" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>
+            <tr><td>4</td><td><strong>#DH0942</strong></td><td>15/09/2026</td><td>273 An Dương Vương, TP. HCM</td>
+              <td class="text-right price-text">16.912.000 VNĐ</td><td><span class="status status-cancelled">Đã hủy</span></td>
+              <td><a href="order-detail.html" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+ 
+  <script src="../js/main.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>
