@@ -39,17 +39,17 @@
     </div>
 
     <div class="ad-head">
-      <div><h1 class="ad-title">Quản lý đơn hàng</h1><p class="ad-sub">Tra cứu và cập nhật tình trạng đơn hàng.</p></div>
+      <div><h1 class="ad-title">Quản lý đơn hàng</h1><p class="ad-sub" id="page-sub">Tra cứu và cập nhật tình trạng đơn hàng.</p></div>
       
     </div>
 
     <section class="ad-card">
       <h2 class="ad-card-title">Tra cứu đơn hàng</h2>
-      <form class="ad-filter js-filter">
+      <form class="ad-filter" id="order-filter">
         <div class="form-group"><label for="from-date">Từ ngày</label><input type="date" id="from-date" name="from"></div>
         <div class="form-group"><label for="to-date">Đến ngày</label><input type="date" id="to-date" name="to"></div>
         <div class="form-group"><label for="order-status">Tình trạng đơn hàng</label>
-          <select id="order-status"><option value="">Tất cả trạng thái</option><option value="pending">Đang chờ xử lý</option><option value="processing">Đang xử lý</option><option value="shipping">Đang vận chuyển</option><option value="delivered">Đã giao</option><option value="completed">Hoàn tất</option><option value="cancelled">Đã hủy</option></select></div>
+          <select id="order-status" name="status"><option value="">Tất cả trạng thái</option><option value="pending">Đang chờ xử lý</option><option value="processing">Đang xử lý</option><option value="shipping">Đang vận chuyển</option><option value="delivered">Đã giao</option><option value="completed">Hoàn tất</option><option value="cancelled">Đã hủy</option></select></div>
         <div class="ad-filter-actions"><button type="submit" class="ad-btn">Tìm kiếm</button><button type="reset" class="ad-btn is-ghost">Đặt lại</button></div>
       </form>
     </section>
@@ -58,31 +58,15 @@
       <div class="table-wrap">
         <table class="data-table">
           <thead><tr><th>STT</th><th>Mã đơn</th><th>Khách hàng</th><th>Địa chỉ</th><th>Số điện thoại</th><th>Ngày đặt</th><th class="text-right">Tổng tiền</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
-          <tbody>
-            <tr><td>1</td><td><strong>#DH1025</strong></td><td class="cell-name">Nguyễn Văn A</td><td>273 An Dương Vương, TP. HCM</td><td>0901 234 567</td><td>21/10/2026</td>
-              <td class="text-right price-text">944.460 VNĐ</td><td><span class="status status-pending">Đang chờ xử lý</span></td>
-              <td><a href="order-detail.html" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>
-            <tr><td>2</td><td><strong>#DH1024</strong></td><td class="cell-name">Trần Thị Bích</td><td>12 Hoa Hồng, Hà Nội</td><td>0912 888 321</td><td>20/10/2026</td>
-              <td class="text-right price-text">18.560.000 VNĐ</td><td><span class="status status-processing">Đang xử lý</span></td>
-              <td><a href="order-detail.html" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>
-            <tr><td>3</td><td><strong>#DH1018</strong></td><td class="cell-name">Nguyễn Văn A</td><td>273 An Dương Vương, TP. HCM</td><td>0901 234 567</td><td>12/10/2026</td>
-              <td class="text-right price-text">9.850.000 VNĐ</td><td><span class="status status-shipping">Đang vận chuyển</span></td>
-              <td><a href="order-detail.html" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>
-            <tr><td>4</td><td><strong>#DH1009</strong></td><td class="cell-name">Lê Hoàng Nam</td><td>88 Ngọc Lan, Đà Nẵng</td><td>0938 456 789</td><td>05/10/2026</td>
-              <td class="text-right price-text">31.469.000 VNĐ</td><td><span class="status status-delivered">Đã giao</span></td>
-              <td><a href="order-detail.html" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>
-            <tr><td>5</td><td><strong>#DH0987</strong></td><td class="cell-name">Nguyễn Văn A</td><td>273 An Dương Vương, TP. HCM</td><td>0901 234 567</td><td>28/09/2026</td>
-              <td class="text-right price-text">12.302.000 VNĐ</td><td><span class="status status-completed">Hoàn tất</span></td>
-              <td><a href="order-detail.html" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>
-            <tr><td>6</td><td><strong>#DH0942</strong></td><td class="cell-name">Nguyễn Văn A</td><td>273 An Dương Vương, TP. HCM</td><td>0901 234 567</td><td>15/09/2026</td>
-              <td class="text-right price-text">16.912.000 VNĐ</td><td><span class="status status-cancelled">Đã hủy</span></td>
-              <td><a href="order-detail.html" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>
+          <tbody id="order-rows">
+
           </tbody>
         </table>
       </div>
     </section>
   </main>
 
+  <script src="../js/data.js"></script>
   <script src="../js/main.js"></script>
   <script src="assets/admin.js"></script>
 </body>

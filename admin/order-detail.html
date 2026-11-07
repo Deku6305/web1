@@ -39,24 +39,18 @@
     </div>
 
     <div class="ad-head">
-      <div><h1 class="ad-title">Thông tin đơn hàng #DH1025</h1><p class="ad-sub">Đặt ngày 21/10/2026 · Thanh toán qua Ví MoMo</p></div>
+      <div><h1 class="ad-title" id="page-title">Thông tin đơn hàng</h1><p class="ad-sub" id="page-sub"></p></div>
       <a href="order.html" class="ad-btn is-ghost">← Danh sách đơn</a>
     </div>
 
     <div class="chart-grid">
       <section class="ad-card">
         <h2 class="ad-card-title">Thông tin khách hàng</h2>
-        <dl class="info-grid">
-          <div><dt>Họ và tên</dt><dd>Nguyễn Văn A</dd></div>
-          <div><dt>Số điện thoại</dt><dd>0901 234 567</dd></div>
-          <div><dt>Email</dt><dd>nguyenvana@example.com</dd></div>
-          <div><dt>Hạng thành viên</dt><dd>Thành viên Vàng</dd></div>
-          <div style="grid-column:1/-1;"><dt>Địa chỉ giao hàng</dt><dd>273 An Dương Vương, Phường Chợ Quán, TP. Hồ Chí Minh</dd></div>
-        </dl>
+        <dl class="info-grid" id="od-customer"></dl>
       </section>
       <section class="ad-card">
         <h2 class="ad-card-title">Cập nhật trạng thái</h2>
-        <p style="margin-bottom:12px;">Trạng thái hiện tại: <span class="status status-pending">Đang chờ xử lý</span></p>
+        <p style="margin-bottom:12px;">Trạng thái hiện tại: <span class="status" id="od-status"></span></p>
         <div class="form-group">
           <label for="statusSelect">Chọn trạng thái mới</label>
           <select id="statusSelect"><option value="">-- Chọn trạng thái --</option><option value="pending">Đang chờ xử lý</option><option value="processing">Đang xử lý</option><option value="shipping">Đang vận chuyển</option><option value="delivered">Đã giao</option><option value="completed">Hoàn tất</option><option value="cancelled">Đã hủy</option></select>
@@ -70,23 +64,16 @@
       <div class="table-wrap">
         <table class="data-table">
           <thead><tr><th>STT</th><th>Mã sản phẩm</th><th>Sản phẩm</th><th class="text-center">Số lượng</th><th class="text-right">Đơn giá</th><th class="text-right">Thành tiền</th></tr></thead>
-          <tbody>
-            <tr><td>1</td><td>DC-BLM-007</td><td><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1708222169717-8251cfdfa608?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Dây chuyền bạc 925 mạ vàng" loading="lazy"></span><div><p class="cell-name">BLOOM – Dây chuyền bạc 925 mạ vàng</p><p class="cell-sub">Trang sức bạc tặng bé</p></div></div></td><td class="text-center">1</td>
-              <td class="text-right">541.080 VNĐ</td><td class="text-right price-text">541.080 VNĐ</td></tr>
-            <tr><td>2</td><td>BT-BLM-007</td><td><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1713004539634-a6694a83f3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Bông tai bạc 925 mạ vàng" loading="lazy"></span><div><p class="cell-name">BLOOM – Bông tai bạc 925 mạ vàng</p><p class="cell-sub">Bông tai</p></div></div></td><td class="text-center">1</td>
-              <td class="text-right">403.380 VNĐ</td><td class="text-right price-text">403.380 VNĐ</td></tr>
+          <tbody id="od-items">
+
           </tbody>
         </table>
       </div>
-      <dl class="order-total-box">
-        <div><dt>Tạm tính</dt><dd>1.049.400 VNĐ</dd></div>
-        <div><dt>Giảm giá</dt><dd class="is-discount">-104.940 VNĐ</dd></div>
-        <div><dt>Phí vận chuyển</dt><dd>Miễn phí</dd></div>
-        <div class="is-total"><dt>Tổng cộng</dt><dd>944.460 VNĐ</dd></div>
-      </dl>
+      <dl class="order-total-box" id="od-totals"></dl>
     </section>
   </main>
 
+  <script src="../js/data.js"></script>
   <script src="../js/main.js"></script>
   <script src="assets/admin.js"></script>
 </body>

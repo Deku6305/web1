@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bạc 925 mạ vàng – BLOOM | Lumière Jewelry (Demo)</title>
+  <title>Chi tiết sản phẩm | Lumière Jewelry (Demo)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
@@ -61,22 +61,13 @@
         <li class="nav-item"><a href="about.html">Về chúng tôi</a></li>
         <li class="nav-item"><a href="collection.html">Quà tặng 20.10</a></li>
         <li class="nav-item has-dropdown">
-          <a href="all-products.html">Bộ sưu tập</a>
-          <ul class="dropdown">
-            <li><a href="all-products.html">Aurora</a></li>
-            <li><a href="all-products.html">Eterna</a></li>
-            <li><a href="all-products.html">Halo</a></li>
-            <li><a href="collection.html">Bloom</a></li>
-            <li><a href="proposal.html">Timeless Vow</a></li>
-          </ul>
-        </li>
-        <li class="nav-item has-dropdown">
           <a href="all-products.html">Sản phẩm</a>
           <ul class="dropdown">
-            <li><a href="index.html#catalog">Nhẫn cưới</a></li>
+            <li><a href="all-products.html">Tất cả sản phẩm</a></li>
+            <li><a href="nhan-cuoi.html">Nhẫn cưới</a></li>
             <li><a href="proposal.html">Nhẫn cầu hôn</a></li>
-            <li><a href="all-products.html">Dây chuyền</a></li>
-            <li><a href="all-products.html">Bông tai</a></li>
+            <li><a href="day-chuyen.html">Dây chuyền</a></li>
+            <li><a href="bong-tai.html">Bông tai</a></li>
             <li><a href="collection.html">Trang sức bạc tặng bé</a></li>
           </ul>
         </li>
@@ -103,14 +94,7 @@
   <main class="product-page">
 
     <!-- Breadcrumb -->
-    <nav class="breadcrumb container" aria-label="Breadcrumb">
-      <ol>
-        <li><a href="index.html" aria-label="Trang chủ">⌂</a></li>
-        <li><a href="all-products.html">Trang sức</a></li>
-        <li><a href="collection.html">Trang sức bạc</a></li>
-        <li aria-current="page">Bạc 925 mạ vàng</li>
-      </ol>
-    </nav>
+    <nav class="breadcrumb container" aria-label="Thanh định vị"><ol id="pd-crumb"></ol></nav>
 
     <!-- Khối chính: gallery + thông tin mua hàng -->
     <section class="product-detail container">
@@ -119,42 +103,32 @@
       <div class="product-gallery">
         <div class="gallery-stage">
           <input type="radio" name="gallery" id="img-1" class="gallery-radio" checked>
-          <div class="gallery-main slide-1"><img class="prod-img" src="https://images.unsplash.com/photo-1708222169717-8251cfdfa608?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Bạc 925 mạ vàng" loading="lazy"></div>
+          <div class="gallery-main slide-1"><img class="prod-img" id="pd-img-1" alt=""></div>
           <input type="radio" name="gallery" id="img-2" class="gallery-radio">
-          <div class="gallery-main slide-2"><img class="prod-img" src="https://images.unsplash.com/photo-1713004539634-a6694a83f3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Bạc 925 mạ vàng" loading="lazy"></div>
+          <div class="gallery-main slide-2"><img class="prod-img" id="pd-img-2" alt=""></div>
           <input type="radio" name="gallery" id="img-3" class="gallery-radio">
-          <div class="gallery-main slide-3"><img class="prod-img" src="https://images.unsplash.com/photo-1765464281313-b3844388b316?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Bạc 925 mạ vàng" loading="lazy"></div>
+          <div class="gallery-main slide-3"><img class="prod-img" id="pd-img-3" alt=""></div>
           <input type="radio" name="gallery" id="img-4" class="gallery-radio">
-          <div class="gallery-main slide-4"><img class="prod-img" src="https://images.unsplash.com/photo-1714733831162-0a6e849141be?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Bạc 925 mạ vàng" loading="lazy"></div>
+          <div class="gallery-main slide-4"><img class="prod-img" id="pd-img-4" alt=""></div>
           <button type="button" class="wish-btn" aria-label="Thêm vào yêu thích">♡</button>
         </div>
         <div class="gallery-thumbs">
-          <label for="img-1" class="gallery-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1708222169717-8251cfdfa608?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Bạc 925 mạ vàng" loading="lazy"></label>
-          <label for="img-2" class="gallery-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1713004539634-a6694a83f3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Bạc 925 mạ vàng" loading="lazy"></label>
-          <label for="img-3" class="gallery-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1765464281313-b3844388b316?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Bạc 925 mạ vàng" loading="lazy"></label>
-          <label for="img-4" class="gallery-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1714733831162-0a6e849141be?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Bạc 925 mạ vàng" loading="lazy"></label>
+          <label for="img-1" class="gallery-thumb"><img class="prod-img" id="pd-thumb-1" alt=""></label>
+          <label for="img-2" class="gallery-thumb"><img class="prod-img" id="pd-thumb-2" alt=""></label>
+          <label for="img-3" class="gallery-thumb"><img class="prod-img" id="pd-thumb-3" alt=""></label>
+          <label for="img-4" class="gallery-thumb"><img class="prod-img" id="pd-thumb-4" alt=""></label>
         </div>
       </div>
 
       <!-- Thông tin + hành động -->
       <div class="product-summary">
-        <p class="summary-brand">BLOOM</p>
-        <h1 class="summary-title">Bạc 925 mạ vàng</h1>
-        <p class="summary-sku">Mã sản phẩm: <span>BLM-007</span></p>
+        <h1 class="summary-title" id="pd-name"></h1>
+        <p class="summary-sku">Mã sản phẩm: <span id="pd-code"></span></p>
 
         <div class="summary-price">
-          <span class="price-now">1.049.400 VNĐ</span>
-          <del class="price-old">1.166.000 VNĐ</del>
-          <span class="price-off">-10%</span>
-        </div>
-
-        <!-- Biến thể -->
-        <div class="variant-group">
-          <span class="variant-label">Sản phẩm</span>
-          <input type="radio" name="variant" id="v1" class="variant-radio" checked>
-          <label for="v1" class="variant-chip">Dây chuyền</label>
-          <input type="radio" name="variant" id="v2" class="variant-radio">
-          <label for="v2" class="variant-chip">Bông tai</label>
+          <span class="price-now" id="pd-price"></span>
+          <del class="price-old" id="pd-old"></del>
+          <span class="price-off" id="pd-off"></span>
         </div>
 
         <!-- Số lượng -->
@@ -170,7 +144,7 @@
             MUA NGAY
             <small>(Giao nhanh từ 2 giờ hoặc nhận tại cửa hàng)</small>
           </a>
-          <a href="#choose-modal" class="btn-cart" aria-label="Thêm vào giỏ">
+          <a href="cart.html" class="btn-cart js-add-cart" aria-label="Thêm vào giỏ">
             <svg viewBox="0 0 24 24"><path d="M7 7V6a5 5 0 0 1 10 0v1h3l-1 14H5L4 7h3zm2 0h6V6a3 3 0 0 0-6 0v1z"/></svg>
             <span>Thêm vào giỏ</span>
           </a>
@@ -208,11 +182,13 @@
       <div class="ptab-panel panel-1">
         <table class="spec-table">
           <tbody>
-            <tr><th>Mã sản phẩm</th><td>BLM-007</td></tr>
-            <tr><th>Chất liệu</th><td>Bạc 925 mạ vàng</td></tr>
-            <tr><th>Trọng lượng tham khảo</th><td>≈ 1.20 gram</td></tr>
-            <tr><th>Nhà sản xuất</th><td>Xưởng chế tác mẫu (Demo)</td></tr>
-            <tr><th>Địa chỉ</th><td>123 Đường Mẫu, TP. Hồ Chí Minh</td></tr>
+            <tr><th>Mã sản phẩm</th><td id="pd-spec-code"></td></tr>
+            <tr><th>Danh mục</th><td id="pd-spec-cat"></td></tr>
+            <tr><th>Chất liệu</th><td id="pd-spec-material"></td></tr>
+            <tr><th>Loại đá</th><td id="pd-spec-stone"></td></tr>
+            <tr><th>Trọng lượng tham khảo</th><td id="pd-spec-weight"></td></tr>
+            <tr><th>Nhà sản xuất</th><td id="pd-spec-maker"></td></tr>
+            <tr><th>Địa chỉ</th><td id="pd-spec-address"></td></tr>
           </tbody>
         </table>
       </div>
@@ -227,103 +203,13 @@
     <!-- Sản phẩm tương tự (cuộn ngang) -->
     <section class="related container">
       <h2 class="section-title">Sản phẩm tương tự</h2>
-      <div class="related-track">
-          <article class="product-card kid-card">
-            <a href="product.html" class="product-thumb kid-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1713004539634-a6694a83f3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="Bạc 925 mạ vàng" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">BLOOM</p>
-              <h3 class="product-name"><a href="product.html">Bạc 925 mạ vàng</a></h3>
-              <p class="price-wrap"><span class="product-price">1.262.000 VNĐ</span></p>
-            </div>
-          </article>
-          <article class="product-card kid-card">
-            <a href="product.html" class="product-thumb kid-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1765464281313-b3844388b316?w=600&h=600&fit=crop&auto=format&q=80" alt="Bạc 925 mạ vàng" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">BLOOM</p>
-              <h3 class="product-name"><a href="product.html">Bạc 925 mạ vàng</a></h3>
-              <p class="price-wrap"><span class="product-price">1.303.000 VNĐ</span></p>
-            </div>
-          </article>
-          <article class="product-card kid-card">
-            <a href="product.html" class="product-thumb kid-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1714733831162-0a6e849141be?w=600&h=600&fit=crop&auto=format&q=80" alt="Bạc 925 mạ vàng" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">BLOOM</p>
-              <h3 class="product-name"><a href="product.html">Bạc 925 mạ vàng</a></h3>
-              <p class="price-wrap"><span class="product-price">1.747.000 VNĐ</span></p>
-            </div>
-          </article>
-          <article class="product-card kid-card">
-            <a href="product.html" class="product-thumb kid-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1693212793204-bcea856c75fe?w=600&h=600&fit=crop&auto=format&q=80" alt="Bạc 925 mạ vàng" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">BLOOM</p>
-              <h3 class="product-name"><a href="product.html">Bạc 925 mạ vàng</a></h3>
-              <p class="price-wrap"><span class="product-price">1.154.000 VNĐ</span></p>
-            </div>
-          </article>
-          <article class="product-card kid-card">
-            <a href="product.html" class="product-thumb kid-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1665159882686-3d4fc7b036a4?w=600&h=600&fit=crop&auto=format&q=80" alt="Bạc 925 mạ vàng" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">BLOOM</p>
-              <h3 class="product-name"><a href="product.html">Bạc 925 mạ vàng</a></h3>
-              <p class="price-wrap"><span class="product-price">1.161.000 VNĐ</span></p>
-            </div>
-          </article>
-          <article class="product-card kid-card">
-            <a href="product.html" class="product-thumb kid-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1665159882377-385d68d2bdff?w=600&h=600&fit=crop&auto=format&q=80" alt="Bạc 925 mạ vàng" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">BLOOM</p>
-              <h3 class="product-name"><a href="product.html">Bạc 925 mạ vàng</a></h3>
-              <p class="price-wrap"><span class="product-price">1.166.000 VNĐ</span></p>
-            </div>
-          </article>
-          <article class="product-card kid-card">
-            <a href="product.html" class="product-thumb kid-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?w=600&h=600&fit=crop&auto=format&q=80" alt="Bạc 925 mạ vàng" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">BLOOM</p>
-              <h3 class="product-name"><a href="product.html">Bạc 925 mạ vàng</a></h3>
-              <p class="price-wrap"><span class="product-price">1.322.000 VNĐ</span></p>
-            </div>
-          </article>
-          <article class="product-card kid-card">
-            <a href="product.html" class="product-thumb kid-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1652949715051-323fed65576a?w=600&h=600&fit=crop&auto=format&q=80" alt="Bạc 925 mạ vàng" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">BLOOM</p>
-              <h3 class="product-name"><a href="product.html">Bạc 925 mạ vàng</a></h3>
-              <p class="price-wrap"><span class="product-price">1.485.000 VNĐ</span></p>
-            </div>
-          </article>
-          <article class="product-card kid-card">
-            <a href="product.html" class="product-thumb kid-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1713004539634-a6694a83f3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="Bạc 925 mạ vàng" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">BLOOM</p>
-              <h3 class="product-name"><a href="product.html">Bạc 925 mạ vàng</a></h3>
-              <p class="price-wrap"><span class="product-price">1.261.000 VNĐ</span></p>
-            </div>
-          </article>
-          <article class="product-card kid-card">
-            <a href="product.html" class="product-thumb kid-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1765464281313-b3844388b316?w=600&h=600&fit=crop&auto=format&q=80" alt="Bạc 925 mạ vàng" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">BLOOM</p>
-              <h3 class="product-name"><a href="product.html">Bạc 925 mạ vàng</a></h3>
-              <p class="price-wrap"><span class="product-price">1.095.000 VNĐ</span></p>
-            </div>
-          </article>
-      </div>
+      <div class="related-track" id="pd-related"></div>
     </section>
 
     <!-- Đã xem gần đây -->
-    <section class="recent container">
-      <h2 class="section-title">Đã xem gần đây</h2>
-      <div class="recent-grid">
-          <article class="product-card">
-            <a href="index.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1766963026693-e73b058176dd?w=600&h=600&fit=crop&auto=format&q=80" alt="AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">AURORA</p>
-              <h3 class="product-name"><a href="index.html">Nhẫn cưới Vàng 14K Kim cương Lab-grown</a></h3>
-              <p class="product-price">10.115.000 VNĐ</p>
-            </div>
-          </article>
-      </div>
+    <section class="related container">
+      <h2 class="section-title">Có thể bạn cũng thích</h2>
+      <div class="related-track" id="pd-more"></div>
     </section>
   </main>
 
@@ -403,29 +289,11 @@
       <div class="modal-body">
         <label class="pick-item">
           <input type="checkbox" class="pick-check" checked>
-          <span class="pick-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1708222169717-8251cfdfa608?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Dây chuyền bạc 925 mạ vàng" loading="lazy"></span>
+          <span class="pick-thumb"><img class="prod-img" id="pd-pick-img" alt=""></span>
           <span class="pick-info">
-            <span class="pick-brand">BLOOM</span>
-            <span class="pick-name">Bạc 925 mạ vàng</span>
-            <span class="pick-sku">Mã sản phẩm: DC-BLM-007</span>
-            <span class="pick-price">
-              <span class="price-now">541.080 VNĐ</span>
-              <del class="price-old">601.200 VNĐ</del>
-            </span>
-          </span>
-        </label>
-
-        <label class="pick-item">
-          <input type="checkbox" class="pick-check" checked>
-          <span class="pick-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1713004539634-a6694a83f3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="BLOOM – Bông tai bạc 925 mạ vàng" loading="lazy"></span>
-          <span class="pick-info">
-            <span class="pick-brand">BLOOM</span>
-            <span class="pick-name">Bạc 925 mạ vàng</span>
-            <span class="pick-sku">Mã sản phẩm: BT-BLM-007</span>
-            <span class="pick-price">
-              <span class="price-now">403.380 VNĐ</span>
-              <del class="price-old">448.200 VNĐ</del>
-            </span>
+            <span class="pick-name" id="pd-pick-name"></span>
+            <span class="pick-sku">Mã sản phẩm: <span id="pd-pick-code"></span></span>
+            <span class="pick-price"><span class="price-now" id="pd-pick-price"></span></span>
           </span>
         </label>
       </div>
@@ -436,6 +304,8 @@
     </div>
   </div>
 
+  <script src="js/data.js"></script>
+  <script src="js/product-detail.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

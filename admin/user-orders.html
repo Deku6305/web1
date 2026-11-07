@@ -39,34 +39,27 @@
     </div>
  
     <div class="ad-head">
-      <div><h1 class="ad-title">Lịch sử đặt hàng</h1><p class="ad-sub">Các đơn hàng của khách hàng Nguyễn Văn A.</p></div>
+      <div><h1 class="ad-title">Lịch sử đặt hàng</h1><p class="ad-sub" id="page-sub">Các đơn hàng của khách hàng Nguyễn Văn A.</p></div>
       <a href="user.html" class="ad-btn is-ghost">← Danh sách khách hàng</a>
     </div>
  
     <section class="ad-card">
       <h2 class="ad-card-title">Thông tin khách hàng</h2>
-      <dl class="info-grid">
-        <div><dt>Họ và tên</dt><dd>Nguyễn Văn A</dd></div>
-        <div><dt>Tài khoản</dt><dd>0901234567</dd></div>
-        <div><dt>Email</dt><dd>nguyenvana@example.com</dd></div>
-        <div><dt>Số điện thoại</dt><dd>0901 234 567</dd></div>
-        <div><dt>Hạng thành viên</dt><dd>Thành viên Vàng</dd></div>
-        <div><dt>Trạng thái</dt><dd><span class="status status-active">Hoạt động</span></dd></div>
-      </dl>
+      <dl class="info-grid" id="uo-info"></dl>
     </section>
  
-    <div class="stat-grid">
-      <div class="stat-card"><span class="stat-ico i2">☰</span><p class="stat-label">Tổng đơn hàng</p><p class="stat-value">4</p></div>
-      <div class="stat-card"><span class="stat-ico i4">₫</span><p class="stat-label">Tổng chi tiêu</p><p class="stat-value">40.008.460 VNĐ</p></div>
-      <div class="stat-card"><span class="stat-ico i1">✓</span><p class="stat-label">Đơn hoàn tất</p><p class="stat-value">1</p></div>
+    <div class="stat-grid is-three">
+      <div class="stat-card"><span class="stat-ico i2">☰</span><p class="stat-label">Tổng đơn hàng</p><p class="stat-value" id="uo-count">0</p></div>
+      <div class="stat-card"><span class="stat-ico i4">₫</span><p class="stat-label">Tổng chi tiêu (không tính đơn hủy)</p><p class="stat-value" id="uo-spent">0</p></div>
+      <div class="stat-card"><span class="stat-ico i1">✓</span><p class="stat-label">Đơn hoàn tất</p><p class="stat-value" id="uo-done">0</p></div>
     </div>
- 
+
     <section class="ad-card">
-      <form class="ad-filter js-filter">
+      <form class="ad-filter" id="user-order-filter">
         <div class="form-group"><label for="uo-from">Từ ngày</label><input type="date" id="uo-from" name="from"></div>
         <div class="form-group"><label for="uo-to">Đến ngày</label><input type="date" id="uo-to" name="to"></div>
         <div class="form-group"><label for="uo-status">Tình trạng đơn hàng</label>
-          <select id="uo-status"><option value="">Tất cả trạng thái</option><option value="pending">Đang chờ xử lý</option><option value="processing">Đang xử lý</option><option value="shipping">Đang vận chuyển</option><option value="delivered">Đã giao</option><option value="completed">Hoàn tất</option><option value="cancelled">Đã hủy</option></select></div>
+          <select id="uo-status" name="status"><option value="">Tất cả trạng thái</option><option value="pending">Đang chờ xử lý</option><option value="processing">Đang xử lý</option><option value="shipping">Đang vận chuyển</option><option value="delivered">Đã giao</option><option value="completed">Hoàn tất</option><option value="cancelled">Đã hủy</option></select></div>
         <div class="ad-filter-actions"><button type="submit" class="ad-btn">Tìm kiếm</button><button type="reset" class="ad-btn is-ghost">Đặt lại</button></div>
       </form>
     </section>
@@ -75,25 +68,13 @@
       <div class="table-wrap">
         <table class="data-table">
           <thead><tr><th>STT</th><th>Mã đơn</th><th>Ngày đặt</th><th>Địa chỉ giao hàng</th><th class="text-right">Tổng tiền</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
-          <tbody>
-            <tr><td>1</td><td><strong>#DH1025</strong></td><td>21/10/2026</td><td>273 An Dương Vương, TP. HCM</td>
-              <td class="text-right price-text">944.460 VNĐ</td><td><span class="status status-pending">Đang chờ xử lý</span></td>
-              <td><a href="order-detail.html" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>
-            <tr><td>2</td><td><strong>#DH1018</strong></td><td>12/10/2026</td><td>273 An Dương Vương, TP. HCM</td>
-              <td class="text-right price-text">9.850.000 VNĐ</td><td><span class="status status-shipping">Đang vận chuyển</span></td>
-              <td><a href="order-detail.html" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>
-            <tr><td>3</td><td><strong>#DH0987</strong></td><td>28/09/2026</td><td>273 An Dương Vương, TP. HCM</td>
-              <td class="text-right price-text">12.302.000 VNĐ</td><td><span class="status status-completed">Hoàn tất</span></td>
-              <td><a href="order-detail.html" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>
-            <tr><td>4</td><td><strong>#DH0942</strong></td><td>15/09/2026</td><td>273 An Dương Vương, TP. HCM</td>
-              <td class="text-right price-text">16.912.000 VNĐ</td><td><span class="status status-cancelled">Đã hủy</span></td>
-              <td><a href="order-detail.html" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>
-          </tbody>
+          <tbody id="uo-rows"></tbody>
         </table>
       </div>
     </section>
   </main>
  
+  <script src="../js/data.js"></script>
   <script src="../js/main.js"></script>
   <script src="assets/admin.js"></script>
 </body>

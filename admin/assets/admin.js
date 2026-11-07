@@ -132,29 +132,241 @@
     addRow();
   }
 
-  /* ---------- Biểu đồ tổng quan (index.html) ---------- */
-  if (window.Chart && document.getElementById("revenueChart")) {
-    Chart.defaults.font.family = '"Mulish", Arial, sans-serif';
-    new Chart(document.getElementById("revenueChart"), {
-      type: "bar",
-      data: {
-        labels: ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"],
-        datasets: [{
-          label: "Doanh thu (triệu VNĐ)",
-          data: [62, 48, 71, 85, 93, 104, 88, 97, 126, 152, 0, 0],
-          backgroundColor: "#ed8383",
-          borderRadius: 6
-        }]
-      },
-      options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+  /* ============================================================
+     CÁC TRANG HIỂN THỊ THEO DỮ LIỆU CHUNG (js/data.js)
+     ============================================================ */
+  var DATA = window.LUMIERE;
+  var query = new URLSearchParams(window.location.search);
+
+  function byId(id) { return document.getElementById(id); }
+  function money(n) { return vnd(n); }
+  function dateVN(iso) { return iso.split("-").reverse().join("/"); }
+  function findProduct(code) { return DATA.products.filter(function (p) { return p.code === code; })[0]; }
+  function findCustomer(id) { return DATA.customers.filter(function (c) { return c.id === id; })[0]; }
+  function statusBadge(st) { return '<span class="status status-' + st + '">' + DATA.status[st] + "</span>"; }
+  function emptyRow(cols, text) { return '<tr><td colspan="' + cols + '" class="text-center">' + text + "</td></tr>"; }
+  function inRange(order, from, to) { return (!from || order.date >= from) && (!to || order.date <= to); }
+  function validRange(from, to) {
+    if (from && to && from > to) { alert("Ngày bắt đầu không thể lớn hơn ngày kết thúc"); return false; }
+    return true;
+  }
+  function infoRow(label, value, full) {
+    return "<div" + (full ? ' style="grid-column:1/-1;"' : "") + "><dt>" + label + "</dt><dd>" + value + "</dd></div>";
+  }
+  // Bộ lọc từ ngày / đến ngày / trạng thái: gọi lại render khi tìm kiếm hoặc đặt lại
+  function bindOrderFilter(form, render) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (validRange(form.from.value, form.to.value)) render();
     });
-    new Chart(document.getElementById("categoryChart"), {
-      type: "doughnut",
-      data: {
-        labels: ["Nhẫn cưới", "Nhẫn cầu hôn", "Dây chuyền", "Bông tai", "Bạc tặng bé"],
-        datasets: [{ data: [46, 21, 14, 9, 10], backgroundColor: ["#ed8383", "#d9b25a", "#8fb3f0", "#b98ae6", "#7fcf9e"] }]
-      },
-      options: { maintainAspectRatio: false, plugins: { legend: { position: "bottom" } } }
+    form.addEventListener("reset", function () { setTimeout(render, 0); });
+  }
+  function matchesFilter(order, form) {
+    return inRange(order, form.from.value, form.to.value) && (!form.status.value || order.status === form.status.value);
+  }
+
+  /* ---------- Danh sách đơn hàng (order.html) ---------- */
+  var orderForm = byId("order-filter");
+  if (orderForm) {
+    var renderOrders = function () {
+      var rows = DATA.orders.filter(function (o) { return matchesFilter(o, orderForm); });
+      byId("order-rows").innerHTML = rows.length ? rows.map(function (o, i) {
+        var c = findCustomer(o.customer);
+        return "<tr><td>" + (i + 1) + "</td><td><strong>#" + o.id + '</strong></td><td class="cell-name">' + c.name + "</td><td>" + c.address + "</td><td>" + c.phone + "</td><td>" + dateVN(o.date) +
+          '</td><td class="text-right price-text">' + money(o.total) + "</td><td>" + statusBadge(o.status) +
+          '</td><td><a href="order-detail.html?id=' + o.id + '" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>';
+      }).join("") : emptyRow(9, "Không có đơn hàng phù hợp");
+    };
+    bindOrderFilter(orderForm, renderOrders);
+    renderOrders();
+  }
+
+  /* ---------- Chi tiết đơn hàng (order-detail.html?id=) ---------- */
+  if (byId("od-items")) {
+    var order = DATA.orders.filter(function (o) { return o.id === query.get("id"); })[0] || DATA.orders[0];
+    var buyer = findCustomer(order.customer);
+    document.title = "Đơn #" + order.id + " | Lumière Admin (Demo)";
+    byId("page-title").textContent = "Thông tin đơn hàng #" + order.id;
+    byId("page-sub").textContent = "Đặt ngày " + dateVN(order.date) + " · Thanh toán: " + order.pay;
+    byId("od-customer").innerHTML = infoRow("Họ và tên", buyer.name) + infoRow("Số điện thoại", buyer.phone) +
+      infoRow("Email", buyer.email) + infoRow("Hạng thành viên", buyer.tier) + infoRow("Địa chỉ giao hàng", buyer.address, true);
+    byId("od-status").className = "status status-" + order.status;
+    byId("od-status").textContent = DATA.status[order.status];
+    byId("od-items").innerHTML = order.items.map(function (item, i) {
+      var p = findProduct(item.code);
+      var cat = DATA.categories.filter(function (c) { return c.id === p.cat; })[0];
+      return "<tr><td>" + (i + 1) + "</td><td>" + p.code + '</td><td><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="' + p.images[0] + '" alt="' + p.name + '"></span><div><p class="cell-name">' + p.name + '</p><p class="cell-sub">' + cat.name + "</p></div></div></td>" +
+        '<td class="text-center">' + item.qty + '</td><td class="text-right">' + money(item.price) + '</td><td class="text-right price-text">' + money(item.price * item.qty) + "</td></tr>";
+    }).join("");
+    byId("od-totals").innerHTML = "<div><dt>Tạm tính</dt><dd>" + money(order.total + order.discount) + "</dd></div>" +
+      (order.discount ? '<div><dt>Giảm giá</dt><dd class="is-discount">-' + money(order.discount) + "</dd></div>" : "") +
+      "<div><dt>Phí vận chuyển</dt><dd>Miễn phí</dd></div>" +
+      '<div class="is-total"><dt>Tổng cộng</dt><dd>' + money(order.total) + "</dd></div>";
+  }
+
+  /* ---------- Lịch sử đặt hàng của một khách (user-orders.html?user=) ---------- */
+  var userOrderForm = byId("user-order-filter");
+  if (userOrderForm) {
+    var customer = findCustomer(query.get("user")) || DATA.customers[0];
+    byId("page-sub").textContent = "Các đơn hàng của khách hàng " + customer.name + ".";
+    byId("uo-info").innerHTML = infoRow("Họ và tên", customer.name) + infoRow("Tài khoản", customer.id) +
+      infoRow("Email", customer.email) + infoRow("Số điện thoại", customer.phone) + infoRow("Hạng thành viên", customer.tier) +
+      infoRow("Trạng thái", '<span class="status status-' + customer.status + '">' + (customer.status === "locked" ? "Đã khóa" : "Hoạt động") + "</span>");
+    var mine = DATA.orders.filter(function (o) { return o.customer === customer.id; });
+    var renderUserOrders = function () {
+      var rows = mine.filter(function (o) { return matchesFilter(o, userOrderForm); });
+      byId("uo-count").textContent = rows.length;
+      byId("uo-spent").textContent = money(rows.reduce(function (sum, o) { return o.status === "cancelled" ? sum : sum + o.total; }, 0));
+      byId("uo-done").textContent = rows.filter(function (o) { return o.status === "completed"; }).length;
+      byId("uo-rows").innerHTML = rows.length ? rows.map(function (o, i) {
+        return "<tr><td>" + (i + 1) + "</td><td><strong>#" + o.id + "</strong></td><td>" + dateVN(o.date) + "</td><td>" + customer.address +
+          '</td><td class="text-right price-text">' + money(o.total) + "</td><td>" + statusBadge(o.status) +
+          '</td><td><a href="order-detail.html?id=' + o.id + '" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>';
+      }).join("") : emptyRow(7, "Không có đơn hàng phù hợp");
+    };
+    bindOrderFilter(userOrderForm, renderUserOrders);
+    renderUserOrders();
+  }
+
+  /* ---------- Sửa khách hàng (edit-user.html?user=) ---------- */
+  if (byId("u-acc") && DATA) {
+    var editing = findCustomer(query.get("user")) || DATA.customers[0];
+    var sub = document.querySelector(".ad-sub");
+    if (sub) sub.textContent = "Cập nhật thông tin tài khoản " + editing.name + ".";
+    byId("u-name").value = editing.name;
+    byId("u-acc").value = editing.id;
+    byId("u-email").value = editing.email;
+    byId("u-phone").value = editing.phone;
+    byId("u-address").value = editing.address;
+    byId("u-status").value = editing.status;
+  }
+
+  /* ---------- Form sản phẩm: 4 ảnh + thông số giống trang chi tiết ---------- */
+  document.querySelectorAll(".js-image-slot").forEach(function (input) {
+    input.addEventListener("change", function () {
+      if (!input.files.length) return;
+      var preview = byId(input.getAttribute("data-preview"));
+      preview.src = URL.createObjectURL(input.files[0]);
+      preview.hidden = false;
+      preview.nextElementSibling.hidden = true;
     });
+  });
+  if (byId("product-form") && DATA) {
+    var item = DATA.products.filter(function (p) { return p.code === query.get("id"); })[0] || DATA.products[0];
+    byId("page-sub").textContent = "Cập nhật thông tin sản phẩm " + item.code + ".";
+    byId("pf-name").value = item.name;
+    byId("pf-code").value = item.code;
+    byId("pf-cat").value = item.cat;
+    byId("pf-mat").value = item.material;
+    byId("pf-stone").value = item.stone;
+    byId("pf-weight").value = item.weight.toFixed(2);
+    byId("pf-price").value = window.formatNumber(String(item.price));
+    byId("pf-maker").value = item.maker;
+    byId("pf-address").value = item.makerAddress;
+    byId("pf-desc").value = item.desc;
+    item.images.forEach(function (src, i) {
+      var preview = byId("pf-preview-" + (i + 1));
+      preview.src = src;
+      preview.alt = item.name + " – ảnh " + (i + 1);
+      preview.hidden = false;
+      preview.nextElementSibling.hidden = true;
+    });
+  }
+
+  /* ---------- Thống kê tổng quan theo thời gian (index.html) ---------- */
+  var statForm = byId("stat-filter");
+  if (statForm) {
+    var charts = {};
+    var COLORS = ["#ed8383", "#d9b25a", "#8fb3f0", "#b98ae6", "#7fcf9e"];
+
+    var drawChart = function (key, canvasId, config) {
+      if (!window.Chart) return;
+      if (charts[key]) charts[key].destroy();
+      charts[key] = new Chart(byId(canvasId), config);
+    };
+
+    var renderStats = function () {
+      var from = statForm.from.value, to = statForm.to.value;
+      // Doanh thu và thống kê không tính đơn đã hủy
+      var orders = DATA.orders.filter(function (o) { return o.status !== "cancelled" && inRange(o, from, to); });
+      var revenue = orders.reduce(function (sum, o) { return sum + o.total; }, 0);
+      var buyers = {};
+      orders.forEach(function (o) {
+        if (!buyers[o.customer]) buyers[o.customer] = { count: 0, total: 0 };
+        buyers[o.customer].count++;
+        buyers[o.customer].total += o.total;
+      });
+
+      byId("stat-customers").textContent = Object.keys(buyers).length;
+      byId("stat-orders").textContent = orders.length;
+      byId("stat-sold").textContent = orders.reduce(function (sum, o) {
+        return sum + o.items.reduce(function (s, it) { return s + it.qty; }, 0);
+      }, 0);
+      byId("stat-revenue").textContent = money(revenue);
+      byId("stat-note").textContent = "Thống kê từ " + (from ? dateVN(from) : "đầu kỳ") + " đến " + (to ? dateVN(to) : "hiện tại") + " · Không tính đơn đã hủy.";
+
+      // Doanh thu theo tháng trong khoảng đã chọn
+      var months = [], values = [];
+      var startM = from ? Number(from.slice(5, 7)) : 1, endM = to ? Number(to.slice(5, 7)) : 12;
+      if (from && to && from.slice(0, 4) !== to.slice(0, 4)) { startM = 1; endM = 12; }
+      for (var m = startM; m <= endM; m++) {
+        var key = "-" + (m < 10 ? "0" : "") + m + "-";
+        months.push("T" + m);
+        values.push(orders.reduce(function (sum, o) { return o.date.indexOf(key) === 4 ? sum + o.total : sum; }, 0) / 1000000);
+      }
+      drawChart("revenue", "revenueChart", {
+        type: "bar",
+        data: { labels: months, datasets: [{ label: "Doanh thu (triệu VNĐ)", data: values, backgroundColor: "#ed8383", borderRadius: 6 }] },
+        options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+      });
+
+      // Tỷ trọng doanh thu theo danh mục
+      var byCat = DATA.categories.map(function (c) {
+        return orders.reduce(function (sum, o) {
+          return sum + o.items.reduce(function (s, it) { return findProduct(it.code).cat === c.id ? s + it.qty * it.price : s; }, 0);
+        }, 0);
+      });
+      var catTotal = byCat.reduce(function (a, b) { return a + b; }, 0) || 1;
+      drawChart("category", "categoryChart", {
+        type: "doughnut",
+        data: {
+          labels: DATA.categories.map(function (c) { return c.name; }),
+          datasets: [{ data: byCat.map(function (v) { return Math.round(v / catTotal * 1000) / 10; }), backgroundColor: COLORS }]
+        },
+        options: { maintainAspectRatio: false, plugins: { legend: { position: "bottom" } } }
+      });
+
+      // Top 5 khách hàng: nút Xem mở đúng lịch sử đặt hàng của khách đó
+      var top = Object.keys(buyers).sort(function (a, b) { return buyers[b].total - buyers[a].total; }).slice(0, 5);
+      byId("top-customers").innerHTML = top.length ? top.map(function (id, i) {
+        var c = findCustomer(id);
+        return "<tr><td>" + (i + 1) + '</td><td class="cell-name">' + c.name + "</td><td>" + c.email + "</td><td>" + c.phone +
+          '</td><td class="text-center">' + buyers[id].count + '</td><td class="text-right price-text">' + money(buyers[id].total) +
+          '</td><td class="text-center"><a href="user-orders.html?user=' + id + '" class="ad-btn is-sm is-info">Xem</a></td></tr>';
+      }).join("") : emptyRow(7, "Không có dữ liệu trong khoảng thời gian này");
+    };
+
+    var chips = statForm.parentNode.querySelectorAll(".range-chip");
+    var markChip = function () {
+      chips.forEach(function (chip) {
+        chip.classList.toggle("is-active", chip.getAttribute("data-from") === statForm.from.value && chip.getAttribute("data-to") === statForm.to.value);
+      });
+    };
+    chips.forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        statForm.from.value = chip.getAttribute("data-from");
+        statForm.to.value = chip.getAttribute("data-to");
+        markChip();
+        renderStats();
+      });
+    });
+    statForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!validRange(statForm.from.value, statForm.to.value)) return;
+      markChip();
+      renderStats();
+    });
+    statForm.addEventListener("reset", function () { setTimeout(function () { markChip(); renderStats(); }, 0); });
+    renderStats();
   }
 })();

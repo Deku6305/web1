@@ -39,19 +39,34 @@
     </div>
 
     <div class="ad-head">
-      <div><h1 class="ad-title">Xin chào, Admin</h1><p class="ad-sub">Tổng quan hoạt động kinh doanh của Lumière Jewelry tháng 10/2026.</p></div>
+      <div><h1 class="ad-title">Xin chào, Admin</h1><p class="ad-sub" id="page-sub">Tổng quan hoạt động kinh doanh của Lumière Jewelry.</p></div>
       
     </div>
 
+    <section class="ad-card stat-filter-card">
+      <form class="ad-filter" id="stat-filter">
+        <div class="form-group"><label for="stat-from">Từ ngày</label><input type="date" id="stat-from" name="from" value="2026-01-01"></div>
+        <div class="form-group"><label for="stat-to">Đến ngày</label><input type="date" id="stat-to" name="to" value="2026-10-31"></div>
+        <div class="ad-filter-actions"><button type="submit" class="ad-btn">Thống kê</button><button type="reset" class="ad-btn is-ghost">Đặt lại</button></div>
+      </form>
+      <div class="range-chips" aria-label="Chọn nhanh thời gian">
+        <button type="button" class="range-chip" data-from="2026-10-01" data-to="2026-10-31">Tháng 10</button>
+        <button type="button" class="range-chip" data-from="2026-07-01" data-to="2026-09-30">Quý 3</button>
+        <button type="button" class="range-chip" data-from="2026-01-01" data-to="2026-06-30">6 tháng đầu năm</button>
+        <button type="button" class="range-chip is-active" data-from="2026-01-01" data-to="2026-10-31">Từ đầu năm</button>
+      </div>
+      <p class="stat-range-note" id="stat-note"></p>
+    </section>
+
     <div class="stat-grid">
-      <div class="stat-card"><span class="stat-ico i1">☺</span><p class="stat-label">Khách hàng</p><p class="stat-value">128</p><p class="stat-change"><b>+12%</b> so với tháng trước</p></div>
-      <div class="stat-card"><span class="stat-ico i2">☰</span><p class="stat-label">Đơn hàng</p><p class="stat-value">342</p><p class="stat-change"><b>+8%</b> so với tháng trước</p></div>
-      <div class="stat-card"><span class="stat-ico i3">◇</span><p class="stat-label">Sản phẩm</p><p class="stat-value">14</p><p class="stat-change">5 danh mục đang bán</p></div>
-      <div class="stat-card"><span class="stat-ico i4">₫</span><p class="stat-label">Doanh thu năm</p><p class="stat-value">926.000.000 VNĐ</p><p class="stat-change"><b>+21%</b> so với cùng kỳ</p></div>
+      <div class="stat-card"><span class="stat-ico i1">☺</span><p class="stat-label">Khách hàng mua</p><p class="stat-value" id="stat-customers">0</p></div>
+      <div class="stat-card"><span class="stat-ico i2">☰</span><p class="stat-label">Đơn hàng</p><p class="stat-value" id="stat-orders">0</p></div>
+      <div class="stat-card"><span class="stat-ico i3">◇</span><p class="stat-label">Sản phẩm đã bán</p><p class="stat-value" id="stat-sold">0</p></div>
+      <div class="stat-card"><span class="stat-ico i4">₫</span><p class="stat-label">Doanh thu</p><p class="stat-value" id="stat-revenue">0</p></div>
     </div>
 
     <div class="chart-grid">
-      <section class="ad-card"><h2 class="ad-card-title">Doanh thu theo tháng (2026)</h2><div class="chart-box"><canvas id="revenueChart"></canvas></div></section>
+      <section class="ad-card"><h2 class="ad-card-title">Doanh thu theo tháng (triệu VNĐ)</h2><div class="chart-box"><canvas id="revenueChart"></canvas></div></section>
       <section class="ad-card"><h2 class="ad-card-title">Tỷ trọng doanh thu theo danh mục (%)</h2><div class="chart-box"><canvas id="categoryChart"></canvas></div></section>
     </div>
 
@@ -60,23 +75,15 @@
       <div class="table-wrap">
         <table class="data-table">
           <thead><tr><th>STT</th><th>Khách hàng</th><th>Email</th><th>Số điện thoại</th><th class="text-center">Số đơn</th><th class="text-right">Tổng chi tiêu</th><th class="text-center">Chi tiết</th></tr></thead>
-          <tbody>
-            <tr><td>1</td><td class="cell-name">Nguyễn Văn A</td><td>nguyenvana@example.com</td><td>0901 234 567</td><td class="text-center">4</td>
-              <td class="text-right price-text">40.008.460 VNĐ</td><td class="text-center"><a href="user.html" class="ad-btn is-sm is-info">Xem</a></td></tr>
-            <tr><td>2</td><td class="cell-name">Trần Thị Bích</td><td>bichtran@example.com</td><td>0912 888 321</td><td class="text-center">6</td>
-              <td class="text-right price-text">36.540.000 VNĐ</td><td class="text-center"><a href="user.html" class="ad-btn is-sm is-info">Xem</a></td></tr>
-            <tr><td>3</td><td class="cell-name">Lê Hoàng Nam</td><td>namle@example.com</td><td>0938 456 789</td><td class="text-center">3</td>
-              <td class="text-right price-text">31.469.000 VNĐ</td><td class="text-center"><a href="user.html" class="ad-btn is-sm is-info">Xem</a></td></tr>
-            <tr><td>4</td><td class="cell-name">Phạm Minh Thư</td><td>thupham@example.com</td><td>0977 112 233</td><td class="text-center">5</td>
-              <td class="text-right price-text">24.870.000 VNĐ</td><td class="text-center"><a href="user.html" class="ad-btn is-sm is-info">Xem</a></td></tr>
-            <tr><td>5</td><td class="cell-name">Võ Quốc Huy</td><td>huyvo@example.com</td><td>0868 765 432</td><td class="text-center">2</td>
-              <td class="text-right price-text">18.560.000 VNĐ</td><td class="text-center"><a href="user.html" class="ad-btn is-sm is-info">Xem</a></td></tr>
+          <tbody id="top-customers">
+
           </tbody>
         </table>
       </div>
     </section>
   </main>
 
+  <script src="../js/data.js"></script>
   <script src="../js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="assets/admin.js"></script>

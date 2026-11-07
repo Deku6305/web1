@@ -70,22 +70,13 @@
         <li class="nav-item"><a href="about.html">Về chúng tôi</a></li>
         <li class="nav-item"><a href="collection.html">Quà tặng 20.10</a></li>
         <li class="nav-item has-dropdown">
-          <a href="all-products.html">Bộ sưu tập</a>
-          <ul class="dropdown">
-            <li><a href="all-products.html">Aurora</a></li>
-            <li><a href="all-products.html">Eterna</a></li>
-            <li><a href="all-products.html">Halo</a></li>
-            <li><a href="collection.html">Bloom</a></li>
-            <li><a href="proposal.html">Timeless Vow</a></li>
-          </ul>
-        </li>
-        <li class="nav-item has-dropdown">
           <a href="all-products.html">Sản phẩm</a>
           <ul class="dropdown">
-            <li><a href="index2.html#catalog">Nhẫn cưới</a></li>
+            <li><a href="all-products.html">Tất cả sản phẩm</a></li>
+            <li><a href="nhan-cuoi.html">Nhẫn cưới</a></li>
             <li><a href="proposal.html">Nhẫn cầu hôn</a></li>
-            <li><a href="all-products.html">Dây chuyền</a></li>
-            <li><a href="all-products.html">Bông tai</a></li>
+            <li><a href="day-chuyen.html">Dây chuyền</a></li>
+            <li><a href="bong-tai.html">Bông tai</a></li>
             <li><a href="collection.html">Trang sức bạc tặng bé</a></li>
           </ul>
         </li>
@@ -109,63 +100,37 @@
   </header>
 
   <!-- ================= MAIN: CHI TIẾT ĐƠN HÀNG ================= -->
-  <main class="page-wrap container">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+  <main class="page-wrap container" id="order-view">
+    <nav class="breadcrumb" aria-label="Thanh định vị">
       <ol>
-        <li><a href="index2.html" aria-label="Trang chủ">⌂</a></li>
+        <li><a href="index2.html">Trang chủ</a></li>
         <li><a href="lichsumuahang.html">Lịch sử mua hàng</a></li>
-        <li aria-current="page">Đơn hàng #DH1018</li>
+        <li aria-current="page" id="ov-crumb">Đơn hàng</li>
       </ol>
     </nav>
 
     <section class="panel">
       <div class="panel-head">
-        <h1 class="panel-title">Chi tiết đơn hàng #DH1018</h1>
-        <span class="status status-shipping">Đang vận chuyển</span>
+        <h1 class="panel-title" id="ov-title">Chi tiết đơn hàng</h1>
+        <span class="status" id="ov-status"></span>
       </div>
-      <div class="order-track" aria-label="Tiến trình đơn hàng">
-        <div class="track-step is-done"><span class="track-dot">✓</span>Đã đặt hàng<br>12/10/2026</div>
-        <div class="track-step is-done"><span class="track-dot">✓</span>Đã xác nhận<br>12/10/2026</div>
-        <div class="track-step is-done"><span class="track-dot">✓</span>Đang vận chuyển<br>14/10/2026</div>
-        <div class="track-step"><span class="track-dot">4</span>Đã giao hàng<br>Dự kiến 16/10/2026</div>
-      </div>
+      <div class="order-track" id="ov-track" aria-label="Tiến trình đơn hàng"></div>
     </section>
 
     <section class="panel">
       <h2 class="panel-title">Thông tin người nhận</h2>
-      <dl class="info-grid">
-        <div><dt>Họ và tên</dt><dd>Nguyễn Văn A</dd></div>
-        <div><dt>Số điện thoại</dt><dd>0901 234 567</dd></div>
-        <div><dt>Địa chỉ giao hàng</dt><dd>273 An Dương Vương, Phường Chợ Quán, TP. Hồ Chí Minh</dd></div>
-        <div><dt>Phương thức thanh toán</dt><dd>Thanh toán khi nhận hàng (COD)</dd></div>
-        <div><dt>Ngày đặt</dt><dd>12/10/2026</dd></div>
-        <div><dt>Ghi chú</dt><dd>Khắc tên "A &amp; B" bên trong nhẫn</dd></div>
-      </dl>
+      <dl class="info-grid" id="ov-info"></dl>
     </section>
 
     <section class="panel">
       <h2 class="panel-title">Sản phẩm</h2>
       <div class="table-wrap">
-            <table class="data-table">
-              <thead>
-                <tr><th>Sản phẩm</th><th class="text-right">Đơn giá</th><th class="text-center">Số lượng</th><th class="text-right">Thành tiền</th></tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td><div class="cell-product"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1549048799-bf3b582ee17b?w=600&h=600&fit=crop&auto=format&q=80" alt="AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown" loading="lazy"></span><div><p class="cell-name">AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown</p><p class="cell-sub">Mã: NC-AUR-001</p></div></div></td>
-                <td class="text-right">9.850.000 VNĐ</td>
-                <td class="text-center">1</td>
-                <td class="text-right price-text">9.850.000 VNĐ</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-      <dl class="order-total-box">
-            <div><dt>Tạm tính</dt><dd>9.850.000 VNĐ</dd></div>
-            
-            <div><dt>Phí vận chuyển</dt><dd>Miễn phí</dd></div>
-            <div class="is-total"><dt>Tổng cộng</dt><dd>9.850.000 VNĐ</dd></div>
-          </dl>
+        <table class="data-table">
+          <thead><tr><th>Sản phẩm</th><th class="text-right">Đơn giá</th><th class="text-center">Số lượng</th><th class="text-right">Thành tiền</th></tr></thead>
+          <tbody id="ov-items"></tbody>
+        </table>
+      </div>
+      <dl class="order-total-box" id="ov-totals"></dl>
     </section>
 
     <div class="form-actions" style="margin-top:24px;">
@@ -235,6 +200,8 @@
   <!-- Nút nổi góc phải -->
   <a href="contact.html" class="floating-btn" aria-label="Liên hệ">◇</a>
 
+  <script src="js/data.js"></script>
+  <script src="js/order-view.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

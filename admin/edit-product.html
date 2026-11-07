@@ -39,29 +39,54 @@
     </div>
 
     <div class="ad-head">
-      <div><h1 class="ad-title">Sửa sản phẩm</h1><p class="ad-sub">Cập nhật thông tin sản phẩm NC-AUR-001.</p></div>
+      <div><h1 class="ad-title">Sửa sản phẩm</h1><p class="ad-sub" id="page-sub">Cập nhật thông tin sản phẩm.</p></div>
       
     </div>
 
     <section class="ad-card">
       <h2 class="ad-card-title">Thông tin sản phẩm</h2>
-      <form class="ad-form" novalidate data-demo data-success="Cập nhật sản phẩm thành công!" data-redirect="products.html">
+      <form class="ad-form" id="product-form" novalidate data-demo data-success="Cập nhật sản phẩm thành công!" data-redirect="products.html">
         <div class="form-grid">
-          <div class="form-group"><label for="pf-name">Tên sản phẩm <span class="req">*</span></label><input type="text" id="pf-name" value="Nhẫn cưới Vàng 14K Kim cương Lab-grown" placeholder="VD: Nhẫn cưới Vàng 14K đá CZ" required></div>
-          <div class="form-group"><label for="pf-code">Mã sản phẩm <span class="req">*</span></label><input type="text" id="pf-code" value="NC-AUR-001" placeholder="VD: NC-ETR-010" required></div>
+          <div class="form-group"><label for="pf-name">Tên sản phẩm <span class="req">*</span></label><input type="text" id="pf-name" placeholder="VD: Nhẫn cưới Vàng 14K đá CZ" required></div>
+          <div class="form-group"><label for="pf-code">Mã sản phẩm <span class="req">*</span></label><input type="text" id="pf-code" placeholder="VD: NC-010" required></div>
         </div>
         <div class="form-grid">
-          <div class="form-group"><label for="pf-brand">Bộ sưu tập</label><select id="pf-brand"><option selected>AURORA</option><option>ETERNA</option><option>HALO</option><option>ARIA</option><option>TIMELESS VOW</option><option>THE ORCHID</option><option>BLOOM</option></select></div>
-          <div class="form-group"><label for="pf-cat">Danh mục <span class="req">*</span></label><select id="pf-cat" required><option value="">-- Chọn danh mục --</option><option value="1" selected>Nhẫn cưới</option><option value="2">Nhẫn cầu hôn</option><option value="3">Dây chuyền</option><option value="4">Bông tai</option><option value="5">Trang sức bạc tặng bé</option></select></div>
+          <div class="form-group"><label for="pf-cat">Danh mục <span class="req">*</span></label><select id="pf-cat" required><option value="">-- Chọn danh mục --</option><option value="nhan-cuoi">Nhẫn cưới</option><option value="nhan-cau-hon">Nhẫn cầu hôn</option><option value="day-chuyen">Dây chuyền</option><option value="bong-tai">Bông tai</option><option value="bac-tang-be">Trang sức bạc tặng bé</option></select></div>
+          <div class="form-group"><label for="pf-mat">Chất liệu</label><select id="pf-mat"><option>Vàng 14K</option><option>Vàng 18K</option><option>Vàng 24K</option><option>Bạc 925</option></select></div>
         </div>
         <div class="form-grid">
-          <div class="form-group"><label for="pf-mat">Chất liệu</label><select id="pf-mat"><option selected>Vàng 14K</option><option>Vàng 18K</option><option>Vàng 24K</option><option>Bạc 925</option></select></div>
-          <div class="form-group"><label for="pf-stone">Loại đá</label><select id="pf-stone"><option>Không đá</option><option selected>Kim cương Lab-grown</option><option>Moissanite</option><option>Đá CZ</option><option>Ngọc bích</option></select></div>
+          <div class="form-group"><label for="pf-stone">Loại đá</label><select id="pf-stone"><option>Không đá</option><option>Kim cương Lab-grown</option><option>Moissanite</option><option>Đá CZ</option><option>Ngọc bích</option><option>Sapphire</option></select></div>
+          <div class="form-group"><label for="pf-weight">Trọng lượng tham khảo (gram) <span class="req">*</span></label><input type="number" id="pf-weight" min="0" step="0.01" placeholder="VD: 3.20" required></div>
         </div>
-        <div class="form-group"><label for="pf-price">Giá bán (VNĐ) <span class="req">*</span></label><input type="text" id="pf-price" class="js-price" value="9.850.000" placeholder="VD: 9.850.000" required></div>
-        <div class="form-group"><label for="pf-desc">Mô tả sản phẩm</label><textarea id="pf-desc" placeholder="Mô tả chất liệu, kiểu dáng, ưu đãi...">Nhẫn cưới vàng 14K đính kim cương Lab-grown, thiết kế vân trơn tinh tế. Miễn phí khắc tên, bảo hành trọn đời.</textarea></div>
-        <div class="form-group"><label for="pf-image">Hình ảnh sản phẩm</label>
-          <div class="img-preview"><span class="cell-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1549048799-bf3b582ee17b?w=600&h=600&fit=crop&auto=format&q=80" alt="AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown" loading="lazy"></span><input type="file" id="pf-image" class="js-image-input" accept="image/*"></div></div>
+        <div class="form-group"><label for="pf-price">Giá bán (VNĐ) <span class="req">*</span></label><input type="text" id="pf-price" class="js-price" placeholder="VD: 9.850.000" required></div>
+        <div class="form-grid">
+          <div class="form-group"><label for="pf-maker">Nhà sản xuất</label><input type="text" id="pf-maker" value="Xưởng chế tác Lumière (Demo)"></div>
+          <div class="form-group"><label for="pf-address">Địa chỉ</label><input type="text" id="pf-address" value="123 Đường Mẫu, TP. Hồ Chí Minh"></div>
+        </div>
+        <div class="form-group"><label for="pf-desc">Mô tả sản phẩm</label><textarea id="pf-desc" placeholder="Mô tả chất liệu, kiểu dáng, ưu đãi..."></textarea></div>
+        <div class="form-group"><label>Hình ảnh sản phẩm (4 ảnh, giống trang chi tiết)</label>
+        <div class="img-slots">
+          <label class="img-slot" for="pf-image-1">
+            <span class="img-slot-box"><img id="pf-preview-1" alt="" hidden><span class="img-slot-empty">+</span></span>
+            <span class="img-slot-label">Ảnh 1 (ảnh chính)</span>
+            <input type="file" id="pf-image-1" class="js-image-slot visually-hidden" accept="image/*" data-preview="pf-preview-1">
+          </label>
+          <label class="img-slot" for="pf-image-2">
+            <span class="img-slot-box"><img id="pf-preview-2" alt="" hidden><span class="img-slot-empty">+</span></span>
+            <span class="img-slot-label">Ảnh 2</span>
+            <input type="file" id="pf-image-2" class="js-image-slot visually-hidden" accept="image/*" data-preview="pf-preview-2">
+          </label>
+          <label class="img-slot" for="pf-image-3">
+            <span class="img-slot-box"><img id="pf-preview-3" alt="" hidden><span class="img-slot-empty">+</span></span>
+            <span class="img-slot-label">Ảnh 3</span>
+            <input type="file" id="pf-image-3" class="js-image-slot visually-hidden" accept="image/*" data-preview="pf-preview-3">
+          </label>
+          <label class="img-slot" for="pf-image-4">
+            <span class="img-slot-box"><img id="pf-preview-4" alt="" hidden><span class="img-slot-empty">+</span></span>
+            <span class="img-slot-label">Ảnh 4</span>
+            <input type="file" id="pf-image-4" class="js-image-slot visually-hidden" accept="image/*" data-preview="pf-preview-4">
+          </label>
+        </div></div>
         <div class="form-actions">
           <a href="products.html" class="ad-btn is-ghost">Hủy</a>
           <button type="submit" class="ad-btn">Lưu thay đổi</button>
@@ -70,6 +95,7 @@
     </section>
   </main>
 
+  <script src="../js/data.js"></script>
   <script src="../js/main.js"></script>
   <script src="assets/admin.js"></script>
 </body>

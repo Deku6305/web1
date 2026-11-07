@@ -61,22 +61,13 @@
         <li class="nav-item"><a href="about.html">Về chúng tôi</a></li>
         <li class="nav-item"><a href="collection.html">Quà tặng 20.10</a></li>
         <li class="nav-item has-dropdown">
-          <a href="all-products.html">Bộ sưu tập</a>
-          <ul class="dropdown">
-            <li><a href="all-products.html">Aurora</a></li>
-            <li><a href="all-products.html">Eterna</a></li>
-            <li><a href="all-products.html">Halo</a></li>
-            <li><a href="collection.html">Bloom</a></li>
-            <li><a href="proposal.html">Timeless Vow</a></li>
-          </ul>
-        </li>
-        <li class="nav-item has-dropdown">
           <a href="all-products.html">Sản phẩm</a>
           <ul class="dropdown">
-            <li><a href="index.html#catalog">Nhẫn cưới</a></li>
+            <li><a href="all-products.html">Tất cả sản phẩm</a></li>
+            <li><a href="nhan-cuoi.html">Nhẫn cưới</a></li>
             <li><a href="proposal.html">Nhẫn cầu hôn</a></li>
-            <li><a href="all-products.html">Dây chuyền</a></li>
-            <li><a href="all-products.html">Bông tai</a></li>
+            <li><a href="day-chuyen.html">Dây chuyền</a></li>
+            <li><a href="bong-tai.html">Bông tai</a></li>
             <li><a href="collection.html">Trang sức bạc tặng bé</a></li>
           </ul>
         </li>
@@ -100,263 +91,302 @@
   </header>
 
   <!-- ================= MAIN: TẤT CẢ SẢN PHẨM ================= -->
-  <main class="collection-page all-products">
+  <main class="category-page">
+    <nav class="breadcrumb container" aria-label="Thanh định vị">
+      <ol>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li aria-current="page">Sản phẩm</li>
+      </ol>
+    </nav>
 
-    <!-- Thanh lọc (dropdown dùng <details>, không cần JS) + sắp xếp -->
-    <section class="toolbar container" aria-label="Bộ lọc sản phẩm">
-      <div class="filter-group">
-        <span class="toolbar-label">Bộ lọc :</span>
-        <div class="filter-options">
-          <details class="filter-dd">
-            <summary class="filter-btn">Khoảng giá</summary>
-            <ul class="filter-panel">
-              <li><label><input type="radio" name="Khoảng giá"> Dưới 5 triệu</label></li>
-              <li><label><input type="radio" name="Khoảng giá"> 5 – 10 triệu</label></li>
-              <li><label><input type="radio" name="Khoảng giá"> 10 – 20 triệu</label></li>
-              <li><label><input type="radio" name="Khoảng giá"> Trên 20 triệu</label></li>
-            </ul>
-          </details>
-          <details class="filter-dd">
-            <summary class="filter-btn">Màu sắc</summary>
-            <ul class="filter-panel">
-              <li><label><input type="checkbox" name="Màu sắc"> Vàng</label></li>
-              <li><label><input type="checkbox" name="Màu sắc"> Vàng hồng</label></li>
-              <li><label><input type="checkbox" name="Màu sắc"> Vàng trắng</label></li>
-            </ul>
-          </details>
-          <details class="filter-dd">
-            <summary class="filter-btn">Chất liệu</summary>
-            <ul class="filter-panel">
-              <li><label><input type="checkbox" name="Chất liệu"> Vàng 10K</label></li>
-              <li><label><input type="checkbox" name="Chất liệu"> Vàng 14K</label></li>
-              <li><label><input type="checkbox" name="Chất liệu"> Vàng 18K</label></li>
-              <li><label><input type="checkbox" name="Chất liệu"> Vàng 24K</label></li>
-              <li><label><input type="checkbox" name="Chất liệu"> Bạc 925</label></li>
-            </ul>
-          </details>
-          <details class="filter-dd">
-            <summary class="filter-btn">Đá</summary>
-            <ul class="filter-panel">
-              <li><label><input type="checkbox" name="Đá"> Kim cương Lab-grown</label></li>
-              <li><label><input type="checkbox" name="Đá"> Moissanite</label></li>
-              <li><label><input type="checkbox" name="Đá"> CZ</label></li>
-              <li><label><input type="checkbox" name="Đá"> Ngọc bích</label></li>
-              <li><label><input type="checkbox" name="Đá"> Sapphire</label></li>
-            </ul>
-          </details>
+    <section class="catalog container" id="catalog" aria-label="Tất cả sản phẩm">
+      <aside class="cat-filter">
+        <h3>Danh mục</h3>
+        <ul>
+          <li><a class="cat-btn is-active" href="all-products.html">Tất cả</a></li>
+          <li><a class="cat-btn" href="nhan-cuoi.html">Nhẫn cưới</a></li>
+          <li><a class="cat-btn" href="proposal.html">Nhẫn cầu hôn</a></li>
+          <li><a class="cat-btn" href="day-chuyen.html">Dây chuyền</a></li>
+          <li><a class="cat-btn" href="bong-tai.html">Bông tai</a></li>
+          <li><a class="cat-btn" href="collection.html">Trang sức bạc tặng bé</a></li>
+        </ul>
+      </aside>
+
+      <div>
+        <div class="search-head">
+          <div>
+            <h1 class="page-heading">Tất cả sản phẩm</h1>
+            <p class="page-sub" style="margin:0;">Toàn bộ trang sức đang kinh doanh tại Lumière (32 sản phẩm)</p>
+          </div>
+          <div class="sort-group">
+            <label class="toolbar-label" for="sort">Sắp xếp:</label>
+            <select id="sort" class="sort-select">
+              <option>Sản phẩm mới nhất</option>
+              <option>Giá: Từ thấp đến cao</option>
+              <option>Giá: Từ cao đến thấp</option>
+              <option>Bán chạy nhất</option>
+            </select>
+          </div>
         </div>
-      </div>
-
-      <div class="sort-group">
-        <label class="toolbar-label" for="sort">Sắp xếp:</label>
-        <select id="sort" class="sort-select">
-          <option>Sản phẩm mới nhất</option>
-          <option>Giá: Từ thấp đến cao</option>
-          <option>Giá: Từ cao đến thấp</option>
-        </select>
-      </div>
-    </section>
-
-    <!-- Lưới sản phẩm: 5 cột, sản phẩm đầu chiếm 2×2 -->
-    <section class="product-section container" aria-label="Tất cả sản phẩm">
-      <div class="product-grid">
-          <article class="product-card is-featured">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1602752250055-5ebb552fc3ae?w=600&h=600&fit=crop&auto=format&q=80" alt="THE ORCHID – Mặt dây chuyền Vàng 24K Ngọc bích" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">THE ORCHID</p>
-              <h3 class="product-name"><a href="product.html">Mặt dây chuyền Vàng 24K Ngọc bích</a></h3>
-              <p class="product-price">6.018.000 VNĐ</p>
-            </div>
-          </article>
+        <div class="catalog-grid">
           <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1602752250055-5ebb552fc3ae?w=600&h=600&fit=crop&auto=format&q=80" alt="Mặt dây chuyền Vàng 24K Ngọc bích" loading="lazy"></a>
+            <a href="product.html?id=NC-001" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1549048799-bf3b582ee17b?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 14K Kim cương Lab-grown vân trơn" loading="lazy"></a>
             <div class="product-info">
-              <p class="product-brand">THE ORCHID</p>
-              <h3 class="product-name"><a href="product.html">Mặt dây chuyền Vàng 24K Ngọc bích</a></h3>
-              <p class="product-price">11.058.000 VNĐ</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1708222169717-8251cfdfa608?w=600&h=600&fit=crop&auto=format&q=80" alt="Mặt dây chuyền Vàng 24K Ngọc bích" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">THE ORCHID</p>
-              <h3 class="product-name"><a href="product.html">Mặt dây chuyền Vàng 24K Ngọc bích</a></h3>
-              <p class="product-price">7.626.000 VNĐ</p>
-              <p class="product-sold">1 đã bán</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1708222170873-b3a0bfa1aee1?w=600&h=600&fit=crop&auto=format&q=80" alt="Mặt dây chuyền Vàng 24K Ngọc bích" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">THE ORCHID</p>
-              <h3 class="product-name"><a href="product.html">Mặt dây chuyền Vàng 24K Ngọc bích</a></h3>
-              <p class="product-price">10.956.000 VNĐ</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=600&h=600&fit=crop&auto=format&q=80" alt="Dây chuyền Vàng 10K đá Sapphire" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">PETAL</p>
-              <h3 class="product-name"><a href="product.html">Dây chuyền Vàng 10K đá Sapphire</a></h3>
-              <p class="product-price">6.552.000 VNĐ</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1549048799-bf3b582ee17b?w=600&h=600&fit=crop&auto=format&q=80" alt="AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">AURORA</p>
-              <h3 class="product-name"><a href="product.html">Nhẫn cưới Vàng 14K Kim cương Lab-grown</a></h3>
+              <h3 class="product-name"><a href="product.html?id=NC-001">Nhẫn cưới Vàng 14K Kim cương Lab-grown vân trơn</a></h3>
               <p class="product-price">9.850.000 VNĐ</p>
               <p class="product-sold">388 đã bán</p>
             </div>
           </article>
           <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1766963026693-e73b058176dd?w=600&h=600&fit=crop&auto=format&q=80" alt="AURORA – Nhẫn cưới Vàng 14K Kim cương Lab-grown" loading="lazy"></a>
+            <a href="product.html?id=NC-002" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1766963026693-e73b058176dd?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 14K Kim cương Lab-grown viền kép" loading="lazy"></a>
             <div class="product-info">
-              <p class="product-brand">AURORA</p>
-              <h3 class="product-name"><a href="product.html">Nhẫn cưới Vàng 14K Kim cương Lab-grown</a></h3>
+              <h3 class="product-name"><a href="product.html?id=NC-002">Nhẫn cưới Vàng 14K Kim cương Lab-grown viền kép</a></h3>
               <p class="product-price">10.115.000 VNĐ</p>
               <p class="product-sold">412 đã bán</p>
             </div>
           </article>
           <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1554047310-ab6170fc7b10?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 10K đá CZ" loading="lazy"></a>
+            <a href="product.html?id=NC-003" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1656751681056-a4ebfe7c546e?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 14K đá CZ hai tông màu" loading="lazy"></a>
             <div class="product-info">
-              <p class="product-brand">ETERNA</p>
-              <h3 class="product-name"><a href="product.html">Nhẫn cưới Vàng 10K đá CZ</a></h3>
-              <p class="product-price">8.864.000 VNĐ</p>
-              <p class="product-sold">601 đã bán</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1584115838497-f317f7455abe?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 10K đá CZ" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">ETERNA</p>
-              <h3 class="product-name"><a href="product.html">Nhẫn cưới Vàng 10K đá CZ</a></h3>
-              <p class="product-price">8.470.000 VNĐ</p>
-              <p class="product-sold">779 đã bán</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1599907888904-14d5d22bfe19?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 10K đá CZ" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">ETERNA</p>
-              <h3 class="product-name"><a href="product.html">Nhẫn cưới Vàng 10K đá CZ</a></h3>
-              <p class="product-price">10.185.000 VNĐ</p>
-              <p class="product-sold">216 đã bán</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1554047310-ab6170fc7b10?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 10K đá CZ" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">ETERNA</p>
-              <h3 class="product-name"><a href="product.html">Nhẫn cưới Vàng 10K đá CZ</a></h3>
-              <p class="product-price">9.419.000 VNĐ</p>
-              <p class="product-sold">411 đã bán</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1584115838497-f317f7455abe?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 10K đá CZ" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">ETERNA</p>
-              <h3 class="product-name"><a href="product.html">Nhẫn cưới Vàng 10K đá CZ</a></h3>
-              <p class="product-price">10.261.000 VNĐ</p>
-              <p class="product-sold">294 đã bán</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1656751681056-a4ebfe7c546e?w=600&h=600&fit=crop&auto=format&q=80" alt="ETERNA – Nhẫn cưới Vàng 14K đá CZ" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">ETERNA</p>
-              <h3 class="product-name"><a href="product.html">Nhẫn cưới Vàng 14K đá CZ</a></h3>
+              <h3 class="product-name"><a href="product.html?id=NC-003">Nhẫn cưới Vàng 14K đá CZ hai tông màu</a></h3>
               <p class="product-price">16.912.000 VNĐ</p>
               <p class="product-sold">64 đã bán</p>
             </div>
           </article>
           <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1549048799-bf3b582ee17b?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 14K đá CZ" loading="lazy"></a>
+            <a href="product.html?id=NC-004" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1554047310-ab6170fc7b10?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 14K đá CZ đính viền" loading="lazy"></a>
             <div class="product-info">
-              <p class="product-brand">ETERNA</p>
-              <h3 class="product-name"><a href="product.html">Nhẫn cưới Vàng 14K đá CZ</a></h3>
-              <p class="product-price">17.463.000 VNĐ</p>
-              <p class="product-sold">33 đã bán</p>
+              <h3 class="product-name"><a href="product.html?id=NC-004">Nhẫn cưới Vàng 14K đá CZ đính viền</a></h3>
+              <p class="product-price">20.245.000 VNĐ</p>
+              <p class="product-sold">544 đã bán</p>
             </div>
           </article>
           <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1605100804567-1ffe942b5cd6?w=600&h=600&fit=crop&auto=format&q=80" alt="Dây chuyền Vàng 14K đá Topaz" loading="lazy"></a>
+            <a href="product.html?id=NC-005" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1565034582189-195bb0084dcf?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 14K Kim cương Lab-grown bản lớn" loading="lazy"></a>
             <div class="product-info">
-              <p class="product-brand">STELLA</p>
-              <h3 class="product-name"><a href="product.html">Dây chuyền Vàng 14K đá Topaz</a></h3>
-              <p class="product-price">4.250.000 VNĐ</p>
-              <p class="product-sold">57 đã bán</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1569397288884-4d43d6738fbd?w=600&h=600&fit=crop&auto=format&q=80" alt="Mặt dây chuyền Vàng 24K Ngọc bích" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">THE ORCHID</p>
-              <h3 class="product-name"><a href="product.html">Mặt dây chuyền Vàng 24K Ngọc bích</a></h3>
-              <p class="product-price">8.390.000 VNĐ</p>
-              <p class="product-sold">12 đã bán</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1584115838497-f317f7455abe?w=600&h=600&fit=crop&auto=format&q=80" alt="HALO – Nhẫn cưới Vàng 18K đá Moissanite" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">HALO</p>
-              <h3 class="product-name"><a href="product.html">Nhẫn cưới Vàng 18K đá Moissanite</a></h3>
-              <p class="product-price">31.248.000 VNĐ</p>
-              <p class="product-sold">1.078 đã bán</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1553915632-175f60dd8e36?w=600&h=600&fit=crop&auto=format&q=80" alt="HALO – Nhẫn cưới Vàng 14K đá Moissanite" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">HALO</p>
-              <h3 class="product-name"><a href="product.html">Nhẫn cưới Vàng 14K đá Moissanite</a></h3>
-              <p class="product-price">29.303.000 VNĐ</p>
-              <p class="product-sold">1.398 đã bán</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1630233888150-e2e0c6aac3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="Dây chuyền Vàng 10K đá Ruby" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">PETAL</p>
-              <h3 class="product-name"><a href="product.html">Dây chuyền Vàng 10K đá Ruby</a></h3>
-              <p class="product-price">5.980.000 VNĐ</p>
-              <p class="product-sold">41 đã bán</p>
-            </div>
-          </article>
-          <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1656751681056-a4ebfe7c546e?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 14K Kim cương Lab-grown" loading="lazy"></a>
-            <div class="product-info">
-              <p class="product-brand">AURORA</p>
-              <h3 class="product-name"><a href="product.html">Nhẫn cưới Vàng 14K Kim cương Lab-grown</a></h3>
+              <h3 class="product-name"><a href="product.html?id=NC-005">Nhẫn cưới Vàng 14K Kim cương Lab-grown bản lớn</a></h3>
               <p class="product-price">22.785.000 VNĐ</p>
               <p class="product-sold">100 đã bán</p>
             </div>
           </article>
           <article class="product-card">
-            <a href="product.html" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1708222170873-b3a0bfa1aee1?w=600&h=600&fit=crop&auto=format&q=80" alt="Dây chuyền Vàng 14K đá Topaz" loading="lazy"></a>
+            <a href="product.html?id=NC-006" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1628926379972-9843ad139a8c?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 14K mặt xước" loading="lazy"></a>
             <div class="product-info">
-              <p class="product-brand">STELLA</p>
-              <h3 class="product-name"><a href="product.html">Dây chuyền Vàng 14K đá Topaz</a></h3>
-              <p class="product-price">4.720.000 VNĐ</p>
-              <p class="product-sold">23 đã bán</p>
+              <h3 class="product-name"><a href="product.html?id=NC-006">Nhẫn cưới Vàng 14K mặt xước</a></h3>
+              <p class="product-price">28.247.000 VNĐ</p>
+              <p class="product-sold">147 đã bán</p>
             </div>
           </article>
+          <article class="product-card">
+            <a href="product.html?id=NC-007" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1584115838497-f317f7455abe?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 18K đá Moissanite đính hàng" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=NC-007">Nhẫn cưới Vàng 18K đá Moissanite đính hàng</a></h3>
+              <p class="product-price">31.248.000 VNĐ</p>
+              <p class="product-sold">1.078 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=NC-008" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1553915632-175f60dd8e36?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 14K đá Moissanite ôm tay" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=NC-008">Nhẫn cưới Vàng 14K đá Moissanite ôm tay</a></h3>
+              <p class="product-price">29.303.000 VNĐ</p>
+              <p class="product-sold">1.398 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=NC-009" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1567523977592-7959bc5df51e?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 18K đá Moissanite vòng tròn" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=NC-009">Nhẫn cưới Vàng 18K đá Moissanite vòng tròn</a></h3>
+              <p class="product-price">31.469.000 VNĐ</p>
+              <p class="product-sold">324 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=NCH-001" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1499899833954-5ecd9439d17f?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cầu hôn Vàng 14K đá CZ ổ tròn" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=NCH-001">Nhẫn cầu hôn Vàng 14K đá CZ ổ tròn</a></h3>
+              <p class="product-price">6.284.000 VNĐ</p>
+              <p class="product-sold">612 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=NCH-002" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1589674668791-4889d2bba4c6?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cầu hôn Vàng 18K Kim cương Lab-grown viền kép" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=NCH-002">Nhẫn cầu hôn Vàng 18K Kim cương Lab-grown viền kép</a></h3>
+              <p class="product-price">18.560.000 VNĐ</p>
+              <p class="product-sold">233 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=NCH-003" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1586104195538-050b9f74f58e?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cầu hôn Vàng 18K Kim cương Lab-grown ổ vuông" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=NCH-003">Nhẫn cầu hôn Vàng 18K Kim cương Lab-grown ổ vuông</a></h3>
+              <p class="product-price">21.450.000 VNĐ</p>
+              <p class="product-sold">97 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=NCH-004" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cầu hôn Vàng 14K đá Moissanite viền hoa" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=NCH-004">Nhẫn cầu hôn Vàng 14K đá Moissanite viền hoa</a></h3>
+              <p class="product-price">8.960.000 VNĐ</p>
+              <p class="product-sold">186 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=NCH-005" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1607703829739-c05b7beddf60?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cầu hôn Vàng 18K đá Moissanite đính vai" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=NCH-005">Nhẫn cầu hôn Vàng 18K đá Moissanite đính vai</a></h3>
+              <p class="product-price">14.320.000 VNĐ</p>
+              <p class="product-sold">142 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=NCH-006" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1598560917807-1bae44bd2be8?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cầu hôn Vàng 14K Kim cương Lab-grown một viên" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=NCH-006">Nhẫn cầu hôn Vàng 14K Kim cương Lab-grown một viên</a></h3>
+              <p class="product-price">11.780.000 VNĐ</p>
+              <p class="product-sold">258 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=DC-001" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1602752250055-5ebb552fc3ae?w=600&h=600&fit=crop&auto=format&q=80" alt="Mặt dây chuyền Vàng 24K Ngọc bích hoa lan" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=DC-001">Mặt dây chuyền Vàng 24K Ngọc bích hoa lan</a></h3>
+              <p class="product-price">6.018.000 VNĐ</p>
+              <p class="product-sold">156 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=DC-002" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1569397288884-4d43d6738fbd?w=600&h=600&fit=crop&auto=format&q=80" alt="Dây chuyền Vàng 18K mặt chữ nhật" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=DC-002">Dây chuyền Vàng 18K mặt chữ nhật</a></h3>
+              <p class="product-price">7.350.000 VNĐ</p>
+              <p class="product-sold">203 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=DC-003" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=600&h=600&fit=crop&auto=format&q=80" alt="Dây chuyền Vàng 14K nhiều lớp" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=DC-003">Dây chuyền Vàng 14K nhiều lớp</a></h3>
+              <p class="product-price">5.120.000 VNĐ</p>
+              <p class="product-sold">321 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=DC-004" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1708222170873-b3a0bfa1aee1?w=600&h=600&fit=crop&auto=format&q=80" alt="Dây chuyền Vàng 18K mặt hoa đính đá" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=DC-004">Dây chuyền Vàng 18K mặt hoa đính đá</a></h3>
+              <p class="product-price">9.480.000 VNĐ</p>
+              <p class="product-sold">118 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=DC-005" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=600&h=600&fit=crop&auto=format&q=80" alt="Dây chuyền Vàng 14K mặt giọt nước" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=DC-005">Dây chuyền Vàng 14K mặt giọt nước</a></h3>
+              <p class="product-price">4.260.000 VNĐ</p>
+              <p class="product-sold">276 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=DC-006" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1605100804567-1ffe942b5cd6?w=600&h=600&fit=crop&auto=format&q=80" alt="Mặt dây chuyền Vàng 14K Kim cương Lab-grown giọt lệ" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=DC-006">Mặt dây chuyền Vàng 14K Kim cương Lab-grown giọt lệ</a></h3>
+              <p class="product-price">12.650.000 VNĐ</p>
+              <p class="product-sold">88 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=BT-001" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1713004539634-a6694a83f3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="Bông tai bạc 925 mạ vàng hoa nhí" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=BT-001">Bông tai bạc 925 mạ vàng hoa nhí</a></h3>
+              <p class="price-wrap"><span class="product-price">403.380 VNĐ</span><del class="price-old">448.200 VNĐ</del></p>
+              <p class="product-sold">655 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=BT-002" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?w=600&h=600&fit=crop&auto=format&q=80" alt="Bông tai Vàng 14K đá màu dáng dài" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=BT-002">Bông tai Vàng 14K đá màu dáng dài</a></h3>
+              <p class="product-price">5.480.000 VNĐ</p>
+              <p class="product-sold">174 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=BT-003" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1693212793204-bcea856c75fe?w=600&h=600&fit=crop&auto=format&q=80" alt="Bông tai Vàng 14K đá CZ vòng hoa" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=BT-003">Bông tai Vàng 14K đá CZ vòng hoa</a></h3>
+              <p class="product-price">3.920.000 VNĐ</p>
+              <p class="product-sold">231 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=BT-004" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1665159882377-385d68d2bdff?w=600&h=600&fit=crop&auto=format&q=80" alt="Bông tai Vàng 18K đá CZ dáng rủ" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=BT-004">Bông tai Vàng 18K đá CZ dáng rủ</a></h3>
+              <p class="product-price">6.870.000 VNĐ</p>
+              <p class="product-sold">109 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=BT-005" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1652949715051-323fed65576a?w=600&h=600&fit=crop&auto=format&q=80" alt="Bông tai Vàng 14K đá Sapphire xanh" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=BT-005">Bông tai Vàng 14K đá Sapphire xanh</a></h3>
+              <p class="product-price">7.240.000 VNĐ</p>
+              <p class="product-sold">76 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=BT-006" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1630233888150-e2e0c6aac3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="Bông tai bạc 925 lông vũ" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=BT-006">Bông tai bạc 925 lông vũ</a></h3>
+              <p class="product-price">890.000 VNĐ</p>
+              <p class="product-sold">298 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=TB-001" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1708222169717-8251cfdfa608?w=600&h=600&fit=crop&auto=format&q=80" alt="Dây chuyền bạc 925 mạ vàng hoa nhí" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=TB-001">Dây chuyền bạc 925 mạ vàng hoa nhí</a></h3>
+              <p class="price-wrap"><span class="product-price">541.080 VNĐ</span><del class="price-old">601.200 VNĐ</del></p>
+              <p class="product-sold">870 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=TB-002" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1714733831162-0a6e849141be?w=600&h=600&fit=crop&auto=format&q=80" alt="Bông tai bạc 925 nụ tròn cho bé" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=TB-002">Bông tai bạc 925 nụ tròn cho bé</a></h3>
+              <p class="product-price">386.000 VNĐ</p>
+              <p class="product-sold">412 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=TB-003" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1765464281313-b3844388b316?w=600&h=600&fit=crop&auto=format&q=80" alt="Khuyên tai tròn bạc 925 cho bé" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=TB-003">Khuyên tai tròn bạc 925 cho bé</a></h3>
+              <p class="product-price">352.000 VNĐ</p>
+              <p class="product-sold">365 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=TB-004" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1665159882686-3d4fc7b036a4?w=600&h=600&fit=crop&auto=format&q=80" alt="Mặt dây bạc 925 giọt nước cho bé" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=TB-004">Mặt dây bạc 925 giọt nước cho bé</a></h3>
+              <p class="product-price">468.000 VNĐ</p>
+              <p class="product-sold">247 đã bán</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <a href="product.html?id=TB-005" class="product-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1629118639934-2b241503956c?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn đôi bạc 925 mạ vàng cho bé" loading="lazy"></a>
+            <div class="product-info">
+              <h3 class="product-name"><a href="product.html?id=TB-005">Nhẫn đôi bạc 925 mạ vàng cho bé</a></h3>
+              <p class="product-price">520.000 VNĐ</p>
+              <p class="product-sold">189 đã bán</p>
+            </div>
+          </article>
+        </div>
       </div>
-
-      <!-- Phân trang -->
-      <nav class="pagination" aria-label="Phân trang">
-        <a href="#" class="page-link is-disabled" aria-label="Trang trước">‹</a>
-        <a href="#" class="page-link is-active" aria-current="page">1</a>
-        <a href="#" class="page-link">2</a>
-        <a href="#" class="page-link">3</a>
-        <span class="page-dots">…</span>
-        <a href="#" class="page-link">12</a>
-        <a href="#" class="page-link" aria-label="Trang sau">›</a>
-      </nav>
     </section>
   </main>
 

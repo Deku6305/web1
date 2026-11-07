@@ -6,6 +6,51 @@
 (function () {
   "use strict";
 
+  /* ---------- Trạng thái đăng nhập giữa các trang ----------
+     Trang dành riêng cho thành viên có sẵn data-logged-in và ghi cờ; vào login.html là xóa cờ.
+     Các trang dùng chung (sản phẩm, phân loại, giới thiệu…) đọc cờ để đổi header và cho mua hàng. */
+  var LOGIN_FLAG = "lumiereLoggedIn";
+  var isAdmin = document.body.classList.contains("admin");
+  var isLoginPage = /\/login\.html$/.test(window.location.pathname);
+  var hasLoginMark = document.body.hasAttribute("data-logged-in");
+  var loginFlag = false;
+  try {
+    if (!isAdmin) {
+      if (isLoginPage) localStorage.removeItem(LOGIN_FLAG);
+      else if (hasLoginMark) localStorage.setItem(LOGIN_FLAG, "1");
+    }
+    loginFlag = !isAdmin && !isLoginPage && localStorage.getItem(LOGIN_FLAG) === "1";
+  } catch (err) {}
+
+  var ACCOUNT_MENU =
+    '<div class="account-menu">' +
+    '  <a href="thongtintaikhoan.html" class="icon-btn" aria-label="Tài khoản">' +
+    '    <svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-5 0-9 2.5-9 6v2h18v-2c0-3.5-4-6-9-6z"/></svg>' +
+    '  </a>' +
+    '  <span class="account-name">Nguyễn Văn A ▾</span>' +
+    '  <ul class="dropdown">' +
+    '    <li><a href="thongtintaikhoan.html">Thông tin tài khoản</a></li>' +
+    '    <li><a href="lichsumuahang.html">Lịch sử mua hàng</a></li>' +
+    '    <li><a href="wishlist.html">Sản phẩm yêu thích</a></li>' +
+    '    <li><a href="login.html" data-confirm="Bạn có chắc chắn muốn đăng xuất?" data-redirect="login.html">Đăng xuất</a></li>' +
+    '  </ul>' +
+    '</div>';
+
+  function applyLoginState() {
+    document.body.setAttribute("data-logged-in", "");
+    var login = document.querySelector('.header-right > a[href="login.html"]');
+    if (login) login.outerHTML = ACCOUNT_MENU;
+    var wish = document.querySelector('.header-right a[href="wishlist.html"] .badge');
+    var bag = document.querySelector('.header-right a[href="cart.html"] .badge');
+    if (wish) wish.textContent = "4";
+    if (bag) bag.textContent = "2";
+    document.querySelectorAll('a[href^="index.html"]').forEach(function (a) {
+      a.setAttribute("href", a.getAttribute("href").replace("index.html", "index2.html"));
+    });
+    document.querySelectorAll('a[href="contactkhongtk.html"]').forEach(function (a) { a.setAttribute("href", "contact.html"); });
+  }
+  if (loginFlag && !hasLoginMark) applyLoginState();
+
   var isLoggedIn = document.body.hasAttribute("data-logged-in");
   var searchPage = isLoggedIn ? "searchcotaikhoan.html" : "searchkhongtk.html";
 
@@ -150,7 +195,7 @@
       document.body.appendChild(root);
     }
     var thumb = card.querySelector(".product-thumb");
-    var brand = card.querySelector(".product-brand");
+    var detailHref = thumb ? thumb.getAttribute("href") : "product.html";
     var name = card.querySelector(".product-name");
     var price = card.querySelector(".product-price");
     var old = card.querySelector(".price-old");
@@ -167,7 +212,6 @@
       '  <div class="qv-body">' +
       '    <div class="qv-img">' + art + '</div>' +
       '    <div class="qv-content">' +
-      '      <p class="qv-brand">' + (brand ? brand.textContent : "LUMIÈRE") + '</p>' +
       '      <h2 class="qv-title">' + (name ? name.textContent.trim() : "Sản phẩm") + '</h2>' +
       '      <p class="qv-price">' + (price ? price.textContent : "") +
                (old ? ' <del>' + old.textContent + '</del>' : "") + '</p>' +
@@ -179,7 +223,7 @@
       '      </ul>' +
       '      <div class="qv-actions">' +
       '        <button type="button" class="btn-primary js-add-cart">Thêm vào giỏ hàng</button>' +
-      '        <a href="product.html" class="btn-outline">Xem chi tiết</a>' +
+      '        <a href="' + detailHref + '" class="btn-outline">Xem chi tiết</a>' +
       '      </div>' +
       '    </div>' +
       '  </div>' +
@@ -253,7 +297,7 @@
     }
 
     // Lọc danh mục (chỉ đổi trạng thái nút)
-    var cat = t.closest(".cat-btn");
+    var cat = t.closest("button.cat-btn");
     if (cat) {
       e.preventDefault();
       cat.parentElement.parentElement.querySelectorAll(".cat-btn").forEach(function (b) { b.classList.remove("is-active"); });
