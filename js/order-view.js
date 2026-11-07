@@ -45,7 +45,7 @@
 
   document.getElementById("ov-items").innerHTML = order.items.map(function (item) {
     var p = product(item.code);
-    var href = "product.html?id=" + p.code;
+    var href = "product.html";
     return '<tr><td><div class="cell-product"><a class="cell-thumb" href="' + href + '"><img class="prod-img" src="' + p.images[0] + '" alt="' + p.name + '"></a>' +
       '<div><p class="cell-name"><a href="' + href + '">' + p.name + '</a></p><p class="cell-sub">Mã: ' + p.code + "</p></div></div></td>" +
       '<td class="text-right">' + money(item.price) + '</td><td class="text-center">' + item.qty + "</td>" +

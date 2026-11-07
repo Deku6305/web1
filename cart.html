@@ -46,7 +46,7 @@
         </a>
         <a href="cart.html" class="icon-btn" aria-label="Giỏ hàng">
           <svg viewBox="0 0 24 24"><path d="M7 7V6a5 5 0 0 1 10 0v1h3l-1 14H5L4 7h3zm2 0h6V6a3 3 0 0 0-6 0v1z"/></svg>
-          <span class="badge">2</span>
+          <span class="badge">3</span>
         </a>
         <div class="account-menu">
           <a href="thongtintaikhoan.html" class="icon-btn" aria-label="Tài khoản">
@@ -105,7 +105,7 @@
 
     <header class="cart-head">
       <h1 class="cart-title">GIỎ HÀNG CỦA BẠN</h1>
-      <p class="cart-count">(Có 2 sản phẩm trong giỏ hàng)</p>
+      <p class="cart-count">(Có 3 sản phẩm trong giỏ hàng)</p>
     </header>
 
     <!-- Trạng thái giỏ trống -->
@@ -125,11 +125,26 @@
           <span>Thành tiền</span>
           <span></span>
         </div>
-          <article class="cart-item">
-            <a href="product.html?id=TB-001" class="cart-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1708222169717-8251cfdfa608?w=600&h=600&fit=crop&auto=format&q=80" alt="Dây chuyền bạc 925 mạ vàng hoa nhí" loading="lazy"></a>
+          <article class="cart-item" id="cart-NC-001">
+            <a href="product.html" class="cart-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1549048799-bf3b582ee17b?w=600&h=600&fit=crop&auto=format&q=80" alt="Nhẫn cưới Vàng 14K Kim cương Lab-grown vân trơn" loading="lazy"></a>
             <div class="cart-info">
               <label class="checkbox cart-select"><input type="checkbox" checked> <span>Chọn mua</span></label>
-              <h3 class="cart-name"><a href="product.html?id=TB-001">Dây chuyền bạc 925 mạ vàng hoa nhí</a></h3>
+              <h3 class="cart-name"><a href="product.html">Nhẫn cưới Vàng 14K Kim cương Lab-grown vân trơn</a></h3>
+              <p class="cart-sku">Mã sản phẩm: NC-001</p>
+              <p class="cart-price"><span class="price-now">9.850.000 VNĐ</span></p>
+            </div>
+            <div class="cart-qty">
+              <label class="visually-hidden" for="q-NC-001">Số lượng</label>
+              <input type="number" id="q-NC-001" class="qty-input" value="1" min="1">
+            </div>
+            <p class="cart-line-total">9.850.000 VNĐ</p>
+            <a href="cart.html" class="cart-remove" aria-label="Xoá sản phẩm" data-confirm="Bạn có chắc chắn muốn xóa sản phẩm này ra khỏi giỏ hàng không?" data-success="Xóa sản phẩm thành công!" data-redirect="cart.html">&times;</a>
+          </article>
+          <article class="cart-item" id="cart-TB-001">
+            <a href="product.html" class="cart-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1708222169717-8251cfdfa608?w=600&h=600&fit=crop&auto=format&q=80" alt="Dây chuyền bạc 925 mạ vàng hoa nhí" loading="lazy"></a>
+            <div class="cart-info">
+              <label class="checkbox cart-select"><input type="checkbox" checked> <span>Chọn mua</span></label>
+              <h3 class="cart-name"><a href="product.html">Dây chuyền bạc 925 mạ vàng hoa nhí</a></h3>
               <p class="cart-sku">Mã sản phẩm: TB-001</p>
               <p class="cart-price"><span class="price-now">541.080 VNĐ</span> <del class="price-old">601.200 VNĐ</del></p>
             </div>
@@ -140,11 +155,11 @@
             <p class="cart-line-total">541.080 VNĐ</p>
             <a href="cart.html" class="cart-remove" aria-label="Xoá sản phẩm" data-confirm="Bạn có chắc chắn muốn xóa sản phẩm này ra khỏi giỏ hàng không?" data-success="Xóa sản phẩm thành công!" data-redirect="cart.html">&times;</a>
           </article>
-          <article class="cart-item">
-            <a href="product.html?id=BT-001" class="cart-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1713004539634-a6694a83f3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="Bông tai bạc 925 mạ vàng hoa nhí" loading="lazy"></a>
+          <article class="cart-item" id="cart-BT-001">
+            <a href="product.html" class="cart-thumb"><img class="prod-img" src="https://images.unsplash.com/photo-1713004539634-a6694a83f3d9?w=600&h=600&fit=crop&auto=format&q=80" alt="Bông tai bạc 925 mạ vàng hoa nhí" loading="lazy"></a>
             <div class="cart-info">
               <label class="checkbox cart-select"><input type="checkbox" checked> <span>Chọn mua</span></label>
-              <h3 class="cart-name"><a href="product.html?id=BT-001">Bông tai bạc 925 mạ vàng hoa nhí</a></h3>
+              <h3 class="cart-name"><a href="product.html">Bông tai bạc 925 mạ vàng hoa nhí</a></h3>
               <p class="cart-sku">Mã sản phẩm: BT-001</p>
               <p class="cart-price"><span class="price-now">403.380 VNĐ</span> <del class="price-old">448.200 VNĐ</del></p>
             </div>
@@ -169,10 +184,10 @@
         </div>
 
         <dl class="summary-rows">
-          <div><dt>Tạm tính</dt><dd>1.049.400 VNĐ</dd></div>
+          <div><dt>Tạm tính</dt><dd>10.899.400 VNĐ</dd></div>
           <div><dt>Giảm giá</dt><dd class="is-discount">-104.940 VNĐ</dd></div>
           <div><dt>Phí vận chuyển</dt><dd>Miễn phí</dd></div>
-          <div class="summary-total"><dt>Tổng cộng</dt><dd>944.460 VNĐ</dd></div>
+          <div class="summary-total"><dt>Tổng cộng</dt><dd>10.794.460 VNĐ</dd></div>
         </dl>
 
         <a href="checkout.html" class="modal-buy">TIẾN HÀNH ĐẶT HÀNG</a>

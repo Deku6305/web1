@@ -43,7 +43,7 @@
     var wish = document.querySelector('.header-right a[href="wishlist.html"] .badge');
     var bag = document.querySelector('.header-right a[href="cart.html"] .badge');
     if (wish) wish.textContent = "4";
-    if (bag) bag.textContent = "2";
+    if (bag) bag.textContent = "3";
     document.querySelectorAll('a[href^="index.html"]').forEach(function (a) {
       a.setAttribute("href", a.getAttribute("href").replace("index.html", "index2.html"));
     });
@@ -256,15 +256,12 @@
       if (t.closest(".js-add-cart")) {
         e.preventDefault();
         alert("Thêm vào giỏ hàng thành công!");
-        window.location.href = "cart.html";
       }
-      // Mua ngay trong popup: báo thành công rồi chỉ đóng popup, ở lại trang sản phẩm
+      // Mua ngay trong popup: báo thành công rồi chuyển vào giỏ hàng
       if (t.closest("#choose-modal .modal-buy")) {
         e.preventDefault();
-        alert("Đặt mua sản phẩm thành công!");
-        var scrollTop = window.pageYOffset;
-        window.location.hash = "";
-        window.scrollTo(0, scrollTop);
+        alert("Mua hàng thành công!");
+        window.location.href = "cart.html";
       }
       return;
     }
@@ -302,6 +299,18 @@
       alert(al.getAttribute("data-alert"));
       if (al.getAttribute("data-redirect")) window.location.href = al.getAttribute("data-redirect");
       return;
+    }
+
+    // Menu Sản phẩm trên header: trang có khung danh mục thì xử lý giống bấm Danh mục
+    var navLink = t.closest(".nav-list .has-dropdown a");
+    if (navLink) {
+      var navBtn = document.querySelector('.catalog .cat-btn[href="' + navLink.getAttribute("href") + '"]');
+      if (navBtn) {
+        e.preventDefault();
+        navBtn.click();
+        window.scrollTo({ top: document.querySelector(".catalog").getBoundingClientRect().top + window.pageYOffset - 110, behavior: "smooth" });
+        return;
+      }
     }
 
     // Danh mục: chỉ đổi nút đang chọn và tên hiển thị, danh sách sản phẩm giữ nguyên (web tĩnh)
@@ -428,7 +437,24 @@
     restart();
   }
 
+  /* ---------- Menu Sản phẩm luôn về một danh sách cố định ---------- */
+  function initProductMenu() {
+    var catalog = document.querySelector(".catalog");
+    if (!catalog) {
+      // Trang không có khung danh mục: mở trang tất cả sản phẩm với đúng tên loại đã chọn
+      document.querySelectorAll(".nav-list .dropdown a").forEach(function (a) {
+        var page = a.getAttribute("href").match(/^(nhan-cuoi|proposal|day-chuyen|bong-tai|collection)\.html$/);
+        if (page) a.setAttribute("href", "all-products.html?cat=" + page[1]);
+      });
+      return;
+    }
+    var wanted = new URLSearchParams(window.location.search).get("cat");
+    var btn = wanted && catalog.querySelector('.cat-btn[href="' + wanted + '.html"]');
+    if (btn) btn.click();
+  }
+
   initSearch();
+  initProductMenu();
   initCardActions();
   initDemoForms();
   initTabs();

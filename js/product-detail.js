@@ -1,12 +1,11 @@
 /* ============================================================
-   Trang chi tiết sản phẩm: hiện đúng sản phẩm theo product.html?id=MÃ
+   Trang chi tiết sản phẩm: web tĩnh, luôn hiện một sản phẩm cố định (NC-001)
    ============================================================ */
 (function () {
   "use strict";
 
   var data = window.LUMIERE;
-  var id = new URLSearchParams(window.location.search).get("id");
-  var product = data.products.filter(function (p) { return p.code === id; })[0] || data.products[0];
+  var product = data.products[0];
   var category = data.categories.filter(function (c) { return c.id === product.cat; })[0];
 
   function money(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " VNĐ"; }
@@ -18,7 +17,7 @@
   document.getElementById("pd-crumb").innerHTML =
     '<li><a href="index.html">Trang chủ</a></li>' +
     '<li><a href="all-products.html">Sản phẩm</a></li>' +
-    '<li><a href="' + category.page + '">' + category.name + "</a></li>" +
+    '<li><a href="all-products.html?cat=' + category.page.replace(".html", "") + '">' + category.name + "</a></li>" +
     '<li aria-current="page">' + product.name + "</li>";
 
   // 4 ảnh sản phẩm
@@ -62,8 +61,8 @@
 
   // Sản phẩm tương tự + gợi ý thêm
   function card(p) {
-    var href = "product.html?id=" + p.code;
-    return '<article class="product-card">' +
+    var href = "product.html";
+    return '<article class="product-card" id="sp-' + p.code + '">' +
       '<a href="' + href + '" class="product-thumb"><img class="prod-img" src="' + p.images[0] + '" alt="' + p.name + '" loading="lazy"></a>' +
       '<div class="product-info"><h3 class="product-name"><a href="' + href + '">' + p.name + "</a></h3>" +
       '<p class="product-price">' + money(p.price) + "</p></div></article>";
