@@ -145,31 +145,15 @@
   function findCustomer(id) { return DATA.customers.filter(function (c) { return c.id === id; })[0]; }
   function statusBadge(st) { return '<span class="status status-' + st + '">' + DATA.status[st] + "</span>"; }
   function emptyRow(cols, text) { return '<tr><td colspan="' + cols + '" class="text-center">' + text + "</td></tr>"; }
-  function inRange(order, from, to) { return (!from || order.date >= from) && (!to || order.date <= to); }
-  function validRange(from, to) {
-    if (from && to && from > to) { alert("Ngày bắt đầu không thể lớn hơn ngày kết thúc"); return false; }
-    return true;
-  }
   function infoRow(label, value, full) {
     return "<div" + (full ? ' style="grid-column:1/-1;"' : "") + "><dt>" + label + "</dt><dd>" + value + "</dd></div>";
-  }
-  // Bộ lọc từ ngày / đến ngày / trạng thái: gọi lại render khi tìm kiếm hoặc đặt lại
-  function bindOrderFilter(form, render) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      if (validRange(form.from.value, form.to.value)) render();
-    });
-    form.addEventListener("reset", function () { setTimeout(render, 0); });
-  }
-  function matchesFilter(order, form) {
-    return inRange(order, form.from.value, form.to.value) && (!form.status.value || order.status === form.status.value);
   }
 
   /* ---------- Danh sách đơn hàng (order.html) ---------- */
   var orderForm = byId("order-filter");
   if (orderForm) {
     var renderOrders = function () {
-      var rows = DATA.orders.filter(function (o) { return matchesFilter(o, orderForm); });
+      var rows = DATA.orders;
       byId("order-rows").innerHTML = rows.length ? rows.map(function (o, i) {
         var c = findCustomer(o.customer);
         return "<tr><td>" + (i + 1) + "</td><td><strong>#" + o.id + '</strong></td><td class="cell-name">' + c.name + "</td><td>" + c.address + "</td><td>" + c.phone + "</td><td>" + dateVN(o.date) +
@@ -177,7 +161,6 @@
           '</td><td><a href="order-detail.html?id=' + o.id + '" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>';
       }).join("") : emptyRow(9, "Không có đơn hàng phù hợp");
     };
-    bindOrderFilter(orderForm, renderOrders);
     renderOrders();
   }
 
@@ -214,7 +197,7 @@
       infoRow("Trạng thái", '<span class="status status-' + customer.status + '">' + (customer.status === "locked" ? "Đã khóa" : "Hoạt động") + "</span>");
     var mine = DATA.orders.filter(function (o) { return o.customer === customer.id; });
     var renderUserOrders = function () {
-      var rows = mine.filter(function (o) { return matchesFilter(o, userOrderForm); });
+      var rows = mine;
       byId("uo-count").textContent = rows.length;
       byId("uo-spent").textContent = money(rows.reduce(function (sum, o) { return o.status === "cancelled" ? sum : sum + o.total; }, 0));
       byId("uo-done").textContent = rows.filter(function (o) { return o.status === "completed"; }).length;
@@ -224,7 +207,6 @@
           '</td><td><a href="order-detail.html?id=' + o.id + '" class="ad-btn is-sm is-info">Chi tiết</a></td></tr>';
       }).join("") : emptyRow(7, "Không có đơn hàng phù hợp");
     };
-    bindOrderFilter(userOrderForm, renderUserOrders);
     renderUserOrders();
   }
 
@@ -286,9 +268,8 @@
     };
 
     var renderStats = function () {
-      var from = statForm.from.value, to = statForm.to.value;
-      // Doanh thu và thống kê không tính đơn đã hủy
-      var orders = DATA.orders.filter(function (o) { return o.status !== "cancelled" && inRange(o, from, to); });
+      // Bản demo: số liệu cố định, đổi thời gian không làm đổi thống kê. Không tính đơn đã hủy
+      var orders = DATA.orders.filter(function (o) { return o.status !== "cancelled"; });
       var revenue = orders.reduce(function (sum, o) { return sum + o.total; }, 0);
       var buyers = {};
       orders.forEach(function (o) {
@@ -303,13 +284,11 @@
         return sum + o.items.reduce(function (s, it) { return s + it.qty; }, 0);
       }, 0);
       byId("stat-revenue").textContent = money(revenue);
-      byId("stat-note").textContent = "Thống kê từ " + (from ? dateVN(from) : "đầu kỳ") + " đến " + (to ? dateVN(to) : "hiện tại") + " · Không tính đơn đã hủy.";
+      byId("stat-note").textContent = "Số liệu mẫu · Không tính đơn đã hủy.";
 
       // Doanh thu theo tháng trong khoảng đã chọn
       var months = [], values = [];
-      var startM = from ? Number(from.slice(5, 7)) : 1, endM = to ? Number(to.slice(5, 7)) : 12;
-      if (from && to && from.slice(0, 4) !== to.slice(0, 4)) { startM = 1; endM = 12; }
-      for (var m = startM; m <= endM; m++) {
+      for (var m = 1; m <= 10; m++) {
         var key = "-" + (m < 10 ? "0" : "") + m + "-";
         months.push("T" + m);
         values.push(orders.reduce(function (sum, o) { return o.date.indexOf(key) === 4 ? sum + o.total : sum; }, 0) / 1000000);
@@ -352,21 +331,17 @@
         chip.classList.toggle("is-active", chip.getAttribute("data-from") === statForm.from.value && chip.getAttribute("data-to") === statForm.to.value);
       });
     };
+    // Chọn thời gian chỉ đổi ô ngày và nút mốc, không đổi số liệu
     chips.forEach(function (chip) {
       chip.addEventListener("click", function () {
         statForm.from.value = chip.getAttribute("data-from");
         statForm.to.value = chip.getAttribute("data-to");
         markChip();
-        renderStats();
+        showToast("Đã áp dụng bộ lọc (dữ liệu mẫu)");
       });
     });
-    statForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      if (!validRange(statForm.from.value, statForm.to.value)) return;
-      markChip();
-      renderStats();
-    });
-    statForm.addEventListener("reset", function () { setTimeout(function () { markChip(); renderStats(); }, 0); });
+    statForm.addEventListener("change", markChip);
+    statForm.addEventListener("reset", function () { setTimeout(markChip, 0); });
     renderStats();
   }
 })();

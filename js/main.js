@@ -251,12 +251,20 @@
     }
 
     // Thêm vào giỏ (card, quick view, nút mua ở product.html)
-    if (t.closest(".js-add-cart, .product-page .btn-buy, .product-page .btn-cart, .product-page .modal-buy")) {
+    if (t.closest(".js-add-cart, .product-page .btn-buy, .product-page .btn-cart, #choose-modal .modal-buy")) {
       if (!isLoggedIn) return requireLogin(e);
       if (t.closest(".js-add-cart")) {
         e.preventDefault();
         alert("Thêm vào giỏ hàng thành công!");
         window.location.href = "cart.html";
+      }
+      // Mua ngay trong popup: báo thành công rồi chỉ đóng popup, ở lại trang sản phẩm
+      if (t.closest("#choose-modal .modal-buy")) {
+        e.preventDefault();
+        alert("Đặt mua sản phẩm thành công!");
+        var scrollTop = window.pageYOffset;
+        window.location.hash = "";
+        window.scrollTo(0, scrollTop);
       }
       return;
     }
@@ -296,12 +304,30 @@
       return;
     }
 
-    // Lọc danh mục (chỉ đổi trạng thái nút)
-    var cat = t.closest("button.cat-btn");
+    // Danh mục: chỉ đổi nút đang chọn và tên hiển thị, danh sách sản phẩm giữ nguyên (web tĩnh)
+    var cat = t.closest(".cat-btn");
     if (cat) {
       e.preventDefault();
-      cat.parentElement.parentElement.querySelectorAll(".cat-btn").forEach(function (b) { b.classList.remove("is-active"); });
+      cat.closest("ul").querySelectorAll(".cat-btn").forEach(function (b) { b.classList.remove("is-active"); });
       cat.classList.add("is-active");
+      var isAll = cat.getAttribute("href") === "all-products.html";
+      var name = isAll ? "Tất cả sản phẩm" : cat.textContent;
+      var title = document.querySelector(".catalog .page-heading, .catalog .section-title");
+      if (title) {
+        if (title.classList.contains("section-title") && !title.hasAttribute("data-home-title")) {
+          title.setAttribute("data-home-title", title.textContent);
+        }
+        title.textContent = (isAll && title.getAttribute("data-home-title")) || name;
+      }
+      var sub = document.querySelector(".catalog .page-sub");
+      if (sub && cat.getAttribute("data-desc")) sub.textContent = cat.getAttribute("data-desc");
+      var crumb = document.querySelector(".breadcrumb ol");
+      if (crumb) {
+        var home = crumb.querySelector("a").getAttribute("href");
+        crumb.innerHTML = '<li><a href="' + home + '">Trang chủ</a></li>' +
+          (isAll ? '<li aria-current="page">Sản phẩm</li>'
+            : '<li><a href="all-products.html">Sản phẩm</a></li><li aria-current="page">' + name + "</li>");
+      }
       return;
     }
   });
