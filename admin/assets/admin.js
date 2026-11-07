@@ -45,9 +45,14 @@
     if (!btn) return;
     var row = btn.closest("tr");
     var name = row.querySelector("[data-name]").getAttribute("data-name");
-    var pct = row.querySelector(".cell-input").value;
+    var input = row.querySelector(".cell-input");
+    var pct = input.value;
     if (pct === "" || pct < 0 || pct > 300) { alert("Tỷ lệ lợi nhuận phải nằm trong khoảng 0% – 300%"); return; }
-    alert("Đã lưu tỷ lệ lợi nhuận " + pct + "% cho " + name);
+
+    // Demo: vẫn báo thành công nhưng giữ nguyên số ban đầu
+    input.value = input.defaultValue;                              // trả ô nhập về số gốc trong HTML
+    input.dispatchEvent(new Event("input", { bubbles: true }));    // tính lại giá bán theo số gốc
+    alert("Đã lưu tỷ lệ lợi nhuận " + input.defaultValue + "% cho " + name);
   });
 
   // Giá bán tự tính lại khi đổi tỷ lệ: giá bán = giá vốn × (1 + tỷ lệ)
@@ -65,7 +70,7 @@
     statusBtn.addEventListener("click", function () {
       var sel = document.getElementById("statusSelect");
       if (!sel.value) { alert("⚠️ Vui lòng chọn trạng thái!"); return; }
-      alert("✅ Cập nhật trạng thái thành công: " + sel.options[sel.selectedIndex].text);
+      alert(" Cập nhật trạng thái thành công: " + sel.options[sel.selectedIndex].text);
       window.location.href = "order.html";
     });
   }
